@@ -1,5 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
+import _ from 'lodash';
 import * as firebase from "firebase";
 
 export default {
@@ -93,11 +94,11 @@ export default {
         .then(user => {
           commit("setLoading", false);
           const newUser = {
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL,
-            ...user
+            id: user.user.uid,
+            name: user.user.displayName,
+            email: user.user.email,
+            photoUrl: user.user.photoURL,
+            ...user.user
           };
           dispatch("checkForDefaultUserData", { user: newUser, ...payload });
           commit("setUser", newUser);
@@ -197,25 +198,14 @@ export default {
     },
     checkForDefaultUserData({ commit, state, dispatch }, payload) {
       let data = {};
-      if (this.state.userData.displayName !== payload.displayName)
-        data.displayName = payload.displayName;
-      dispatch("userData/set", data);
-      /*const userDataRef = Vue.prototype.$db
-        .collection("users")
-        .doc(payload.user.id);
-      userDataRef.get().then(doc => {
-        if (doc.exists) {
-          // check if user has some settings
-          const data = doc.data();
-        } else {
-          let uData = {
-            // default user settings
-            user_role: payload.userType || "student",
-            displayName: payload.user.displayName
-          };
-          dispatch("userData/set", uData);
-        }
-      });*/
+      if (!this.state.userData.name || this.state.userData.name !== payload.user.displayName)
+        data.name = payload.user.displayName;
+      if (!this.state.userData.email || this.state.userData.email !== payload.user.email)
+        data.email = payload.user.email;
+      if (!this.state.userData.photoURL || this.state.userData.photoURL !== payload.user.photoURL)
+        data.photoURL = payload.user.photoURL;
+      // If data is not empty, proceed
+      if (!_.isEmpty(data)) dispatch("userData/set", data);
     }
   },
   getters: {

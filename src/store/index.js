@@ -46,8 +46,8 @@ const store = new Vuex.Store({
   },
   mutations: {},
   actions: {
-    init: () => {
-    
+    init: ({ dispatch }, payload) => {
+      dispatch("checkForDefaultUserData", { ...payload });
     },
   },
   getters: {

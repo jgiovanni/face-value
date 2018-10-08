@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row display-flex">
-	  <div class="home">
+	  <div class="col-12 home" style="text-align: center">
 	    <img alt="Vue logo" src="../assets/logo.png">
 	    <HelloWorld msg="Welcome to Your Vue.js App"/>
 	  </div>

@@ -80,16 +80,14 @@ new Vue({
       console.log(user);
       if (user) {
         self.$store.dispatch("autoSignIn", user.toJSON()).then(() => {
-          self.$store.dispatch("init").then(() => {
-            self.$store
-              .dispatch("userData/openDBChannel")
-              .then(result => {
-                self.appReady = true;
-                this.$router.push("/");
-              })
-              .catch(console.error);
-           
-          });
+          self.$store
+            .dispatch("userData/openDBChannel")
+            .then(result => {
+              self.$store.dispatch("init", { user });
+              self.appReady = true;
+              this.$router.push("/");
+            })
+            .catch(console.error);
         });
       } else {
         this.appReady = true;
