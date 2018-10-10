@@ -15,7 +15,16 @@ const userDataModule = {
   // for other config like fillables see "Extra features"
 };
 
-const easyFirestores = createEasyFirestore([userDataModule], { logging: true });
+const newsFeedModule = {
+  firestorePath: 'newsFeed',
+  firestoreRefType: 'collection', // or 'doc'
+  moduleName: 'newsFeed',
+  statePropName: '',
+  // you can also add state/getters/mutations/actions
+  // for other config like fillables see 'Extra features'
+}
+
+const easyFirestores = createEasyFirestore([userDataModule, newsFeedModule], { logging: true });
 
 Vue.use(Vuex);
 

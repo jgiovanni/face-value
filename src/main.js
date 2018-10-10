@@ -56,6 +56,7 @@ Vue.mixin({
   },
   created() {}
 });
+
 new Vue({
   el: "#app",
   router,

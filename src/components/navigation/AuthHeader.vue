@@ -5,7 +5,7 @@
 		<header class="header" id="site-header">
 
 			<div class="page-title">
-				<h6>SHORTCODES</h6>
+				<h6>{{ $route.name }}</h6>
 			</div>
 
 			<div class="header-content-wrapper">
@@ -442,8 +442,8 @@
 
 					<div class="author-page author vcard inline-items more">
 						<div class="author-thumb">
-							<img alt="author" src="img/author-page.jpg" class="avatar">
-							<span class="icon-status online"></span>
+							<img :src="user.photoUrl" height="36" width="36" alt="author" class="avatar">
+							<span class="icon-status" :class="currentStatusType"></span>
 							<div class="more-dropdown more-with-triangle">
 								<div class="mCustomScrollbar" data-mcs-theme="dark">
 									<div class="ui-block-title ui-block-title-small">
@@ -452,16 +452,15 @@
 
 									<ul class="account-settings">
 										<li>
-											<a href="29-YourAccount-AccountSettings.html">
-
-												<svg class="olymp-menu-icon">
+											<router-link to="/account">
+												<!--<svg class="olymp-menu-icon">
 													<use xlink:href="svg-icons/sprites/icons.svg#olymp-menu-icon"></use>
-												</svg>
-
+												</svg>-->
+												<i class="fa fa-cog"></i>
 												<span>Profile Settings</span>
-											</a>
+											</router-link>
 										</li>
-										<li>
+										<!--<li>
 											<a href="36-FavPage-SettingsAndCreatePopup.html">
 												<svg class="olymp-star-icon left-menu-icon" data-toggle="tooltip"
 												     data-placement="right" data-original-title="FAV PAGE">
@@ -470,7 +469,7 @@
 
 												<span>Create Fav Page</span>
 											</a>
-										</li>
+										</li>-->
 										<li>
 											<a href="#" @click.prevent="logout">
 												<svg class="olymp-logout-icon">
@@ -488,33 +487,33 @@
 
 									<ul class="chat-settings">
 										<li>
-											<a href="#">
+											<a href="#" @click.prevent="currentStatusType = 'online'">
 												<span class="icon-status online"></span>
 												<span>Online</span>
 											</a>
 										</li>
 										<li>
-											<a href="#">
+											<a href="#" @click.prevent="currentStatusType = 'away'">
 												<span class="icon-status away"></span>
 												<span>Away</span>
 											</a>
 										</li>
 										<li>
-											<a href="#">
+											<a href="#" @click.prevent="currentStatusType = 'disconected'">
 												<span class="icon-status disconected"></span>
 												<span>Disconnected</span>
 											</a>
 										</li>
 
 										<li>
-											<a href="#">
+											<a href="#" @click.prevent="currentStatusType = 'status-invisible'">
 												<span class="icon-status status-invisible"></span>
 												<span>Invisible</span>
 											</a>
 										</li>
 									</ul>
 
-									<div class="ui-block-title ui-block-title-small">
+									<!--<div class="ui-block-title ui-block-title-small">
 										<h6 class="title">Custom Status</h6>
 									</div>
 
@@ -526,47 +525,47 @@
 												<use xlink:href="svg-icons/sprites/icons.svg#olymp-check-icon"></use>
 											</svg>
 										</button>
-									</form>
+									</form>-->
 
 									<div class="ui-block-title ui-block-title-small">
-										<h6 class="title">About Olympus</h6>
+										<h6 class="title">About FaceValue</h6>
 									</div>
 
 									<ul>
 										<li>
-											<a href="#">
+											<router-link to="/terms">
 												<span>Terms and Conditions</span>
-											</a>
+											</router-link>
 										</li>
 										<li>
-											<a href="#">
+											<router-link to="/faq">
 												<span>FAQs</span>
-											</a>
+											</router-link>
 										</li>
-										<li>
-											<a href="#">
+										<!--<li>
+											<router-link to="#">
 												<span>Careers</span>
-											</a>
-										</li>
+											</router-link>
+										</li>-->
 										<li>
-											<a href="#">
+											<router-link to="/contact">
 												<span>Contact</span>
-											</a>
+											</router-link>
 										</li>
 									</ul>
 								</div>
 
 							</div>
 						</div>
-						<a href="02-ProfilePage.html" class="author-name fn">
+						<router-link to="/profile" class="author-name fn">
 							<div class="author-title">
-								James Spiegel
+								{{ user.name }}
 								<svg class="olymp-dropdown-arrow-icon">
 									<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 								</svg>
 							</div>
-							<span class="author-subtitle">SPACE COWBOY</span>
-						</a>
+							<span class="author-subtitle">{{ statuses[currentStatusType] }}</span>
+						</router-link>
 					</div>
 
 				</div>
@@ -1038,24 +1037,41 @@
 		</header>
 
 		<!-- ... end Responsive Header-BP -->
-		<div class="header-spacer"></div>	</div>
+		<div class="header-spacer"></div>
+	</div>
 </template>
-<style></style>
+<style>
+	.account-settings li i {
+		font-size: 20px;
+		margin-right: 15px;
+		color: #9a9fbf;
+		width: 20px;
+		height: 20px;
+	}
+</style>
 <script type="text/javascript">
   export default {
-    name: 'UserHeader',
+    name: "UserHeader",
     data() {
       return {
-        msg: null
-      }
+        currentStatusType: "online",
+        statusTypes: ["online", "away", "disconected", "status-invisible"],
+        statuses: {
+          online: "Online",
+          away: "Away",
+          disconected: "Disconnected",
+          "status-invisible": "Invisible",
+          custom: ""
+        }
+      };
     },
     methods: {
       logout() {
-        this.$store.dispatch('logout');
+        this.$store.dispatch("logout");
       }
     },
     mounted() {
-      
+
     }
-  }
+  };
 </script>
