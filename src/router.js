@@ -41,7 +41,7 @@ const router = new Router({
       }
     },
     {
-      path: "/profile-settings",
+      path: "/account",
       name: "settings",
       component: MyAccount,
       meta: {
