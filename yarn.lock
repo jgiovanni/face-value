@@ -860,6 +860,13 @@
     vue "^2.5.16"
     vue-click-outside "^1.0.7"
 
+"@johmun/vue-tags-input@^1.5.6":
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/@johmun/vue-tags-input/-/vue-tags-input-1.5.6.tgz#02147d774d0e09cde68daf16777d38301745929f"
+  integrity sha512-Mmm9s2kyyQSpRWAY4YNd8lgvgCT+cjKYKbabVMQ1JK5zecnHwfdxWG1zlBhSoc6WnddJuHUZCuhVva4cbreQwA==
+  dependencies:
+    vue "^2.5.16"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1218,6 +1225,11 @@ acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0, acorn@^5.6.2, acorn@^5.7.1:
   version "5.7.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
   integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
+
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha1-JI8Kn25aUo7yKV2+7DBTITCuIjU=
 
 address@^1.0.3:
   version "1.0.3"
@@ -2743,6 +2755,11 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+date-fns@^1.29.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
+  integrity sha512-lbTXWZ6M20cWH8N9S6afb0SBm6tMk+uUg6z3MqHPKE9atmsY3kJkTm8vKe93izJ2B2+q5MV990sM2CHgtAZaOw==
+
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
@@ -3644,10 +3661,17 @@ finalhandler@1.1.1:
     statuses "~1.4.0"
     unpipe "~1.0.0"
 
-find-and-replace-anything@^1.1.1, find-and-replace-anything@^1.1.2:
+find-and-replace-anything@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/find-and-replace-anything/-/find-and-replace-anything-1.1.2.tgz#321a11bb5255d5bafa7c518ea839b50235044e1d"
   integrity sha512-iWo1FsIDGzO6qK/Iwt2LVzLstltExcX6Iatp37gMWR7r4VAsl91awGbz02PMPgHpf/0uFeCHuZbwREmZzCvsZw==
+  dependencies:
+    is-what "^3.0.1"
+
+find-and-replace-anything@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/find-and-replace-anything/-/find-and-replace-anything-1.2.0.tgz#d2f2b69718da4e7aee363441d42485274cf79a2d"
+  integrity sha512-Dlk3Ks3Ttq2F49qkhfOcPJ/tL7c4wFKHcwPFfKM6vJ/bJ8rAecZGNqbnglADKSFmM6lysbaVeJaJ78uUPcT9KQ==
   dependencies:
     is-what "^3.0.1"
 
@@ -8621,6 +8645,13 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   integrity sha512-x3LV3wdmmERhVCYy3quqA57NJW7F3i6faas++pJQWtknWT+n7k30F4TVdHvCLn48peTJFRvCpxs3UuFPqgeELg==
 
+vue-timeago@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/vue-timeago/-/vue-timeago-5.0.0.tgz#e9633c28f923b380518f91305a6477e2712f1c0a"
+  integrity sha512-C+EqTlfHE9nO6FOQIS6q5trAZ0WIgNz/eydTvsanPRsLVV1xqNiZirTG71d9nl/LjfNETwaktnBlgP8adCc37A==
+  dependencies:
+    date-fns "^1.29.0"
+
 vue@^2.5.16, vue@^2.5.17:
   version "2.5.17"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
@@ -8635,12 +8666,12 @@ vuex-easy-access@^3.1.1:
     is-what "^2.5.0"
     merge-anything "^2.1.1"
 
-vuex-easy-firestore@^1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.15.0.tgz#5a3edd66d06931160c45811fba1ee1653ebf82e9"
-  integrity sha512-9U5XYTh3Ro7X1fwK6dJrq6CVRkoVCvOvbdsZX1YEaCGJB6wQopjFwbJQFNHNlIvtI9LPcNunTwZcPoEBYqLibA==
+vuex-easy-firestore@^1.15.3:
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.15.3.tgz#b92af797b73a3531826fb7521cce4bcbb3c07584"
+  integrity sha512-WdBhzgCPlK+jv4r5eRKF+o8W8pnTz1A8+O/MwCdx7bLUwl5GBKCIHn0oK8oZu1+n1FWEeFyTOTImNZhH0OAI9Q==
   dependencies:
-    find-and-replace-anything "^1.1.2"
+    find-and-replace-anything "^1.2.0"
     is-what "^3.0.1"
     merge-anything "^2.2.0"
     vuex-easy-access "^3.1.1"
@@ -9118,6 +9149,11 @@ yargs@^7.0.0:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
+
+yarn@^1.10.1:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.10.1.tgz#b792ba28f050ae94cd7e719dbca80639d70da76f"
+  integrity sha512-EH0H1fyfFxkE4UpG4b+VCaVY4I488I2EyQNmGjGGKmvsSIb0G3b+1IcfGYPI2gqa1du43g4ZA3jH8fXlq6oVxg==
 
 yorkie@^2.0.0:
   version "2.0.0"

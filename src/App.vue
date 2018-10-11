@@ -21,7 +21,7 @@
 
 			<!-- ...end Main Content -->
 
-			<a v-if="userIsAuthenticated" class="back-to-top" href="#">
+			<a v-if="userIsAuthenticated" class="back-to-top" href="#" @click.prevent="">
 				<img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
 			</a>
 

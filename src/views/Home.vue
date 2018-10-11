@@ -13,7 +13,7 @@
 
 				<div id="newsfeed-items-grid">
 
-					<NewsFeedItemBlock v-for="item in newsFeed" :key="item.key" :item="item" />
+					<NewsFeedItemBlock v-for="item in newsFeed.items" :key="item.key" :item="item" />
 
 					<!--<div class="ui-block">
 
@@ -462,7 +462,7 @@
 
 				</div>
 
-				<a id="load-more-button" href="#" class="btn btn-control btn-more" data-load-link="items-to-load.html"
+				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more" data-load-link="items-to-load.html"
 				   data-container="newsfeed-items-grid">
 					<svg class="olymp-three-dots-icon">
 						<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
@@ -1483,21 +1483,13 @@
     name: "Home",
     components: { NewsFeedFormBlock, NewsFeedItemBlock },
     data() {
-      return {
-        newsFeed: [
-          {
-            author: {
-              photoUrl: 'data:image/jpeg;base64,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',
-              userName: 'edreyfuss',
-              displayName: 'Elaine Dreyfuss'
-            },
-          },
-        ]
-      }
+      return {}
     },
     computed: {
-      // ...mapState(["newsFeed"]),
+      ...mapState(["newsFeed"]),
     },
-
+		methods: {
+      loadMore() {}
+		}
   };
 </script>

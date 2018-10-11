@@ -9,6 +9,7 @@ const userDataModule = {
   moduleName: "userData",
   statePropName: "",
   state: {
+    userName: "",
     role: "student"
   },
   // you can also add state/getters/mutations/actions
@@ -16,13 +17,23 @@ const userDataModule = {
 };
 
 const newsFeedModule = {
-  firestorePath: 'newsFeed',
-  firestoreRefType: 'collection', // or 'doc'
-  moduleName: 'newsFeed',
-  statePropName: '',
+  firestorePath: "newsFeed",
+  firestoreRefType: "collection", // or "doc"
+  moduleName: "newsFeed",
+  statePropName: "items",
   // you can also add state/getters/mutations/actions
-  // for other config like fillables see 'Extra features'
-}
+  // for other config like fillables see "Extra features"
+};
+
+const newsFeedItemAuthorModule = {
+  firestorePath: "newsFeed",
+  firestoreRefType: "collection", // or "doc"
+  moduleName: "newsFeed",
+  statePropName: "items",
+  // you can also add state/getters/mutations/actions
+  // for other config like fillables see "Extra features"
+};
+
 
 const easyFirestores = createEasyFirestore([userDataModule, newsFeedModule], { logging: true });
 
@@ -47,11 +58,11 @@ import user from "./user";
 const store = new Vuex.Store({
   modules: {
     shared,
-    user,
+    user
   },
   plugins: [easyFirestores],
   state: {
-    user: null,
+    user: null
   },
   mutations: {},
   actions: {
@@ -61,10 +72,10 @@ const store = new Vuex.Store({
   },
   getters: {
     userData(state) {
-      return state.user.userData;
+      return state.userData;
     },
     isStudent(state) {
-      return state.userData && (!state.userData.user_role || state.userData.user_role === "student");
+      return state.userData && (!state.userData.role || state.userData.role === "student");
     }
   }
 });

@@ -202,6 +202,8 @@ export default {
         data.name = payload.user.displayName;
       if (!this.state.userData.email || this.state.userData.email !== payload.user.email)
         data.email = payload.user.email;
+      if (!this.state.userData.userName || this.state.userData.userName !== payload.user.userName)
+        data.userName = payload.user.userName || payload.user.email.split('@')[0].toString();
       if (!this.state.userData.photoURL || this.state.userData.photoURL !== payload.user.photoURL)
         data.photoURL = payload.user.photoURL;
       // If data is not empty, proceed

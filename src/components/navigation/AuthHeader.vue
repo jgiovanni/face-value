@@ -9,7 +9,7 @@
 			</div>
 
 			<div class="header-content-wrapper">
-				<form class="search-bar w-search notification-list friend-requests">
+				<form @submit.prevent="" class="search-bar w-search notification-list friend-requests">
 					<div class="form-group with-button">
 						<input class="form-control js-user-search" placeholder="Search here people or pages..."
 						       type="text">
@@ -21,11 +21,11 @@
 					</div>
 				</form>
 
-				<a href="#" class="link-find-friend">Find Friends</a>
+				<!--<a href="#" class="link-find-friend">Find Friends</a>-->
 
 				<div class="control-block">
 
-					<div class="control-icon more has-items">
+					<div class="control-icon more has-items" style="display: none;">
 						<svg class="olymp-happy-face-icon">
 							<use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
 						</svg>
@@ -1051,7 +1051,7 @@
 </style>
 <script type="text/javascript">
   export default {
-    name: "UserHeader",
+    name: "AuthHeader",
     data() {
       return {
         currentStatusType: "online",

@@ -3,6 +3,8 @@ import App from "./App.vue";
 import BootstrapVue from "bootstrap-vue";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
+import VueTimeago from 'vue-timeago'
+import VueTagsInput from '@johmun/vue-tags-input';
 import vSelect from "vue-select";
 import router from "./router";
 import { store, firebaseApp } from "./store/index";
@@ -22,7 +24,14 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
+Vue.use(VueTimeago, {
+  name: 'Timeago', // Component name, `Timeago` by default
+  locale: 'en', // Default locale
+});
+
+
 Vue.component("v-select", vSelect);
+Vue.component("tags-input", VueTagsInput);
 
 Vue.mixin({
   computed: {
@@ -90,6 +99,11 @@ new Vue({
             })
             .catch(console.error);
         });
+  
+        self.$store.dispatch("newsFeed/openDBChannel").then(result => {
+          console.log(result);
+          // self.$store.dispatch("newsFeed/fetchAndAdd");
+        }).catch(console.error)
       } else {
         this.appReady = true;
       }
