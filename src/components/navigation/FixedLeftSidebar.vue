@@ -384,7 +384,7 @@
 </style>
 <script type="text/javascript">
   export default {
-    name: 'FixedLeftSidebar',
+    name: 'NavigationSidebar',
     data() {
       return {
         sidebarState: false

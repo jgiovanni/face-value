@@ -1,7 +1,5 @@
 <template>
 	<div class="ui-block">
-
-
 		<article class="hentry post">
 
 			<div class="post__author author vcard inline-items">
@@ -14,7 +12,7 @@
 					</template>
 					<div class="post__date">
 						<time class="published" :datetime="timestamp.toISO()">
-							<timeago :datetime="timestamp"></timeago>
+							<timeago :datetime="timestamp" :auto-update="300"></timeago>
 						</time>
 					</div>
 				</div>

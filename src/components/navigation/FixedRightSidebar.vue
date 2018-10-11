@@ -2,12 +2,12 @@
 	<div>
 		<!-- Fixed Sidebar Right -->
 
-		<div class="fixed-sidebar right">
+		<div class="fixed-sidebar right" :class="{ 'open': sidebarState }">
 			<div class="fixed-sidebar-right sidebar--small" id="sidebar-right">
 
 				<div class="mCustomScrollbar" data-mcs-theme="dark">
 					<ul class="chat-users">
-						<li class="inline-items js-chat-open">
+						<li class="inline-items js-chat-open" @click.prevent="openChat">
 							<div class="author-thumb">
 								<img alt="author" src="img/avatar67-sm.jpg" class="avatar">
 								<span class="icon-status online"></span>
@@ -17,57 +17,6 @@
 							<div class="author-thumb">
 								<img alt="author" src="img/avatar62-sm.jpg" class="avatar">
 								<span class="icon-status online"></span>
-							</div>
-						</li>
-
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar68-sm.jpg" class="avatar">
-								<span class="icon-status online"></span>
-							</div>
-						</li>
-
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar69-sm.jpg" class="avatar">
-								<span class="icon-status away"></span>
-							</div>
-						</li>
-
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar70-sm.jpg" class="avatar">
-								<span class="icon-status disconected"></span>
-							</div>
-						</li>
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar64-sm.jpg" class="avatar">
-								<span class="icon-status online"></span>
-							</div>
-						</li>
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar71-sm.jpg" class="avatar">
-								<span class="icon-status online"></span>
-							</div>
-						</li>
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar72-sm.jpg" class="avatar">
-								<span class="icon-status away"></span>
-							</div>
-						</li>
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar63-sm.jpg" class="avatar">
-								<span class="icon-status status-invisible"></span>
-							</div>
-						</li>
-						<li class="inline-items js-chat-open">
-							<div class="author-thumb">
-								<img alt="author" src="img/avatar72-sm.jpg" class="avatar">
-								<span class="icon-status away"></span>
 							</div>
 						</li>
 						<li class="inline-items js-chat-open">
@@ -81,7 +30,7 @@
 				</div>
 
 				<div class="search-friend inline-items">
-					<a href="#" class="js-sidebar-open">
+					<a href="#" @click.prevent="toggleSidebar" class="">
 						<svg class="olymp-menu-icon">
 							<use xlink:href="svg-icons/sprites/icons.svg#olymp-menu-icon"></use>
 						</svg>
@@ -651,7 +600,7 @@
 						</svg>
 					</a>
 
-					<a href="#" class="js-sidebar-open">
+					<a href="#" @click.prevent="toggleSidebar" class="">
 						<svg class="olymp-close-icon">
 							<use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use>
 						</svg>
@@ -660,7 +609,7 @@
 
 				<a href="#" class="olympus-chat inline-items js-chat-open">
 
-					<h6 class="olympus-chat-title">OLYMPUS CHAT</h6>
+					<h6 class="olympus-chat-title">CHAT</h6>
 					<svg class="olymp-chat---messages-icon">
 						<use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
 					</svg>
@@ -694,13 +643,17 @@
 <style></style>
 <script type="text/javascript">
   export default {
-    name: 'FixedRightSidebar',
+    name: 'ChatSidebar',
     data() {
       return {
-        msg: null
+        sidebarState: false
       }
     },
-    methods: {},
+    methods: {
+      toggleSidebar() {
+        this.sidebarState = !this.sidebarState;
+      }
+    },
     mounted() {
       
     }
