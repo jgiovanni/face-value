@@ -1,7 +1,8 @@
 import Vue from "vue";
 import axios from "axios";
 import _ from 'lodash';
-import * as firebase from "firebase";
+import firebase from "firebase/app";
+import { event } from "vue-analytics";
 
 export default {
   state: {

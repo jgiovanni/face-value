@@ -286,6 +286,9 @@
 </script>
 
 <style lang="scss">
+	$animationDuration: 0.5s; // specify animation duration. Default value: 1s
+	@import "~vue2-animate/src/sass/vue2-animate.scss";
+
 	#app {}
 	.form-control, input, select {
 		height: auto;

@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createEasyFirestore from "vuex-easy-firestore";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
+import firestore from "firebase/firestore";
+import { event } from "vue-analytics";
 
 const userDataModule = {
   firestorePath: "users/{userId}",
@@ -26,7 +28,13 @@ const newsFeedModule = {
       // ["softDeleted", "==", false],
       ["publish", "==", true],
     ],
-    orderBy: ["created_at", "desc"]
+    orderBy: ["created_at", "desc"],
+    insertHook(updateStore, doc, store) {
+      doc.created_at = {
+        seconds: parseInt(new Date().getTime() / 1000),
+      };
+      updateStore(doc);
+    },
   }
 };
 
@@ -54,7 +62,8 @@ const firebaseApp = firebase.initializeApp({
   storageBucket: "face-value-6b3c6.appspot.com",
   messagingSenderId: "242553748651"
 });
-const db = firebaseApp.firestore();
+console.log(firestore);
+const db = firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 Vue.prototype.$db = db;
 

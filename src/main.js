@@ -26,7 +26,12 @@ Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
 Vue.use(VueAnalytics, {
-  id: "UA-27155404-19"
+  id: "UA-27155404-19",
+  router,
+  ignoreRoutes: [],
+  debug: {
+    sendHitTask: process.env.NODE_ENV === "production"
+  }
 });
 Vue.use(VueTimeago, {
   name: "Timeago",

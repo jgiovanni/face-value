@@ -237,7 +237,6 @@
 	}
 </style>
 <script type="text/javascript">
-  import firebase from "firebase";
   import { mapState } from "vuex";
   import { DateTime } from 'luxon';
 
@@ -271,13 +270,13 @@
       submitComment() {},
       chatWithAuthor() {},
       onDialogConfirm () {
-        // this.$store.dispatch('newsFeed/delete', this.item.id);
-        this.$store.dispatch('newsFeed/patch', {
+        this.$store.dispatch('newsFeed/delete', this.item.id);
+        /*this.$store.dispatch('newsFeed/patch', {
           id: this.item.id,
 	        softDeleted: true,
 	        publish: false,
 	        deleted_at: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        });*/
       },
       onDialogCancel () {
         this.dialogActive = false;
