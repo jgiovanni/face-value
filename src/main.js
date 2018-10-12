@@ -1,10 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
 import BootstrapVue from "bootstrap-vue";
+import VueAnalytics from "vue-analytics";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
-import VueTimeago from 'vue-timeago'
-import VueTagsInput from '@johmun/vue-tags-input';
+import VueTimeago from "vue-timeago";
+import VueTagsInput from "@johmun/vue-tags-input";
 import vSelect from "vue-select";
 import router from "./router";
 import { store, firebaseApp } from "./store/index";
@@ -24,9 +25,12 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
+Vue.use(VueAnalytics, {
+  id: "UA-27155404-19"
+});
 Vue.use(VueTimeago, {
-  name: 'Timeago', // Component name, `Timeago` by default
-  locale: 'en', // Default locale
+  name: "Timeago",
+  locale: "en"
 });
 
 
@@ -81,6 +85,11 @@ new Vue({
   watch: {
     appReady() {
       this.$router.start();
+    },
+    userIsAuthenticated(val) {
+      if (!val) {
+        this.$router.push("/hello");
+      }
     }
   },
   async created() {
@@ -95,11 +104,9 @@ new Vue({
             .then(result => {
               self.$store.dispatch("init", { user });
               self.appReady = true;
-              this.$router.push("/");
             })
             .catch(console.error);
         });
-  
         self.$store.dispatch("newsFeed/openDBChannel").then(result => {
           console.log(result);
           // self.$store.dispatch("newsFeed/fetchAndAdd");

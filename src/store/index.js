@@ -21,8 +21,13 @@ const newsFeedModule = {
   firestoreRefType: "collection", // or "doc"
   moduleName: "newsFeed",
   statePropName: "items",
-  // you can also add state/getters/mutations/actions
-  // for other config like fillables see "Extra features"
+  sync: {
+    where: [
+      // ["softDeleted", "==", false],
+      ["publish", "==", true],
+    ],
+    orderBy: ["created_at", "desc"]
+  }
 };
 
 const newsFeedItemAuthorModule = {
@@ -34,8 +39,9 @@ const newsFeedItemAuthorModule = {
   // for other config like fillables see "Extra features"
 };
 
-
-const easyFirestores = createEasyFirestore([userDataModule, newsFeedModule], { logging: true });
+const easyFirestores = createEasyFirestore([userDataModule, newsFeedModule], {
+  logging: true
+});
 
 Vue.use(Vuex);
 

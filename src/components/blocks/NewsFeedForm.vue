@@ -153,6 +153,8 @@
           skills: [],
           attachments: [],
           publish: true,
+          created_at: null,
+	        softDeleted: false
         },
 	      tagInputConfig: {
           seperators: [';', ','],
@@ -188,6 +190,7 @@
           skills: [],
           attachments: [],
 	        publish: true,
+          softDeleted: false
         };
 	    },
       formatName (str) {

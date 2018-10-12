@@ -6,7 +6,7 @@
 		<template v-if="$root.appReady">
 			<template v-if="userIsAuthenticated">
 				<FixedLeftSidebar />
-				<FixedRightSidebar />
+				<FixedRightSidebar v-if="$route.name !== 'Messenger'" />
 			</template>
 
 			<AuthHeader v-if="userIsAuthenticated" />
@@ -21,14 +21,14 @@
 
 			<!-- ...end Main Content -->
 
-			<a v-if="userIsAuthenticated" class="back-to-top" href="#" @click.prevent="">
+			<a v-if="userIsAuthenticated && $route.name !== 'Messenger'" class="back-to-top" href="#" @click.prevent="">
 				<img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
 			</a>
 
 
 			<!-- Window-popup-CHAT for responsive min-width: 768px -->
 
-			<div v-if="userIsAuthenticated" class="ui-block popup-chat popup-chat-responsive" tabindex="-1"
+			<div v-if="userIsAuthenticated && $route.name !== 'Messenger'" class="ui-block popup-chat popup-chat-responsive" tabindex="-1"
 			     role="dialog" aria-labelledby="update-header-photo" aria-hidden="true">
 
 				<div class="modal-content">
@@ -314,28 +314,56 @@
 		border: 1px solid #e6ecf5 !important;
 	}
 
-	.md-checkbox.md-theme-default.md-checked .md-checkbox-container {
-		background-color: #ff5252;
-		border-color: #ff5252;
+	.md-checkbox.md-theme-default.md-checked {
+		.md-ripple {
+			color: #ff5252;
+		}
+		.md-checkbox-container {
+			background-color: #ff5252;
+			border-color: #ff5252;
+
+			&:after {
+				border-color: #fff;
+			}
+		}
 	}
 
-	.md-checkbox.md-theme-default.md-checked .md-checkbox-container:after {
-		border-color: #fff;
+	.md-radio.md-theme-default.md-checked {
+		.md-ripple {
+			color: #ff5252;
+		}
+		.md-radio-container {
+			border-color: #ff5252;
+
+			&:after {
+				background-color: #ff5252;
+			}
+		}
 	}
 
-	.md-checkbox.md-theme-default.md-checked .md-ripple {
-		color: #ff5252;
+	.messages-page {
+		overflow-y: hidden;
+		.container {
+			margin-left: 70px;
+			margin-right: 0;
+			padding-left: 0;
+			padding-right: 0;
+			max-width: calc(100% - 70px);
+			.ui-block {
+				margin: 0;
+				padding: 0;
+			}
+		}
+		.header-spacer {
+			height: 70px;
+		}
 	}
 
-	.md-radio.md-theme-default.md-checked .md-radio-container {
-		border-color: #ff5252;
+	.md-overlay {
+		z-index: 22 !important;
 	}
-
-	.md-radio.md-theme-default.md-checked .md-radio-container:after {
-		background-color: #ff5252;
-	}
-
-	.md-radio.md-theme-default.md-checked .md-ripple {
-		color: #ff5252;
+	.md-dialog {
+		z-index: 23 !important;
+		background-color: white;
 	}
 </style>

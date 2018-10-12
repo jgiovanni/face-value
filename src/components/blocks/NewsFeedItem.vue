@@ -11,26 +11,29 @@
 						looking to collaborate
 					</template>
 					<div class="post__date">
-						<time class="published" :datetime="timestamp.toISO()">
+						<time v-if="this.item.created_at && timestamp" class="published" :datetime="timestamp.toISO()">
 							<timeago :datetime="timestamp" :auto-update="300"></timeago>
 						</time>
 					</div>
 				</div>
 
-				<div class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
+				<div class="more" v-if="user.id === item.author.id">
+					<svg class="olymp-three-dots-icon">
+						<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+					</svg>
 					<ul class="more-dropdown">
+						<!--<li>
+							<a href="#" @click.prevent="">Edit Post</a>
+						</li>-->
 						<li>
-							<a href="#">Edit Post</a>
+							<a href="#" @click.prevent="deletePost">Delete Post</a>
 						</li>
-						<li>
-							<a href="#">Delete Post</a>
-						</li>
-						<li>
-							<a href="#">Turn Off Notifications</a>
-						</li>
-						<li>
-							<a href="#">Select as Featured</a>
-						</li>
+						<!--<li>
+							<a href="#" @click.prevent="">Turn Off Notifications</a>
+						</li>-->
+						<!--<li>
+							<a href="#" @click.prevent="">Select as Featured</a>
+						</li>-->
 					</ul>
 				</div>
 
@@ -207,6 +210,15 @@
 
 			<!-- ... end Comment Form  -->
 		</template>
+
+		<md-dialog-confirm
+				:md-active.sync="dialogActive"
+				md-title="Delete this post?"
+				md-content="Deleting this post is irreversible."
+				md-confirm-text="Yes, Delete"
+				md-cancel-text="Cancel"
+				@md-cancel="onDialogCancel"
+				@md-confirm="onDialogConfirm" />
 	</div>
 </template>
 <style lang="scss">
@@ -225,6 +237,7 @@
 	}
 </style>
 <script type="text/javascript">
+  import firebase from "firebase";
   import { mapState } from "vuex";
   import { DateTime } from 'luxon';
 
@@ -238,7 +251,8 @@
     },
     data() {
       return {
-
+				dialogActive: false,
+	      dialogValue: null
       }
     },
     computed: {
@@ -249,12 +263,25 @@
     },
 	  methods: {
       likePost() {},
+      deletePost() {
+        this.dialogActive = true;
+      },
       commentPost() {},
       sharePost() {},
       submitComment() {},
-      chatWithAuthor() {
-
+      chatWithAuthor() {},
+      onDialogConfirm () {
+        // this.$store.dispatch('newsFeed/delete', this.item.id);
+        this.$store.dispatch('newsFeed/patch', {
+          id: this.item.id,
+	        softDeleted: true,
+	        publish: false,
+	        deleted_at: firebase.firestore.FieldValue.serverTimestamp()
+        });
       },
+      onDialogCancel () {
+        this.dialogActive = false;
+      }
 	  },
     mounted() {
       

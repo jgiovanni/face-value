@@ -12,7 +12,7 @@
 				<!-- ... end News Feed Form  -->
 
 				<div id="newsfeed-items-grid">
-					<NewsFeedItemBlock v-for="item in newsFeed.items" :key="item.key" :item="item" />
+					<NewsFeedItemBlock v-for="item in orderedNewsFeed" :key="item.key" :item="item" />
 				</div>
 
 				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more" data-load-link="items-to-load.html"
@@ -41,10 +41,11 @@
 </template>
 
 <script>
+	import _ from "lodash";
+	import firebase from "firebase";
   import {mapState} from "vuex";
 
   // @ is an alias to /src
-  import HelloWorld from "@/components/HelloWorld.vue";
   import NewsFeedFormBlock from '../components/blocks/NewsFeedForm';
   import NewsFeedItemBlock from '../components/blocks/NewsFeedItem';
   import HomeLeftAside from '../components/blocks/HomeLeftAside';
@@ -58,6 +59,20 @@
     },
     computed: {
       ...mapState(["newsFeed"]),
+	    orderedNewsFeed() {
+        // firebase.firestore.FieldValue.serverTimestamp()
+        return _.sortBy(this.newsFeed.items, (item, index, arr) => {
+          if (_.isNull(item.created_at)) {
+            _.find(this.newsFeed.items, { id: item.id }).created_at = {
+              seconds: new Date().getTime() / 1000,
+            }
+            item.created_at = {
+              seconds: new Date().getTime() / 1000,
+            }
+          }
+          return !item.created_at.seconds
+        });
+	    }
     },
 		methods: {
       loadMore() {}

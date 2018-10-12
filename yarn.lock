@@ -6968,6 +6968,11 @@ querystringify@^2.0.0:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
   integrity sha512-eTPo5t/4bgaMNZxyjWx6N2a6AuE0mq51KWvpc7nU/MAqixcI6v6KrGUKES0HaomdnolQBBXU/++X6/QQ9KL4tw==
 
+ramjet@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ramjet/-/ramjet-0.5.0.tgz#1a7a972b5c2abbc4e94c52baf778feb4b46dd50f"
+  integrity sha1-GnqXK1wqu8TpTFK693j+tLRt1Q8=
+
 randomatic@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-3.1.0.tgz#36f2ca708e9e567f5ed2ec01949026d50aa10116"
@@ -8571,6 +8576,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-analytics@^5.16.0:
+  version "5.16.0"
+  resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.16.0.tgz#82e88703a0678cba076d51acacd6569bc8f7d54c"
+  integrity sha512-WOdI1Ot/Tq3xHIIu3a5hiLawMrQeHsgqwcvHdZb5CNV4IM3RWZ3rw1gCnsAGbSWGPQw88mjkY9wuG5CXmfsssA==
+
 vue-click-outside@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/vue-click-outside/-/vue-click-outside-1.0.7.tgz#cdd2b1605e3c4944784e1794eae4a12a0f700bd6"
@@ -8613,6 +8623,13 @@ vue-material@^1.0.0-beta-10.2:
   version "1.0.0-beta-10.2"
   resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-10.2.tgz#c3effea97e0c5a0c696b0051d5ef9c6e6cf2a5ed"
   integrity sha512-DXOUXm6M8zbeJ6LPvP1h/0EhXmCkxNGz2dM/0q4w+lsT9uTaos+YDrwQvJBJcxil3fEw6oHCfhG/peWks+8v7Q==
+
+vue-overdrive@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/vue-overdrive/-/vue-overdrive-0.0.12.tgz#3433dad0c6745154537011be6c37d00e3af08b68"
+  integrity sha1-NDPa0MZ0UVRTcBG+bDfQDjrwi2g=
+  dependencies:
+    ramjet "^0.5.0"
 
 vue-router@^3.0.1:
   version "3.0.1"

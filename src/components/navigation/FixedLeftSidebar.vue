@@ -18,12 +18,12 @@
 								<svg class="olymp-menu-icon left-menu-icon"  v-b-tooltip.hover.right title="OPEN MENU"><use xlink:href="svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
 							</a>
 						</li>
-						<li>
-							<router-link to="/">
-								<svg class="olymp-newsfeed-icon left-menu-icon" v-b-tooltip.hover.right title="NEWSFEED"><use xlink:href="svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
+						<li v-for="route in routes" :key="route.name">
+							<router-link :to="route.path">
+								<svg class="left-menu-icon" :class="route.meta.navigationIcon" v-b-tooltip.hover.right :title="route.meta.navigationTitle"><use v-bind:xlink:href="`svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use></svg>
 							</router-link>
 						</li>
-						<li>
+						<!--<li>
 							<a href="16-FavPagesFeed.html">
 								<svg class="olymp-star-icon left-menu-icon"  v-b-tooltip.hover.right title="FAV PAGE"><use xlink:href="svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
 							</a>
@@ -67,7 +67,7 @@
 							<a href="27-ManageWidgets.html">
 								<svg class="olymp-manage-widgets-icon left-menu-icon"  v-b-tooltip.hover.right title="Manage Widgets"><use xlink:href="svg-icons/sprites/icons.svg#olymp-manage-widgets-icon"></use></svg>
 							</a>
-						</li>
+						</li>-->
 					</ul>
 				</div>
 			</div>
@@ -387,7 +387,8 @@
     name: 'NavigationSidebar',
     data() {
       return {
-        sidebarState: false
+        sidebarState: false,
+	      routes: this.$router.options.routes.filter(route => route.meta.navigation === "main")
       }
     },
     methods: {
