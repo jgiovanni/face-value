@@ -299,7 +299,7 @@ import Collab from "../mixins/collab";
 
 export default {
   name: "Messenger",
-	mixins: [Collab],
+  mixins: [Collab],
   data() {
     return {
       windowHeight: 0,
@@ -368,7 +368,7 @@ export default {
     },
     getWindowHeight(event) {
       this.windowHeight = document.documentElement.clientHeight;
-    },
+    }
   },
   mounted() {
     this.$nextTick(function() {

@@ -144,61 +144,70 @@
 	</div>
 </template>
 <style lang="scss">
-	.chat-users {
-		.status {
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			width: 150px;
-		}
-	}
+.chat-users {
+  .status {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 150px;
+  }
+}
 </style>
 <script type="text/javascript">
-	import _ from "lodash";
-  import {mapState} from "vuex";
+import _ from "lodash";
+import { mapState } from "vuex";
 
-  export default {
-    name: 'ChatSidebar',
-    data() {
-      return {
-        sidebarState: false,
-        chatsSearch: "",
-      }
-    },
-    computed: {
-      ...mapState(["chats"]),
-	    filteredChats() {
-        let self = this;
-        return this.chats && _.filter(this.chats.items, (item) => {
+export default {
+  name: "ChatSidebar",
+  data() {
+    return {
+      sidebarState: false,
+      chatsSearch: ""
+    };
+  },
+  computed: {
+    ...mapState(["chats"]),
+    filteredChats() {
+      let self = this;
+      return (
+        this.chats &&
+        _.filter(this.chats.items, item => {
           let test = true;
           if (self.chatsSearch && self.chatsSearch.length)
-            test = !!_.some(item.membersData, member => member.displayName.includes(self.chatsSearch));
+            test = !!_.some(item.membersData, member =>
+              member.displayName.includes(self.chatsSearch)
+            );
           return test;
         })
-	    }
+      );
+    }
+  },
+  methods: {
+    otherMember(chat) {
+      return _.find(chat.membersData, (member, key) => key !== this.user.id);
     },
-    methods: {
-      otherMember(chat) {
-        return _.find(chat.membersData, (member, key) => key !== this.user.id);
-      },
-      otherMemberPhoto(chat) {
-        return _.find(chat.membersData, (member, key) => key !== this.user.id).photoUrl;
-      },
-      toggleSidebar() {
-        this.sidebarState = !this.sidebarState;
-      },
-      openChatModal(chat) {
-        // this.$store.state.chats.messages.items = {};
-        this.$store.dispatch('chats/messages/openDBChannel', { chatId: chat.id }).then(() => {
+    otherMemberPhoto(chat) {
+      return _.find(chat.membersData, (member, key) => key !== this.user.id)
+        .photoUrl;
+    },
+    toggleSidebar() {
+      this.sidebarState = !this.sidebarState;
+    },
+    openChatModal(chat) {
+      // this.$store.state.chats.messages.items = {};
+      this.$store
+        .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
+        .then(() => {
           this.$root.$emit("openChatModal", chat);
-        }).catch(console.error);
-        /*this.$store.dispatch('chats/messages/getMessagesByChat', chat).then(() => {
+        })
+        .catch(console.error);
+      /*this.$store.dispatch('chats/messages/getMessagesByChat', chat).then(() => {
           this.$root.$emit("openChatModal", chat);
         });*/
-      }
-    },
-    created() {
-      let self = this;
     }
+  },
+  created() {
+    let self = this;
   }
+};
 </script>

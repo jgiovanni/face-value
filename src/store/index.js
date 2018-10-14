@@ -121,7 +121,10 @@ const chatMessagesModule = {
         })
         .catch(console.error);
     },
-    postMessage(context, { message, chat, additionalMessageData, additionalChatData }) {
+    postMessage(
+      context,
+      { message, chat, additionalMessageData, additionalChatData }
+    ) {
       const messageObj = {
         body: message,
         author: {
@@ -167,9 +170,7 @@ const collabRequestsModule = {
   moduleName: "collabs/requests",
   statePropName: "items",
   sync: {
-    where: [
-      ["unconfirmedList", "array-contains", "{userId}"]
-    ],
+    where: [["unconfirmedList", "array-contains", "{userId}"]],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
         seconds: parseInt(new Date().getTime() / 1000)
@@ -179,7 +180,15 @@ const collabRequestsModule = {
   }
 };
 
-const easyFirestores = createEasyFirestore([userDataModule, newsFeedModule, chatsModule, chatMessagesModule, collabsModule, collabRequestsModule],
+const easyFirestores = createEasyFirestore(
+  [
+    userDataModule,
+    newsFeedModule,
+    chatsModule,
+    chatMessagesModule,
+    collabsModule,
+    collabRequestsModule
+  ],
   {
     logging: true
   }
