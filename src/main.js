@@ -1,10 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
 import BootstrapVue from "bootstrap-vue";
+import VueAnalytics from "vue-analytics";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
-import VueTimeago from 'vue-timeago'
-import VueTagsInput from '@johmun/vue-tags-input';
+import VueTimeago from "vue-timeago";
+import VueTagsInput from "@johmun/vue-tags-input";
 import vSelect from "vue-select";
 import router from "./router";
 import { store, firebaseApp } from "./store/index";
@@ -24,11 +25,18 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
-Vue.use(VueTimeago, {
-  name: 'Timeago', // Component name, `Timeago` by default
-  locale: 'en', // Default locale
+Vue.use(VueAnalytics, {
+  id: "UA-27155404-19",
+  router,
+  ignoreRoutes: [],
+  debug: {
+    sendHitTask: process.env.NODE_ENV === "production"
+  }
 });
-
+Vue.use(VueTimeago, {
+  name: "Timeago",
+  locale: "en"
+});
 
 Vue.component("v-select", vSelect);
 Vue.component("tags-input", VueTagsInput);
@@ -43,8 +51,12 @@ Vue.mixin({
       return this.user !== null && this.user !== undefined;
     },
     userIsStudent() {
-      return this.userIsAuthenticated && this.$store.userData !== null && this.$store.getters.isStudent;
-    },
+      return (
+        this.userIsAuthenticated &&
+        this.$store.userData !== null &&
+        this.$store.getters.isStudent
+      );
+    }
     /*userIsMerchant () {
       return this.userIsAuthenticated && this.$store.userData !== null && this.$store.getters.isMerchant
     },
@@ -54,7 +66,7 @@ Vue.mixin({
   },
   methods: {
     errorClass(field, scope) {
-      return { "input": true, "is-danger": this.errors.has(field, scope) }
+      return { input: true, "is-danger": this.errors.has(field, scope) };
     },
     hasError(field, scope) {
       return this.errors && this.errors.has(field, scope);
@@ -66,13 +78,31 @@ Vue.mixin({
   created() {}
 });
 
+Vue.filter("truncate", function(text, length, clamp) {
+  text = text || "";
+  clamp = clamp || "...";
+  length = length || 30;
+
+  if (text.length <= length) return text;
+
+  let tcText = text.slice(0, length - clamp.length);
+  let last = tcText.length - 1;
+
+  while (last > 0 && tcText[last] !== " " && tcText[last] !== clamp[0])
+    last -= 1;
+
+  // Fix for case when text dont have any `space`
+  last = last || length - clamp.length;
+
+  tcText = tcText.slice(0, last);
+
+  return tcText + clamp;
+});
+
 new Vue({
-  el: "#app",
   router,
   store,
   render: h => h(App),
-  // template: '<App v-if="appReady"/>',
-  // components: { App },
   data() {
     return {
       appReady: false
@@ -81,6 +111,11 @@ new Vue({
   watch: {
     appReady() {
       this.$router.start();
+    },
+    userIsAuthenticated(val) {
+      if (!val) {
+        this.$router.push("/hello");
+      }
     }
   },
   async created() {
@@ -95,15 +130,9 @@ new Vue({
             .then(result => {
               self.$store.dispatch("init", { user });
               self.appReady = true;
-              this.$router.push("/");
             })
             .catch(console.error);
         });
-  
-        self.$store.dispatch("newsFeed/openDBChannel").then(result => {
-          console.log(result);
-          // self.$store.dispatch("newsFeed/fetchAndAdd");
-        }).catch(console.error)
       } else {
         this.appReady = true;
       }

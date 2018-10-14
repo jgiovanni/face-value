@@ -69,138 +69,151 @@
 	</div>
 </template>
 <style lang="scss">
-	.news-feed-form {
-		.nav-link {
-			i {
-				margin-right: 10px;
-				/*width: 18px;*/
-				height: 26px;
-				width: 26px;
-				display: inline-block;
-			}
-			&.active i {
-				color: #ff5e3a;
-			}
-		}
-		.form-group.label-floating.is-focused .control-label {
-			top: 12px !important;
-		}
-		.tags-control {
-			label {
-				z-index: 10;
-				top: 10px !important;
-			}
-			.vue-tags-input {
-				width: 100%;
-				padding: 16px 1em 0 60px !important;
-				max-width: 100% !important;
-				border-left: none;
-				border-right: none;
-				border-radius: 0;
-
-				.input {
-					border: none !important;
-
-					i.icon-close {
-						display: block;
-						position: relative !important;
-						left: auto !important;
-						right: auto !important;
-						top: auto !important;
-						bottom: auto !important;
-						width: 20px !important;
-						height: 20px !important;
-						line-height: 20px !important;
-					}
-				}
-			}
-		}
-		.md-chips {
-			.md-input, .md-input::placeholder {
-				font-size: .875rem !important;
-			}
-			.md-chip {
-				/*font-size: .875rem !important;*/
-				background-color: #ff5e3a;
-				color: #fff;
-			}
-		}
-	}
-</style>
-<script type="text/javascript">
-  export default {
-    name: 'NewsFeedForm',
-    data() {
-      return {
-        skill: '',
-        postTypeLabels: {
-          'collab': 'What do you want to collaborate on?',
-          'skill-share': 'Need help with a project?',
-          'skill-learn': 'What do you want to learn?',
-        },
-        post: {
-          author: null,
-          authorRef: null,
-          type: 'skill-share',
-          body: '',
-	        comments: [],
-	        comments_count: 0,
-	        likes: [],
-	        likes_count: 0,
-	        liked: false,
-	        shares: [],
-	        share_count: 0,
-          skills: [],
-          attachments: [],
-          publish: true,
-        },
-	      tagInputConfig: {
-          seperators: [';', ','],
-          skillsList: []
-	      }
-      }
-    },
-	  computed: {},
-    methods: {
-      createItem(e) {
-        // Add author
-        this.post.author = {
-          id: this.user.id, displayName: this.user.name, photoUrl: this.user.photoUrl, userName: this.userData.userName
-        };
-        this.post.authorRef = this.$db.collection('users').doc(this.user.id); // document reference
-        this.$store.dispatch("newsFeed/set", this.post).then(result => {
-          this.resetPost();
-        })
-      },
-	    resetPost() {
-        this.post = {
-          author: null,
-          authorRef: null,
-          type: 'skill-share',
-          body: '',
-          comments: [],
-          comments_count: 0,
-          likes: [],
-          likes_count: 0,
-          liked: false,
-          shares: [],
-          share_count: 0,
-          skills: [],
-          attachments: [],
-	        publish: true,
-        };
-	    },
-      formatName (str) {
-        let words = str.split(' ').filter(str => str !== '')
-        // remove accents / diacritics
-        words = words.map(str => str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
-        // capitalize
-        words = words.map(str => str[0].toUpperCase() + str.slice(1))
-        return words.join(' ')
-      }
-    },
-    mounted() {
-      
+.news-feed-form {
+  .nav-link {
+    i {
+      margin-right: 10px;
+      /*width: 18px;*/
+      height: 26px;
+      width: 26px;
+      display: inline-block;
+    }
+    &.active i {
+      color: #ff5e3a;
     }
   }
+  .form-group.label-floating.is-focused .control-label {
+    top: 12px !important;
+  }
+  .tags-control {
+    label {
+      z-index: 10;
+      top: 10px !important;
+    }
+    .vue-tags-input {
+      width: 100%;
+      padding: 16px 1em 0 60px !important;
+      max-width: 100% !important;
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+
+      .input {
+        border: none !important;
+
+        i.icon-close {
+          display: block;
+          position: relative !important;
+          left: auto !important;
+          right: auto !important;
+          top: auto !important;
+          bottom: auto !important;
+          width: 20px !important;
+          height: 20px !important;
+          line-height: 20px !important;
+        }
+      }
+    }
+  }
+  .md-chips {
+    .md-input,
+    .md-input::placeholder {
+      font-size: 0.875rem !important;
+    }
+    .md-chip {
+      /*font-size: .875rem !important;*/
+      background-color: #ff5e3a;
+      color: #fff;
+    }
+  }
+}
+</style>
+<script type="text/javascript">
+export default {
+  name: "NewsFeedForm",
+  data() {
+    return {
+      skill: "",
+      postTypeLabels: {
+        collab: "What do you want to collaborate on?",
+        "skill-share": "Need help with a project?",
+        "skill-learn": "What do you want to learn?"
+      },
+      post: {
+        author: null,
+        authorRef: null,
+        type: "skill-share",
+        body: "",
+        chats: {},
+        chats_with: {},
+        chats_count: 0,
+        comments: [],
+        comments_count: 0,
+        likes: [],
+        likes_count: 0,
+        liked: false,
+        shares: [],
+        share_count: 0,
+        skills: [],
+        attachments: [],
+        publish: true,
+        created_at: null,
+        softDeleted: false
+      },
+      tagInputConfig: {
+        seperators: [";", ","],
+        skillsList: []
+      }
+    };
+  },
+  computed: {},
+  methods: {
+    createItem(e) {
+      // Add author
+      this.post.author = {
+        id: this.user.id,
+        displayName: this.user.name,
+        photoUrl: this.user.photoUrl,
+        userName: this.userData.userName
+      };
+      this.post.authorRef = this.$db.collection("users").doc(this.user.id); // document reference
+      this.$store.dispatch("newsFeed/set", this.post).then(result => {
+        this.resetPost();
+      });
+    },
+    resetPost() {
+      this.post = {
+        author: null,
+        authorRef: null,
+        type: "skill-share",
+        body: "",
+        chats: {},
+        chats_with: {},
+        chats_count: 0,
+        comments: [],
+        comments_count: 0,
+        likes: [],
+        likes_count: 0,
+        liked: false,
+        shares: [],
+        share_count: 0,
+        skills: [],
+        attachments: [],
+        publish: true,
+        softDeleted: false
+      };
+    },
+    formatName(str) {
+      let words = str.split(" ").filter(str => str !== "");
+      // remove accents / diacritics
+      words = words.map(str =>
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      );
+      // capitalize
+      words = words.map(str => str[0].toUpperCase() + str.slice(1));
+      return words.join(" ");
+    }
+  },
+  mounted() {}
+};
 </script>

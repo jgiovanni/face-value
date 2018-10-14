@@ -11,9 +11,9 @@
 				<NewsFeedFormBlock/>
 				<!-- ... end News Feed Form  -->
 
-				<div id="newsfeed-items-grid">
-					<NewsFeedItemBlock v-for="item in newsFeed.items" :key="item.key" :item="item" />
-				</div>
+				<transition-group tag="div" name="fadeDown" id="newsfeed-items-grid">
+					<NewsFeedItemBlock v-for="item in orderedNewsFeed" :key="item.id" :item="item" />
+				</transition-group>
 
 				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more" data-load-link="items-to-load.html"
 				   data-container="newsfeed-items-grid">
@@ -41,10 +41,10 @@
 </template>
 
 <script>
+	import _ from "lodash";
   import {mapState} from "vuex";
 
   // @ is an alias to /src
-  import HelloWorld from "@/components/HelloWorld.vue";
   import NewsFeedFormBlock from '../components/blocks/NewsFeedForm';
   import NewsFeedItemBlock from '../components/blocks/NewsFeedItem';
   import HomeLeftAside from '../components/blocks/HomeLeftAside';
@@ -58,9 +58,15 @@
     },
     computed: {
       ...mapState(["newsFeed"]),
+	    orderedNewsFeed() {
+        return _.sortBy(this.newsFeed.items, item => item.created_at.seconds).reverse();
+	    }
     },
 		methods: {
       loadMore() {}
-    }
+    },
+	  created() {
+      // this.$root.$emit("showAlert", "Testing this now 1 2 3")
+	  }
   };
 </script>

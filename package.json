@@ -13,19 +13,22 @@
     "add": "^2.0.6",
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "firebase": "^5.5.3",
+    "firebase": "^5.5.4",
     "lodash": "^4.17.11",
     "luxon": "^1.4.3",
     "register-service-worker": "^1.0.0",
     "selectize": "^0.12.6",
-    "vee-validate": "^2.1.0-beta.9",
+    "vee-validate": "^2.1.0-beta.11",
     "vue": "^2.5.17",
+    "vue-analytics": "^5.16.0",
     "vue-material": "^1.0.0-beta-10.2",
+    "vue-overdrive": "^0.0.12",
     "vue-router": "^3.0.1",
     "vue-select": "^2.5.1",
     "vue-timeago": "^5.0.0",
+    "vue2-animate": "^2.1.0",
     "vuex": "^3.0.1",
-    "vuex-easy-firestore": "^1.15.3",
+    "vuex-easy-firestore": "^1.16.0",
     "yarn": "^1.10.1"
   },
   "devDependencies": {
@@ -41,6 +44,9 @@
   },
   "eslintConfig": {
     "root": true,
+    "globals": {
+      "$": true
+    },
     "env": {
       "node": true,
       "browser": true

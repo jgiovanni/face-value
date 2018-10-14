@@ -4,6 +4,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Landing from "./views/Landing.vue";
 import MyAccount from "./views/MyAccount.vue";
+import Messenger from "./views/Messenger.vue";
 
 Vue.use(Router);
 
@@ -14,8 +15,8 @@ const router = new Router({
       name: "Hello",
       component: Landing,
       meta: {
-        rootClasses: 'landing-page',
-        headerClasses: ''
+        rootClasses: "landing-page",
+        headerClasses: ""
       }
     },
     {
@@ -38,6 +39,21 @@ const router = new Router({
       component: Home,
       meta: {
         access: true,
+        navigation: "main",
+        navigationIcon: "olymp-newsfeed-icon",
+        navigationTitle: "Home"
+      }
+    },
+    {
+      path: "/messages",
+      name: "Messenger",
+      component: Messenger,
+      meta: {
+        rootClasses: "messages-page",
+        access: true,
+        navigation: "main",
+        navigationIcon: "olymp-chat---messages-icon",
+        navigationTitle: "Messages"
       }
     },
     {
@@ -73,12 +89,10 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach((to, from) => {
-  // console.log(this);
   $.material.init();
-  
-  $('.checkbox > label').on('click', function () {
+  /*$('.checkbox > label').on('click', function () {
     $(this).closest('.checkbox').addClass('clicked');
-  })
+  })*/
 });
 
 export default router;
