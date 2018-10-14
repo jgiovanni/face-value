@@ -162,7 +162,8 @@ export default {
   data() {
     return {
       sidebarState: false,
-      chatsSearch: ""
+      chatsSearch: "",
+      activeChat: null,
     };
   },
   computed: {
@@ -194,16 +195,29 @@ export default {
       this.sidebarState = !this.sidebarState;
     },
     openChatModal(chat) {
-      // this.$store.state.chats.messages.items = {};
+      let self = this;
+      const oldChatId = this.activeChat && this.activeChat.id;
+      if (oldChatId) {
+        self.$store.state.chats.messages._conf.firestorePath = self.$store.state.chats.messages._conf.firestorePath.replace(
+          oldChatId,
+          chat.id
+        );
+      }
+      this.activeChat = null;
       this.$store
-        .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
+        .dispatch("chats/messages/closeDBChannel", { clearModule: true })
         .then(() => {
-          this.$root.$emit("openChatModal", chat);
-        })
-        .catch(console.error);
-      /*this.$store.dispatch('chats/messages/getMessagesByChat', chat).then(() => {
-          this.$root.$emit("openChatModal", chat);
-        });*/
+          self.chats.messages.items = {};
+          self.$nextTick(function() {
+            this.activeChat = chat;
+		        this.$store
+		            .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
+		            .then(() => {
+		              this.$root.$emit("openChatModal", chat);
+		            })
+		            .catch(console.error);
+	        });
+	      });
     }
   },
   created() {

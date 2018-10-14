@@ -8688,10 +8688,10 @@ vuex-easy-access@^3.1.1:
     is-what "^2.5.0"
     merge-anything "^2.1.1"
 
-vuex-easy-firestore@^1.15.4:
-  version "1.15.4"
-  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.15.4.tgz#32c970e07e06057dee2037595a4bf107fcabaadf"
-  integrity sha512-1u+aQFYzmnpwf3SFSrWypwp6FD7DDLC/HcGjz/srlTmEr8IvIgulmM6FMrgL76y9mzgd9XTwijlvWgjcwhzIKQ==
+vuex-easy-firestore@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.16.0.tgz#25758537f942215de3557fa4b2c5bc1ce32fa17e"
+  integrity sha512-zFwwz5UqVW+aAB6ooFDMzQeFO1t7lisFA6OlOFuhVk4mxOBqqQ64wSVN/YBLlnZxsEboYam0O5w8gQTUpyfxyA==
   dependencies:
     find-and-replace-anything "^1.2.0"
     is-what "^3.0.1"

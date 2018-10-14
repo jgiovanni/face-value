@@ -28,9 +28,9 @@
 										<svg class="olymp-chat---messages-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
 									</span>
 
-									<!--<div class="more">
+									<div class="more">
 										<svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
-									</div>-->
+									</div>
 								</li>
 
 								<!--<li class="chat-group">
@@ -82,30 +82,36 @@
 									</b-dropdown>-->
 								</div>
 								<div class="mCustomScrollbar" data-mcs-theme="dark">
-									<transition-group tag="ul" class="notification-list chat-message chat-message-field" name="slideUp">
-										<li class="" v-for="message in chats.messages.items" :key="message.id">
-											<div class="author-thumb">
-												<img :src="message.author.photoUrl" width="36" :alt="message.author.displayName">
-											</div>
-											<div class="notification-event" style="width: 90%;">
-												<div style="width: 100%;height: 20px;">
-													<router-link :to="`/users/${message.author.userName}`" class="h6 notification-friend" v-text="message.author.displayName"></router-link>
-													<span class="notification-date">
+									<div class="text-center" v-if="loadingMessages">
+										<md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate" class="my-5"></md-progress-spinner>
+									</div>
+									<template v-else>
+										<transition-group tag="ul" class="notification-list chat-message chat-message-field" name="slideUp" >
+											<li class="" v-for="message in chats.messages.items" :key="message.id">
+												<div class="author-thumb">
+													<img :src="message.author.photoUrl" width="36" :alt="message.author.displayName">
+												</div>
+												<div class="notification-event" style="width: 90%;">
+													<div style="width: 100%;height: 20px;">
+														<router-link :to="`/users/${message.author.userName}`" class="h6 notification-friend" v-text="message.author.displayName"></router-link>
+														<span class="notification-date">
 														<time v-if="message.created_at && getTimestamp(message)" class="entry-date updated" :datetime="getTimestamp(message).toISO()">
 															<timeago :datetime="getTimestamp(message)" :auto-update="300"></timeago>
 														</time>
 													</span>
+													</div>
+													<div class="chat-message-item" v-html="message.body"></div>
 												</div>
-												<div class="chat-message-item" v-html="message.body"></div>
-											</div>
-										</li>
-									</transition-group>
+											</li>
+										</transition-group>
 
-									<template v-if="activeChat && activeChat.collab.request_id && !activeChat.collab.collab_id">
-										<b-jumbotron class="text-center mb-0 py-5" :lead="`${activeChat.membersData[activeChat.collab.requested_by].displayName} has sent an invitation to collaborate.`" v-if="activeChat.collab.requested_by !== user.id">
-											<b-btn variant="primary" @click="acceptCollab">Accept</b-btn>&nbsp;&nbsp;&nbsp;
-											<b-btn variant="dark" @click="declineCollab">Decline</b-btn>
-										</b-jumbotron>
+										<template v-if="activeChat && activeChat.collab && activeChat.collab.request_id && !activeChat.collab.collab_id">
+											<b-jumbotron class="text-center mb-0 py-5" :lead="`${activeChat.membersData[activeChat.collab.requested_by].displayName} has sent an invitation to collaborate.`"
+											             v-if="activeChat.collab.requested_by !== user.id">
+												<b-btn variant="primary" @click="acceptCollab">Accept</b-btn>&nbsp;&nbsp;&nbsp;
+												<b-btn variant="dark" @click="declineCollab">Decline</b-btn>
+											</b-jumbotron>
+										</template>
 									</template>
 								</div>
 
@@ -290,6 +296,11 @@
     }
   }
 }
+.md-progress-spinner {
+  svg {
+    stroke: #ff5e3a;
+  }
+}
 </style>
 <script type="text/javascript">
 import _ from "lodash";
@@ -304,7 +315,8 @@ export default {
     return {
       windowHeight: 0,
       activeChat: null,
-      chatMessage: null
+      chatMessage: null,
+      loadingMessages: false
     };
   },
   computed: {
@@ -319,7 +331,7 @@ export default {
   watch: {
     orderedChats(val, oldVal) {
       if (oldVal.length === 0 && oldVal !== val) {
-        // this.openChat(_.first(val));
+        this.openChat(_.first(val));
       }
     }
   },
@@ -335,20 +347,48 @@ export default {
       return _.find(chat.membersData, (member, key) => key !== this.user.id)
         .photoUrl;
     },
+    closeChat() {
+      // this.activeChat = null;
+      this.$store.dispatch("chats/messages/closeDBChannel", {
+        clearModule: true
+      });
+    },
     openChat(chat) {
-      this.activeChat = chat;
       let self = this;
-      this.$store
-        .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
-        .then(() => {
-          // this.$root.$emit("openChatModal", chat);
-          self.$nextTick(function() {
-            const scrollBox = $(".mCustomScrollbar");
-            scrollBox.scrollTop(scrollBox.prop("scrollHeight"));
-            scrollBox.perfectScrollbar("update");
+      if (this.activeChat && this.activeChat.id === chat.id) return false;
+      this.loadingMessages = true;
+      const oldChatId = this.activeChat && this.activeChat.id;
+      if (oldChatId) {
+        self.$store.state.chats.messages._conf.firestorePath = self.$store.state.chats.messages._conf.firestorePath.replace(
+          oldChatId,
+          chat.id
+        );
+      }
+      this.activeChat = null;
+      this.$nextTick(() => {
+        self.$store
+          .dispatch("chats/messages/closeDBChannel", { clearModule: true })
+          .then(() => {
+            self.chats.messages.items = {};
+            self.$nextTick(function() {
+              self.activeChat = chat;
+              self.$store
+                .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
+                .then(() => {
+                  // this.$root.$emit("openChatModal", chat);
+                  self.$nextTick(function() {
+                    const scrollBox = $(".mCustomScrollbar");
+                    scrollBox.scrollTop(scrollBox.prop("scrollHeight"));
+                    scrollBox.perfectScrollbar("update");
+                    setTimeout(function() {
+                      self.loadingMessages = false;
+                    }, 200);
+                  });
+                })
+                .catch(console.error);
+            });
           });
-        })
-        .catch(console.error);
+      });
     },
     postMessage(forcedMessage) {
       const message = forcedMessage || this.chatMessage;
