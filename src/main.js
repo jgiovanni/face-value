@@ -38,7 +38,6 @@ Vue.use(VueTimeago, {
   locale: "en"
 });
 
-
 Vue.component("v-select", vSelect);
 Vue.component("tags-input", VueTagsInput);
 
@@ -52,8 +51,12 @@ Vue.mixin({
       return this.user !== null && this.user !== undefined;
     },
     userIsStudent() {
-      return this.userIsAuthenticated && this.$store.userData !== null && this.$store.getters.isStudent;
-    },
+      return (
+        this.userIsAuthenticated &&
+        this.$store.userData !== null &&
+        this.$store.getters.isStudent
+      );
+    }
     /*userIsMerchant () {
       return this.userIsAuthenticated && this.$store.userData !== null && this.$store.getters.isMerchant
     },
@@ -63,7 +66,7 @@ Vue.mixin({
   },
   methods: {
     errorClass(field, scope) {
-      return { "input": true, "is-danger": this.errors.has(field, scope) }
+      return { input: true, "is-danger": this.errors.has(field, scope) };
     },
     hasError(field, scope) {
       return this.errors && this.errors.has(field, scope);
@@ -75,13 +78,31 @@ Vue.mixin({
   created() {}
 });
 
+Vue.filter("truncate", function(text, length, clamp) {
+  text = text || "";
+  clamp = clamp || "...";
+  length = length || 30;
+
+  if (text.length <= length) return text;
+
+  let tcText = text.slice(0, length - clamp.length);
+  let last = tcText.length - 1;
+
+  while (last > 0 && tcText[last] !== " " && tcText[last] !== clamp[0])
+    last -= 1;
+
+  // Fix for case when text dont have any `space`
+  last = last || length - clamp.length;
+
+  tcText = tcText.slice(0, last);
+
+  return tcText + clamp;
+});
+
 new Vue({
-  el: "#app",
   router,
   store,
   render: h => h(App),
-  // template: '<App v-if="appReady"/>',
-  // components: { App },
   data() {
     return {
       appReady: false
@@ -112,10 +133,6 @@ new Vue({
             })
             .catch(console.error);
         });
-        self.$store.dispatch("newsFeed/openDBChannel").then(result => {
-          console.log(result);
-          // self.$store.dispatch("newsFeed/fetchAndAdd");
-        }).catch(console.error)
       } else {
         this.appReady = true;
       }

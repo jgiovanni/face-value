@@ -489,6 +489,12 @@
 										<li>
 											<a href="#" @click.prevent="currentStatusType = 'online'">
 												<span class="icon-status online"></span>
+												<span>On Campus</span>
+											</a>
+										</li>
+										<li>
+											<a href="#" @click.prevent="currentStatusType = 'online'">
+												<span class="icon-status online"></span>
 												<span>Online</span>
 											</a>
 										</li>

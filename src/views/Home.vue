@@ -64,6 +64,9 @@
     },
 		methods: {
       loadMore() {}
-    }
+    },
+	  created() {
+      // this.$root.$emit("showAlert", "Testing this now 1 2 3")
+	  }
   };
 </script>
