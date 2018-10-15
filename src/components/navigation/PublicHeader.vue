@@ -7,8 +7,8 @@
 
 					<a href="#" class="logo">
 						<div class="img-wrap">
-							<img src="img/logo.png" alt="Olympus">
-							<img src="img/logo-colored-small.png" alt="Olympus" class="logo-colored">
+							<img src="img/logo.png" width="34" alt="FaceValue">
+							<img src="img/logo.png" width="34" alt="FaceValue" class="logo-colored">
 						</div>
 						<div class="title-block">
 							<h6 class="logo-title">FaceValue</h6>

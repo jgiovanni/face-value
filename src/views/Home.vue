@@ -41,32 +41,40 @@
 </template>
 
 <script>
-	import _ from "lodash";
-  import {mapState} from "vuex";
+import _ from "lodash";
+import { mapState } from "vuex";
 
-  // @ is an alias to /src
-  import NewsFeedFormBlock from '../components/blocks/NewsFeedForm';
-  import NewsFeedItemBlock from '../components/blocks/NewsFeedItem';
-  import HomeLeftAside from '../components/blocks/HomeLeftAside';
-  import HomeRightAside from '../components/blocks/HomeRightAside';
+// @ is an alias to /src
+import NewsFeedFormBlock from "../components/blocks/NewsFeedForm";
+import NewsFeedItemBlock from "../components/blocks/NewsFeedItem";
+import HomeLeftAside from "../components/blocks/HomeLeftAside";
+import HomeRightAside from "../components/blocks/HomeRightAside";
 
-  export default {
-    name: "Home",
-    components: { NewsFeedFormBlock, NewsFeedItemBlock, HomeLeftAside, HomeRightAside },
-    data() {
-      return {}
-    },
-    computed: {
-      ...mapState(["newsFeed"]),
-	    orderedNewsFeed() {
-        return _.sortBy(this.newsFeed.items, item => item.created_at.seconds).reverse();
-	    }
-    },
-		methods: {
-      loadMore() {}
-    },
-	  created() {
-      // this.$root.$emit("showAlert", "Testing this now 1 2 3")
-	  }
-  };
+export default {
+  name: "Home",
+  components: {
+    NewsFeedFormBlock,
+    NewsFeedItemBlock,
+    HomeLeftAside,
+    HomeRightAside
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(["newsFeed"]),
+    orderedNewsFeed() {
+      return _.sortBy(
+        this.newsFeed.items,
+        item => item.created_at.seconds
+      ).reverse();
+    }
+  },
+  methods: {
+    loadMore() {}
+  },
+  created() {
+    // this.$root.$emit("showAlert", "Testing this now 1 2 3")
+  }
+};
 </script>

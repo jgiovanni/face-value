@@ -80,7 +80,7 @@
 
 			<div class="widget w-action">
 
-				<img src="img/logo.png" alt="Olympus">
+				<img src="img/logo.png" alt="Face Value">
 				<div class="content">
 					<h4 class="title">AD SPACE</h4>
 					<span>PREMIUM AD SPACE HERE!</span>
@@ -93,18 +93,17 @@
 
 	</aside>
 </template>
-<style></style>
+<style>
+</style>
 <script type="text/javascript">
-  export default {
-    name: "HomeRightAside",
-    data() {
-      return {
-        msg: null
-      };
-    },
-    methods: {},
-    mounted() {
-      
-    }
-  };
+export default {
+  name: "HomeRightAside",
+  data() {
+    return {
+      msg: null
+    };
+  },
+  methods: {},
+  mounted() {}
+};
 </script>
