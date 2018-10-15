@@ -20,67 +20,24 @@
 						</li>
 						<li v-for="route in routes" :key="route.name">
 							<router-link :to="route.path">
-								<svg class="left-menu-icon" :class="route.meta.navigationIcon" v-b-tooltip.hover.right :title="route.meta.navigationTitle"><use v-bind:xlink:href="`svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use></svg>
+								<svg class="left-menu-icon" :class="route.meta.navigationIcon" v-b-tooltip.hover.right :title="route.meta.navigationTitle">
+									<use v-bind:xlink:href="`svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use>
+								</svg>
 							</router-link>
 						</li>
-						<!--<li>
-							<a href="16-FavPagesFeed.html">
-								<svg class="olymp-star-icon left-menu-icon"  v-b-tooltip.hover.right title="FAV PAGE"><use xlink:href="svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="17-FriendGroups.html">
-								<svg class="olymp-happy-faces-icon left-menu-icon"  v-b-tooltip.hover.right title="FRIEND GROUPS"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-faces-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="18-MusicAndPlaylists.html">
-								<svg class="olymp-headphones-icon left-menu-icon"  v-b-tooltip.hover.right title="MUSIC & PLAYLISTS"><use xlink:href="svg-icons/sprites/icons.svg#olymp-headphones-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="19-WeatherWidget.html">
-								<svg class="olymp-weather-icon left-menu-icon"  v-b-tooltip.hover.right title="WEATHER APP"><use xlink:href="svg-icons/sprites/icons.svg#olymp-weather-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="20-CalendarAndEvents-MonthlyCalendar.html">
-								<svg class="olymp-calendar-icon left-menu-icon"  v-b-tooltip.hover.right title="CALENDAR AND EVENTS"><use xlink:href="svg-icons/sprites/icons.svg#olymp-calendar-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="24-CommunityBadges.html">
-								<svg class="olymp-badge-icon left-menu-icon"  v-b-tooltip.hover.right title="Community Badges"><use xlink:href="svg-icons/sprites/icons.svg#olymp-badge-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="25-FriendsBirthday.html">
-								<svg class="olymp-cupcake-icon left-menu-icon"  v-b-tooltip.hover.right title="Friends Birthdays"><use xlink:href="svg-icons/sprites/icons.svg#olymp-cupcake-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="26-Statistics.html">
-								<svg class="olymp-stats-icon left-menu-icon"  v-b-tooltip.hover.right title="Account Stats"><use xlink:href="svg-icons/sprites/icons.svg#olymp-stats-icon"></use></svg>
-							</a>
-						</li>
-						<li>
-							<a href="27-ManageWidgets.html">
-								<svg class="olymp-manage-widgets-icon left-menu-icon"  v-b-tooltip.hover.right title="Manage Widgets"><use xlink:href="svg-icons/sprites/icons.svg#olymp-manage-widgets-icon"></use></svg>
-							</a>
-						</li>-->
 					</ul>
 				</div>
 			</div>
 
 			<div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1">
-				<a href="02-ProfilePage.html" class="logo">
+				<router-link to="/" class="logo">
 					<div class="img-wrap">
-						<img src="img/logo.png" alt="Face Value">
+						<img src="img/logo.png" width="100" alt="Face Value">
 					</div>
 					<div class="title-block">
 						<h6 class="logo-title">Face Value</h6>
 					</div>
-				</a>
+				</router-link>
 
 				<div class="mCustomScrollbar" data-mcs-theme="dark">
 					<ul class="left-menu">
@@ -90,11 +47,13 @@
 								<span class="left-menu-title">Collapse Menu</span>
 							</a>
 						</li>
-						<li>
-							<a href="03-Newsfeed.html">
-								<svg class="olymp-newsfeed-icon left-menu-icon" v-b-tooltip.hover.right title="NEWSFEED"><use xlink:href="svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
-								<span class="left-menu-title">Newsfeed</span>
-							</a>
+						<li v-for="route in routes" :key="route.name">
+							<router-link :to="route.path">
+								<svg class="left-menu-icon" :class="route.meta.navigationIcon" v-b-tooltip.hover.right :title="route.meta.navigationTitle">
+									<use v-bind:xlink:href="`svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use>
+								</svg>
+								<span class="left-menu-title" v-text="route.meta.navigationTitle"></span>
+							</router-link>
 						</li>
 						<li>
 							<a href="16-FavPagesFeed.html">
@@ -380,24 +339,23 @@
 
 </template>
 <style>
-
 </style>
 <script type="text/javascript">
-  export default {
-    name: 'NavigationSidebar',
-    data() {
-      return {
-        sidebarState: false,
-	      routes: this.$router.options.routes.filter(route => route.meta.navigation === "main")
-      }
-    },
-    methods: {
-      toggleSidebar() {
-        this.sidebarState = !this.sidebarState;
-      }
-    },
-    mounted() {
-      
+export default {
+  name: "NavigationSidebar",
+  data() {
+    return {
+      sidebarState: false,
+      routes: this.$router.options.routes.filter(
+        route => route.meta.navigation === "main"
+      )
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.sidebarState = !this.sidebarState;
     }
-  }
+  },
+  mounted() {}
+};
 </script>

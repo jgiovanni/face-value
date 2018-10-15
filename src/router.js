@@ -4,7 +4,9 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Landing from "./views/Landing.vue";
 import MyAccount from "./views/MyAccount.vue";
+import Profile from "./views/Profile.vue";
 import Messenger from "./views/Messenger.vue";
+import Collabs from "./views/Collabs.vue";
 
 Vue.use(Router);
 
@@ -57,9 +59,29 @@ const router = new Router({
       }
     },
     {
+      path: "/collabs",
+      name: "Collabs",
+      component: Collabs,
+      meta: {
+        rootClasses: "collabs-page",
+        access: true,
+        navigation: "main",
+        navigationIcon: "olymp-happy-faces-icon",
+        navigationTitle: "Collabs"
+      }
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: MyAccount,
+      meta: {
+        access: true,
+      }
+    },
+    {
       path: "/account",
       name: "settings",
-      component: MyAccount,
+      component: Profile,
       meta: {
         access: true,
       }
