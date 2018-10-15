@@ -265,7 +265,7 @@
 
 					<div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
 						<div class="crumina-module crumina-heading">
-							<h2 class="heading-title">Why Join <span class="c-primary">FaceValue Skill Sharing Community</span>?</h2>
+							<h2 class="heading-title">Why Join <span class="c-primary">FaceValue Skill Sharing Network</span>?</h2>
 							<p class="heading-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 								Excepteur sint occaecat cupidatat non proident, sunt in culpa.
 							</p>
@@ -342,7 +342,7 @@
 				<div class="row mb60">
 					<div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
 						<div class="crumina-module crumina-heading align-center">
-							<div class="heading-sup-title">Skill Sharing Community</div>
+							<div class="heading-sup-title">Skill Sharing Network</div>
 							<h2 class="h1 heading-title">Community Reviews</h2>
 							<p class="heading-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</p>
 						</div>
@@ -416,7 +416,7 @@
 											<img src="img/avatar17.jpg" alt="author">
 										</div>
 
-										<h3 class="testimonial-title">This is the Best Skill Sharing Community ever!</h3>
+										<h3 class="testimonial-title">This is the Best Skill Sharing Network ever!</h3>
 
 										<ul class="rait-stars">
 											<li>
@@ -596,197 +596,6 @@
 		</section>
 
 		<!-- ... end Section Subscribe Animation -->
-		<section class="medium-padding120">
-			<div class="container">
-				<div class="row mb60">
-					<div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
-						<div class="crumina-module crumina-heading align-center">
-							<div class="heading-sup-title">FaceValue BLOG</div>
-							<h2 class="h1 heading-title">Latest News</h2>
-							<p class="heading-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-
-
-						<!-- Post -->
-
-						<article class="hentry blog-post">
-
-							<div class="post-thumb">
-								<img src="img/post1.jpg" alt="photo">
-							</div>
-
-							<div class="post-content">
-								<a href="#" class="post-category bg-blue-light">THE COMMUNITY</a>
-								<a href="#" class="h4 post-title">Here’s the Featured Urban photo of August! </a>
-								<p>Here’s a photo from last month’s photoshoot. We got really awesome shots for the new catalog.</p>
-
-								<div class="author-date">
-									by
-									<a class="h6 post__author-name fn" href="#">Maddy Simmons</a>
-									<div class="post__date">
-										<time class="published" datetime="2017-03-24T18:18">
-											- 7 hours ago
-										</time>
-									</div>
-								</div>
-
-								<div class="post-additional-info inline-items">
-
-									<ul class="friends-harmonic">
-										<li>
-											<a href="#">
-												<img src="img/icon-chat27.png" alt="icon">
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<img src="img/icon-chat2.png" alt="icon">
-											</a>
-										</li>
-									</ul>
-									<div class="names-people-likes">
-										26
-									</div>
-
-									<div class="comments-shared">
-										<a href="#" class="post-add-icon inline-items">
-											<svg class="olymp-speech-balloon-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
-											<span>0</span>
-										</a>
-									</div>
-
-								</div>
-							</div>
-
-						</article>
-
-						<!-- ... end Post -->
-					</div>
-					<div class="col col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-
-
-						<!-- Post -->
-
-						<article class="hentry blog-post">
-
-							<div class="post-thumb">
-								<img src="img/post2.jpg" alt="photo">
-							</div>
-
-							<div class="post-content">
-								<a href="#" class="post-category bg-primary">FaceValue NEWS</a>
-								<a href="#" class="h4 post-title">FaceValue Network added new photo filters!</a>
-								<p>Here’s a photo from last month’s photoshoot. We got really awesome shots for the new catalog.</p>
-
-								<div class="author-date">
-									by
-									<a class="h6 post__author-name fn" href="#">JACK SCORPIO</a>
-									<div class="post__date">
-										<time class="published" datetime="2017-03-24T18:18">
-											- 12 hours ago
-										</time>
-									</div>
-								</div>
-
-								<div class="post-additional-info inline-items">
-
-									<ul class="friends-harmonic">
-										<li>
-											<a href="#">
-												<img src="img/icon-chat4.png" alt="icon">
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<img src="img/icon-chat26.png" alt="icon">
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<img src="img/icon-chat16.png" alt="icon">
-											</a>
-										</li>
-									</ul>
-									<div class="names-people-likes">
-										82
-									</div>
-
-									<div class="comments-shared">
-										<a href="#" class="post-add-icon inline-items">
-											<svg class="olymp-speech-balloon-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
-											<span>14</span>
-										</a>
-									</div>
-
-								</div>
-							</div>
-
-						</article>
-
-						<!-- ... end Post -->
-					</div>
-					<div class="col col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-
-
-						<!-- Post -->
-
-						<article class="hentry blog-post">
-
-							<div class="post-thumb">
-								<img src="img/post3.jpg" alt="photo">
-							</div>
-
-							<div class="post-content">
-								<a href="#" class="post-category bg-purple">INSPIRATION</a>
-								<a href="#" class="h4 post-title">Take a look at these truly awesome worspaces</a>
-								<p>Here’s a photo from last month’s photoshoot. We got really awesome shots for the new catalog.</p>
-
-								<div class="author-date">
-									by
-									<a class="h6 post__author-name fn" href="#">Maddy Simmons</a>
-									<div class="post__date">
-										<time class="published" datetime="2017-03-24T18:18">
-											- 2 days ago
-										</time>
-									</div>
-								</div>
-
-								<div class="post-additional-info inline-items">
-
-									<ul class="friends-harmonic">
-										<li>
-											<a href="#">
-												<img src="img/icon-chat28.png" alt="icon">
-											</a>
-										</li>
-									</ul>
-									<div class="names-people-likes">
-										0
-									</div>
-
-									<div class="comments-shared">
-										<a href="#" class="post-add-icon inline-items">
-											<svg class="olymp-speech-balloon-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
-											<span>22</span>
-										</a>
-									</div>
-
-								</div>
-							</div>
-
-						</article>
-
-						<!-- ... end Post -->
-					</div>
-				</div>
-			</div>
-		</section>
-
 
 		<!-- Section Call To Action Animation -->
 
@@ -954,11 +763,11 @@
 
 							<a href="02-ProfilePage.html" class="logo">
 								<div class="img-wrap">
-									<img src="img/logo-colored.png" alt="FaceValue">
+									<img src="img/logo.png" width="60" alt="FaceValue">
 								</div>
 								<div class="title-block">
 									<h6 class="logo-title">FaceValue</h6>
-									<div class="sub-title">Skill Sharing Community</div>
+									<div class="sub-title">Skill Sharing</div>
 								</div>
 							</a>
 							<p>Lorem ipsum dolor sit amet, consect adipisicing elit, sed do eiusmod por incidid ut labore et lorem.</p>
@@ -1095,7 +904,7 @@
 
 						<div class="sub-footer-copyright">
 					<span>
-						Copyright <a href="index.html">FaceValue Buddypress + WP</a> All Rights Reserved 2017
+						Copyright <router-link to="/">FaceValue</router-link> All Rights Reserved 2017
 					</span>
 						</div>
 
