@@ -5,6 +5,7 @@ import Home from "./views/Home.vue";
 import Landing from "./views/Landing.vue";
 import MyAccount from "./views/MyAccount.vue";
 import Profile from "./views/Profile.vue";
+import ProfileAbout from "./views/Profile/About.vue";
 import Messenger from "./views/Messenger.vue";
 import Collabs from "./views/Collabs.vue";
 
@@ -73,7 +74,15 @@ const router = new Router({
     {
       path: "/profile",
       name: "Profile",
-      component: MyAccount,
+      component: Profile,
+      children: [
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: "/",
+          component: ProfileAbout
+        }
+      ],
       meta: {
         access: true,
       }
@@ -81,7 +90,7 @@ const router = new Router({
     {
       path: "/account",
       name: "settings",
-      component: Profile,
+      component: MyAccount,
       meta: {
         access: true,
       }
