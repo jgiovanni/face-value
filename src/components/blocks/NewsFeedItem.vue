@@ -52,7 +52,7 @@
 					<span v-text="item.likes_count">24</span>
 				</a>
 
-				<ul class="friends-harmonic">
+				<!--<ul class="friends-harmonic">
 					<li>
 						<a href="#">
 							<img src="img/friend-harmonic7.jpg" alt="friend">
@@ -78,12 +78,12 @@
 							<img src="img/friend-harmonic11.jpg" alt="friend">
 						</a>
 					</li>
-				</ul>
+				</ul>-->
 
-				<div class="names-people-likes">
+				<!--<div class="names-people-likes">
 					<a href="#">You</a>, <a href="#">Elaine</a> and
 					<br>22 more liked this
-				</div>
+				</div>-->
 
 
 				<div class="comments-shared">

@@ -175,7 +175,7 @@
 													             data-vv-name="terms" data-vv-as="Terms of Service" type="checkbox"
 													             v-validate="'required'" id="terms" name="terms" reqired>I
 														accept the
-														<router-link to="/tos">Terms and Conditions</router-link>
+														<router-link to="/terms">Terms of Service</router-link>
 														of the FaceValue.
 													</md-checkbox>
 													<div v-show="!newUser.acceptedTOS && forms.register.validated" role="alert" aria-live="assertive" aria-atomic="true" class="invalid-feedback d-block">You must accept the Terms of Service.</div>

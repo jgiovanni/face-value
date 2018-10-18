@@ -75,7 +75,9 @@
 						</div>
 						<div class="top-header-author">
 							<router-link to="/profile" class="author-thumb">
-								<img :src="userData.photoURL" width="124" :alt="userData.name">
+								<overdrive id="profile-avatar">
+										<img :src="userData.photoURL" width="124" :alt="userData.name">
+								</overdrive>
 							</router-link>
 							<div class="author-content">
 								<router-link to="/profile" class="h4 author-name" v-text="userData.name"></router-link>

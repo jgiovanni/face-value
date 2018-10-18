@@ -167,7 +167,7 @@
 						</div>
 					</div>
 
-					<div class="control-icon more has-items">
+					<div class="control-icon more has-items" style="display: none;">
 						<svg class="olymp-chat---messages-icon">
 							<use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
 						</svg>
@@ -277,7 +277,7 @@
 						</div>
 					</div>
 
-					<div class="control-icon more has-items">
+					<div class="control-icon more has-items" style="display: none;">
 						<svg class="olymp-thunder-icon">
 							<use xlink:href="svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
 						</svg>
@@ -442,7 +442,11 @@
 
 					<div class="author-page author vcard inline-items more">
 						<div class="author-thumb">
-							<img :src="user.photoUrl" height="36" width="36" alt="author" class="avatar">
+							<router-link to="/profile">
+								<overdrive id="profile-avatar">
+									<img :src="user.photoUrl" height="36" width="36" alt="author" class="avatar">
+								</overdrive>
+							</router-link>
 							<span class="icon-status" :class="currentStatusType"></span>
 							<div class="more-dropdown more-with-triangle">
 								<div class="mCustomScrollbar" data-mcs-theme="dark">

@@ -26,11 +26,8 @@
 								<li class="nav-item">
 									<router-link to="/" class="nav-link">Home</router-link>
 								</li>
-								<li class="nav-item">
-									<router-link to="/tos" class="nav-link">Terms & Conditions</router-link>
-								</li>
-								<li class="nav-item">
-									<router-link to="/privacy-policy" class="nav-link">Privacy Policy</router-link>
+								<li class="nav-item" v-for="route in routes" :key="route.name">
+									<router-link :to="route.path" class="nav-link" v-text="route.name"></router-link>
 								</li>
 								<li class="close-responsive-menu js-close-responsive-menu">
 									<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
@@ -53,18 +50,20 @@
 
 	</div>
 </template>
-<style></style>
+<style>
+</style>
 <script type="text/javascript">
-  export default {
-    name: 'PublicHeader',
-    data() {
-      return {
-        expanded: false
-      }
-    },
-    methods: {},
-    mounted() {
-      
-    }
-  }
+export default {
+  name: "PublicHeader",
+  data() {
+    return {
+      expanded: false,
+      routes: this.$router.options.routes.filter(
+        route => route.meta.navigation === "public"
+      )
+    };
+  },
+  methods: {},
+  mounted() {}
+};
 </script>

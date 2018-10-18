@@ -3,9 +3,11 @@ import { store } from "./store/index";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Landing from "./views/Landing.vue";
+import TermsOfService from "./views/TermsOfService.vue";
+import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import MyAccount from "./views/MyAccount.vue";
 import Profile from "./views/Profile.vue";
-import ProfilHome from "./views/Profile/Home.vue";
+import ProfileHome from "./views/Profile/Home.vue";
 import ProfileAbout from "./views/Profile/About.vue";
 import Messenger from "./views/Messenger.vue";
 import Collabs from "./views/Collabs.vue";
@@ -24,6 +26,26 @@ const router = new Router({
       }
     },
     {
+      path: "/terms",
+      name: "Terms of Service",
+      component: TermsOfService,
+      meta: {
+        navigation: "public",
+        rootClasses: "",
+        headerClasses: ""
+      }
+    },
+    {
+      path: "/privacy-policy",
+      name: "Privacy Policy",
+      component: PrivacyPolicy,
+      meta: {
+        navigation: "public",
+        rootClasses: "",
+        headerClasses: ""
+      }
+    },
+    {
       path: "/about",
       name: "about",
       meta: {
@@ -35,7 +57,6 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
-    
     // Authenticated Routes (User must be logged in)
     {
       path: "/",
@@ -81,7 +102,7 @@ const router = new Router({
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "",
-          component: ProfilHome,
+          component: ProfileHome,
         },
         {
           // UserProfile will be rendered inside User's <router-view>
