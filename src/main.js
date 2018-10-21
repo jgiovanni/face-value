@@ -5,6 +5,7 @@ import VueAnalytics from "vue-analytics";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
 import VueTimeago from "vue-timeago";
+import Overdrive from "vue-overdrive";
 import VueTagsInput from "@johmun/vue-tags-input";
 import vSelect from "vue-select";
 import router from "./router";
@@ -22,6 +23,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 Vue.config.productionTip = false;
 
+Vue.use(Overdrive);
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);

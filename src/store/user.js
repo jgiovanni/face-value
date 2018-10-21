@@ -1,6 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
-import _ from 'lodash';
+import _ from "lodash";
 import firebase from "firebase/app";
 import { event } from "vue-analytics";
 
@@ -25,13 +25,17 @@ export default {
             commit("setLoading", false);
 
             // Send Email Verification
-            firebase.auth().currentUser.sendEmailVerification().catch(error => {
-              console.log(error);
-            });
+            firebase
+              .auth()
+              .currentUser.sendEmailVerification()
+              .catch(error => {
+                console.log(error);
+              });
 
             // Add additional data to user profile
-            firebase.auth().currentUser
-              .updateProfile({
+            firebase
+              .auth()
+              .currentUser.updateProfile({
                 displayName: `${payload.first_name} ${payload.last_name}`
               })
               .then(updatedUser => {
@@ -125,7 +129,7 @@ export default {
       });
       firebase
         .auth()
-        .signInWithCustomToken(token)
+        .signInWithCustomToken("token")
         .then(user => {
           commit("setLoading", false);
           const newUser = {
@@ -199,13 +203,26 @@ export default {
     },
     checkForDefaultUserData({ commit, state, dispatch }, payload) {
       let data = {};
-      if (!this.state.userData.name || this.state.userData.name !== payload.user.displayName)
+      if (
+        !this.state.userData.name ||
+        this.state.userData.name !== payload.user.displayName
+      )
         data.name = payload.user.displayName;
-      if (!this.state.userData.email || this.state.userData.email !== payload.user.email)
+      if (
+        !this.state.userData.email ||
+        this.state.userData.email !== payload.user.email
+      )
         data.email = payload.user.email;
-      if (!this.state.userData.userName || this.state.userData.userName !== payload.user.userName)
-        data.userName = payload.user.userName || payload.user.email.split('@')[0].toString();
-      if (!this.state.userData.photoURL || this.state.userData.photoURL !== payload.user.photoURL)
+      if (
+        !this.state.userData.userName ||
+        this.state.userData.userName !== payload.user.userName
+      )
+        data.userName =
+          payload.user.userName || payload.user.email.split("@")[0].toString();
+      if (
+        !this.state.userData.photoURL ||
+        this.state.userData.photoURL !== payload.user.photoURL
+      )
         data.photoURL = payload.user.photoURL;
       // If data is not empty, proceed
       if (!_.isEmpty(data)) dispatch("userData/set", data);
