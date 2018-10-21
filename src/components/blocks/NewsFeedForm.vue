@@ -36,16 +36,12 @@
 						</b-form-group>
 						<!--<b-form-group class="form-group with-icon label-floating label-static is-empty tags-control" label="Add Skills here" label-class="control-label" label-for="postSkills">-->
 						<div class="" style="border-bottom: 1px solid #e6ecf5;padding-left: 70px;">
-							<md-chips class="md-primary" style="font-size: .875rem;" v-model="post.skills" md-placeholder="Add Skills here..." @keydown.enter.prevent.stop="" :md-format="formatName"></md-chips>
-							<!--<tags-input
-							id="postSkills"
-							class="form-control" placeholder=""
-							v-model="skill"
-							:tags="post.skills"
-							:seperators="tagInputConfig.seperators"
-							:autocomplete-items="tagInputConfig.skillsList"
-							@tags-changed="newTags => post.skills = newTags"
-					/>-->
+        
+							<!-- <md-chips class="md-primary" style="font-size: .875rem;" v-model="post.skills" md-placeholder="Add Skills here..." @keydown.enter.prevent.stop="" :md-format="formatName"  md-static></md-chips> -->
+              <md-chip v-for="skill in post.skills" :key="skill" class="md-primary" style="font-size: .875rem;" md-deletable @md-delete="removeSkill(skill)">{{ skill }}</md-chip>
+              <md-autocomplete v-model="skill" :md-options="skillsList" @md-selected="addSkill" @md-changed="searchSkills" @md-opened="searchSkills">
+                <label>Add Skills here...</label>
+              </md-autocomplete>
 						</div>
 						<!--</b-form-group>-->
 						<div class="add-options-message">
@@ -126,14 +122,27 @@
       color: #fff;
     }
   }
+  .md-chip {
+    /*font-size: .875rem !important;*/
+    background-color: #ff5e3a;
+    color: #fff;
+    height: 32px;
+  }
+}
+.md-menu-content.md-theme-default {
+  background-color: #fff;
 }
 </style>
 <script type="text/javascript">
+import _ from "lodash";
+import axios from "axios";
+// import skillsList from "../../assets/skills.json";
 export default {
   name: "NewsFeedForm",
   data() {
     return {
-      skill: "",
+      skillsList: [],
+      skill: null,
       postTypeLabels: {
         collab: "What do you want to collaborate on?",
         "skill-share": "Need help with a project?",
@@ -168,6 +177,24 @@ export default {
   },
   computed: {},
   methods: {
+    searchSkills(searchTerm) {
+      return new Promise(resolve => {
+        axios.get("/data/skills.json").then(result => {
+          if (!searchTerm || searchTerm < 3) {
+            resolve(this.skillsList);
+          } else {
+            resolve(this.skillsList = result.data.data.filter(skill => skill.toLowerCase().includes(searchTerm)));
+          }
+        });
+      });
+    },
+    addSkill(skill) {
+      this.post.skills.push(skill);
+      this.skill = null;
+    },
+    removeSkill(skill) {
+      this.post.skills = _.without(this.post.skills, skill);
+    },
     createItem(e) {
       // Add author
       this.post.author = {
