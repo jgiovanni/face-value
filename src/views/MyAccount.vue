@@ -18,18 +18,17 @@
 
 	<!-- ... end Main Header Account -->
 </template>
-<style></style>
+<style>
+</style>
 <script type="text/javascript">
-  export default {
-    name: "MyAccount",
-    data() {
-      return {
-        msg: null
-      };
-    },
-    methods: {},
-    mounted() {
-      
-    }
-  };
+export default {
+  name: "MyAccount",
+  data() {
+    return {
+      msg: null
+    };
+  },
+  methods: {},
+  mounted() {}
+};
 </script>

@@ -1051,37 +1051,35 @@
 	</div>
 </template>
 <style>
-	.account-settings li i {
-		font-size: 20px;
-		margin-right: 15px;
-		color: #9a9fbf;
-		width: 20px;
-		height: 20px;
-	}
+.account-settings li i {
+  font-size: 20px;
+  margin-right: 15px;
+  color: #9a9fbf;
+  width: 20px;
+  height: 20px;
+}
 </style>
 <script type="text/javascript">
-  export default {
-    name: "AuthHeader",
-    data() {
-      return {
-        currentStatusType: "online",
-        statusTypes: ["online", "away", "disconected", "status-invisible"],
-        statuses: {
-          online: "Online",
-          away: "Away",
-          disconected: "Disconnected",
-          "status-invisible": "Invisible",
-          custom: ""
-        }
-      };
-    },
-    methods: {
-      logout() {
-        this.$store.dispatch("logout");
+export default {
+  name: "AuthHeader",
+  data() {
+    return {
+      currentStatusType: "online",
+      statusTypes: ["online", "away", "disconected", "status-invisible"],
+      statuses: {
+        online: "Online",
+        away: "Away",
+        disconected: "Disconnected",
+        "status-invisible": "Invisible",
+        custom: ""
       }
-    },
-    mounted() {
-
+    };
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
     }
-  };
+  },
+  mounted() {}
+};
 </script>

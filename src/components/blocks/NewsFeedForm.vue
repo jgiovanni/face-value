@@ -39,8 +39,10 @@
         
 							<!-- <md-chips class="md-primary" style="font-size: .875rem;" v-model="post.skills" md-placeholder="Add Skills here..." @keydown.enter.prevent.stop="" :md-format="formatName"  md-static></md-chips> -->
               <md-chip v-for="skill in post.skills" :key="skill" class="md-primary" style="font-size: .875rem;" md-deletable @md-delete="removeSkill(skill)">{{ skill }}</md-chip>
-              <md-autocomplete v-model="skill" :md-options="skillsList" @md-selected="addSkill" @md-changed="searchSkills" @md-opened="searchSkills">
-                <label>Add Skills here...</label>
+              <md-autocomplete v-model="skill" :md-options="skillsList" @md-selected="addSkill" @md-changed="searchSkills" @md-opened="searchSkills" md-dense>
+                <label>Add skills you are looking for here...</label>
+
+	              <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item }}</template>
               </md-autocomplete>
 						</div>
 						<!--</b-form-group>-->
@@ -126,7 +128,8 @@
     /*font-size: .875rem !important;*/
     background-color: #ff5e3a;
     color: #fff;
-    height: 32px;
+    line-height: 24px;
+    margin: 5px 0;
   }
 }
 .md-menu-content.md-theme-default {
@@ -135,8 +138,9 @@
 </style>
 <script type="text/javascript">
 import _ from "lodash";
-import axios from "axios";
-// import skillsList from "../../assets/skills.json";
+import Defiant from "defiant.js/dist/defiant";
+import SkillsList from "../../assets/skills.json";
+
 export default {
   name: "NewsFeedForm",
   data() {
@@ -179,18 +183,30 @@ export default {
   methods: {
     searchSkills(searchTerm) {
       return new Promise(resolve => {
-        axios.get("/data/skills.json").then(result => {
-          if (!searchTerm || searchTerm < 3) {
-            resolve(this.skillsList);
-          } else {
-            resolve(this.skillsList = result.data.data.filter(skill => skill.toLowerCase().includes(searchTerm)));
-          }
-        });
+        if (!searchTerm || searchTerm.length < 3) {
+          resolve(this.skillsList);
+        } else {
+          const snapshot = Defiant.getSnapshot(SkillsList);
+          this.skillsList = JSON.search(
+            snapshot,
+            `//data[contains(., "${searchTerm}")]`
+          );
+          resolve(this.skillsList);
+
+          /*Defiant.getSnapshot(SkillsList, function(snapshot) {
+            // executed when the snapshot is created
+            const found = JSON.search(snapshot, `//data[contains(., "${searchTerm}")]`);
+            resolve(this.skillsList = found);
+          });*/
+        }
       });
     },
     addSkill(skill) {
       this.post.skills.push(skill);
-      this.skill = null;
+      this.$nextTick(() => {
+        this.skill = null;
+      });
+      return null;
     },
     removeSkill(skill) {
       this.post.skills = _.without(this.post.skills, skill);

@@ -163,7 +163,7 @@ export default {
     return {
       sidebarState: false,
       chatsSearch: "",
-      activeChat: null,
+      activeChat: null
     };
   },
   computed: {
@@ -210,14 +210,14 @@ export default {
           self.chats.messages.items = {};
           self.$nextTick(function() {
             this.activeChat = chat;
-		        this.$store
-		            .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
-		            .then(() => {
-		              this.$root.$emit("openChatModal", chat);
-		            })
-		            .catch(console.error);
-	        });
-	      });
+            this.$store
+              .dispatch("chats/messages/openDBChannel", { chatId: chat.id })
+              .then(() => {
+                this.$root.$emit("openChatModal", chat);
+              })
+              .catch(console.error);
+          });
+        });
     }
   },
   created() {

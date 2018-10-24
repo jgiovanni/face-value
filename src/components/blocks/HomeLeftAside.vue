@@ -609,18 +609,17 @@
 			<!-- ... end W-Calendar -->            </div>
 	</aside>
 </template>
-<style></style>
+<style>
+</style>
 <script type="text/javascript">
-  export default {
-    name: "HomeLeftAside",
-    data() {
-      return {
-        msg: null
-      };
-    },
-    methods: {},
-    mounted() {
-      
-    }
-  };
+export default {
+  name: "HomeLeftAside",
+  data() {
+    return {
+      msg: null
+    };
+  },
+  methods: {},
+  mounted() {}
+};
 </script>

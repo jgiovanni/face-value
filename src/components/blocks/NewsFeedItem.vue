@@ -26,7 +26,7 @@
 							<a href="#" @click.prevent="">Edit Post</a>
 						</li>-->
 						<li>
-							<a href="#" @click.prevent="deletePost">Delete Post</a>
+							<a href="#" @click.prevent="deletePost"><i class="fa fa-trash"></i>&nbsp;Delete Post</a>
 						</li>
 						<!--<li>
 							<a href="#" @click.prevent="">Turn Off Notifications</a>
@@ -42,7 +42,7 @@
 			<p class="mb-2" v-html="item.body"></p>
 
 			<div class="mb-3">
-				<md-chip v-for="chip in item.skills" :key="chip" md-clickable>{{ chip }}</md-chip>
+				<md-chip v-for="chip in item.skills" :key="chip" md-clickable @click="searchSkill(chip)">{{ chip }}</md-chip>
 			</div>
 
 			<div class="post-additional-info inline-items">
@@ -381,6 +381,12 @@ export default {
           // this.$store.dispatch('chats/messages/set', msg).then(console.log).catch(console.error);
         })
         .catch(console.error);
+    },
+    searchSkill(skill) {
+      return this.$router.push({
+        path: "",
+        query: { skill }
+      });
     },
     chatWithAuthor() {},
     onDialogConfirm() {

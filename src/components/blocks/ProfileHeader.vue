@@ -317,7 +317,7 @@ export default {
   data() {
     return {
       updateHeaderPhotoModal: false,
-      updateAvatarModal: false,
+      updateAvatarModal: false
     };
   },
   methods: {},

@@ -102,17 +102,17 @@ const router = new Router({
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "",
-          component: ProfileHome,
+          component: ProfileHome
         },
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "about",
           component: ProfileAbout
-        },
+        }
       ],
       meta: {
-        access: true,
+        access: true
       }
     },
     {
@@ -120,12 +120,11 @@ const router = new Router({
       name: "settings",
       component: MyAccount,
       meta: {
-        access: true,
+        access: true
       }
-    },
-
+    }
   ],
-  mode: 'history'
+  mode: "history"
 });
 
 let promise = new Promise(resolve => {
