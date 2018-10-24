@@ -9,11 +9,11 @@
 			</div>
 
 			<div class="header-content-wrapper">
-				<form @submit.prevent="" class="search-bar w-search notification-list friend-requests">
+				<form @submit.prevent="searchSkill" class="search-bar w-search notification-list friend-requests">
 					<div class="form-group with-button">
-						<input class="form-control js-user-search" placeholder="Search here people or pages..."
+						<input v-model="searchSkillInput" class="form-control js-user-search" placeholder="Search posts on skills..."
 						       type="text">
-						<button>
+						<button type="submit">
 							<svg class="olymp-magnifying-glass-icon">
 								<use xlink:href="svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
 							</svg>
@@ -1064,6 +1064,7 @@ export default {
   name: "AuthHeader",
   data() {
     return {
+      searchSkillInput: null,
       currentStatusType: "online",
       statusTypes: ["online", "away", "disconected", "status-invisible"],
       statuses: {
@@ -1076,6 +1077,12 @@ export default {
     };
   },
   methods: {
+    searchSkill() {
+      return this.$router.push({
+        path: "",
+        query: { skill: this.searchSkillInput }
+      });
+    },
     logout() {
       this.$store.dispatch("logout");
     }
