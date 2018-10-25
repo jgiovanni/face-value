@@ -47,43 +47,31 @@
 
 			<div class="post-additional-info inline-items">
 
-				<a href="#" @click.prevent="likePost" class="post-add-icon inline-items" :aria-disabled="userIsAuthor" :class="{ 'disabled': userIsAuthor }">
+				<a href="#" @click.prevent="likePost" class="post-add-icon inline-items" :aria-disabled="userIsAuthor" :class="{ 'disabled': userIsAuthor, 'active': liked }">
 					<svg class="olymp-heart-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
-					<span v-text="item.likes_count">24</span>
+					<span v-text="item.like_count">24</span>
 				</a>
 
-				<!--<ul class="friends-harmonic">
-					<li>
+				<ul class="friends-harmonic">
+					<li v-for="liker in item.recent_likes" :key="liker.user.id">
 						<a href="#">
-							<img src="img/friend-harmonic7.jpg" alt="friend">
+							<img :src="liker.user.photoUrl" :alt="liker.user.name">
 						</a>
 					</li>
-					<li>
-						<a href="#">
-							<img src="img/friend-harmonic8.jpg" alt="friend">
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="img/friend-harmonic9.jpg" alt="friend">
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="img/friend-harmonic10.jpg" alt="friend">
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="img/friend-harmonic11.jpg" alt="friend">
-						</a>
-					</li>
-				</ul>-->
+				</ul>
 
-				<!--<div class="names-people-likes">
-					<a href="#">You</a>, <a href="#">Elaine</a> and
-					<br>22 more liked this
-				</div>-->
+				<div class="names-people-likes">
+					<template v-if="!!liked"><router-link :to="`/users/${userData.userName}`">You</router-link><template v-if="item.recent_likes && item.recent_likes.length > 1 && randomLikerNotUser">, </template></template>
+					<template v-if="item.recent_likes && item.recent_likes.length">
+						<template v-if="item.recent_likes.length > 1">
+							<template v-if="randomLikerNotUser">
+								<router-link href="#">{{ randomLikerNotUser.user.name }}</router-link>
+							</template>
+							<template v-if="item.recent_likes.length > 2">&nbsp;and <br>{{ item.like_count - 2 }} more </template>
+						</template>
+						liked this
+					</template>
+				</div>
 
 
 				<div class="comments-shared">
@@ -104,7 +92,7 @@
 
 			<div class="control-block-button post-control-button">
 
-				<a href="#" @click.prevent="likePost" class="btn btn-control" :aria-disabled="userIsAuthor" :class="{ 'disabled': userIsAuthor}">
+				<a href="#" @click.prevent="likePost" class="btn btn-control" :aria-disabled="userIsAuthor" :class="{ 'disabled': userIsAuthor, 'active': liked }">
 					<svg class="olymp-like-post-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-like-post-icon"></use></svg>
 				</a>
 
@@ -271,6 +259,20 @@ export default {
   },
   computed: {
     // ...mapState(['newsFeed']),
+    liked() {
+      return _.find(
+        this.userData.likes,
+        like => like.newsFeed === this.item.id
+      );
+    },
+    randomLikerNotUser() {
+      const likers = _.without(
+        this.item.recent_likes,
+        liker => liker.user.id === this.user.id
+      );
+      if (likers.length) return likers[_.random(likers.length - 1)];
+      return null;
+    },
     userIsAuthor() {
       return this.user.id === this.item.author.id;
     },
@@ -283,8 +285,60 @@ export default {
   },
   methods: {
     likePost() {
-      if (!userIsAuthor) {
+      if (!this.userIsAuthor) {
+        if (this.liked) {
+          // un-like
+          this.$db
+            .collection("likes")
+            .doc(`${this.user.id}_${this.item.id}`)
+            .delete()
+            .then(console.log)
+            .then(console.log);
 
+          this.$db
+            .collection("newsFeed")
+            .doc(this.item.id)
+            .collection("likes")
+            .doc(this.liked.newsFeedLike)
+            .delete()
+            .then(console.log)
+            .then(console.log);
+          this.item.like_count--;
+        } else {
+          // like
+          this.$db
+            .collection("newsFeed")
+            .doc(this.item.id)
+            .collection("likes")
+            .add({
+              like: `${this.user.id}_${this.item.id}`,
+              user: {
+                id: this.user.id,
+                photoUrl: this.user.photoUrl,
+                displayName: this.user.name,
+                userName: this.userData.userName
+              },
+              created_at: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(doc => {
+              this.$db
+                .collection("likes")
+                .doc(`${this.user.id}_${this.item.id}`)
+                .set({
+                  user: this.user.id,
+                  userDisplayName: this.user.name,
+                  userName: this.userData.userName,
+                  newsFeed: this.item.id,
+                  newsFeedLike: doc.id,
+                  newsFeedAuthor: this.item.author,
+                  created_at: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(console.log)
+                .then(console.log);
+              this.item.like_count++;
+            })
+            .then(console.log);
+        }
       }
     },
     deletePost() {

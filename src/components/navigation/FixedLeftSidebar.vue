@@ -62,14 +62,14 @@
 						<div class="skills-item">
 							<div class="skills-item-info">
 								<span class="skills-item-title">Profile Completion</span>
-								<span class="skills-item-count"><span class="count-animate" data-speed="1000" data-refresh-interval="50" data-to="76" data-from="0"></span><span class="units">76%</span></span>
+								<span class="skills-item-count"><span class="count-animate" data-speed="1000" data-refresh-interval="50" data-to="74" data-from="0"></span><span class="units">74%</span></span>
 							</div>
 							<div class="skills-item-meter">
-								<span class="skills-item-meter-active bg-primary" style="width: 76%"></span>
+								<b-progress style="width: 100%; opacity: 1;top: 0;" variant="success" :value="76" striped animated class="skills-item-meter-active mb-3"></b-progress>
 							</div>
 						</div>
 
-						<span>Complete <a href="#">your profile</a> so people can know more about you!</span>
+						<span>Complete <router-link to="/profile">your profile</router-link> so people can know more about you!</span>
 
 					</div>
 				</div>
@@ -289,6 +289,9 @@
   li * {
     max-height: 59px;
   }
+}
+.progress-bar.bg-success.progress-bar-striped.progress-bar-animated {
+	height: 100%;
 }
 </style>
 <script type="text/javascript">

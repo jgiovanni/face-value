@@ -32,6 +32,15 @@ const userDataModule = {
   // you can also add state/getters/mutations/actions
   // for other config like fillables see "Extra features"
 };
+const userDataLikesModule = {
+  firestorePath: "likes",
+  firestoreRefType: "collection",
+  moduleName: "userData/likes",
+  statePropName: "",
+  sync: {
+    where: [["user", "==", "{userId}"]]
+  }
+};
 
 const newsFeedModule = {
   firestorePath: "newsFeed",
@@ -202,6 +211,7 @@ const collabRequestsModule = {
 const easyFirestores = createEasyFirestore(
   [
     userDataModule,
+    userDataLikesModule,
     newsFeedModule,
     chatsModule,
     chatMessagesModule,
@@ -232,6 +242,9 @@ const store = new Vuex.Store({
   actions: {
     init: ({ dispatch, state }, payload) => {
       dispatch("checkForDefaultUserData", { ...payload });
+      dispatch("userData/likes/openDBChannel", { userId: state.user.user.id })
+        .then(console.log)
+        .catch(console.error);
       dispatch("newsFeed/openDBChannel")
         .then(console.log)
         .catch(console.error);

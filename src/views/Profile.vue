@@ -1,12 +1,7 @@
 <template>
 	<div>
-		<!-- Top Header-Profile -->
-
 		<ProfileHeader />
-
-		<!-- ... end Top Header-Profile -->
-
-		<router-view></router-view>
+		<router-view />
 	</div>
 </template>
 <style>
@@ -22,6 +17,6 @@ export default {
     };
   },
   methods: {},
-  mounted() {},
+  mounted() {}
 };
 </script>

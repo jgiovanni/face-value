@@ -1,3 +1,4 @@
+import _ from "lodash";
 import Vue from "vue";
 import App from "./App.vue";
 import BootstrapVue from "bootstrap-vue";
@@ -67,6 +68,7 @@ Vue.mixin({
     }*/
   },
   methods: {
+    randomInt: _.random,
     errorClass(field, scope) {
       return { input: true, "is-danger": this.errors.has(field, scope) };
     },
