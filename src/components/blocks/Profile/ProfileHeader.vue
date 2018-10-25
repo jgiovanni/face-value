@@ -22,23 +22,8 @@
 							<div class="row">
 								<div class="col col-xl-8 m-auto col-lg-8 col-md-12">
 									<ul class="profile-menu">
-										<li>
-											<a href="12-FavouritePage.html" class="active">Timeline</a>
-										</li>
-										<li>
-											<a href="13-FavouritePage-About.html">About</a>
-										</li>
-										<li>
-											<a href="07-ProfilePage-Photos.html">Photos</a>
-										</li>
-										<li>
-											<a href="09-ProfilePage-Videos.html">Videos</a>
-										</li>
-										<li>
-											<a href="14-FavouritePage-Statistics.html">Statistics</a>
-										</li>
-										<li>
-											<a href="15-FavouritePage-Events.html">Events</a>
+										<li v-for="route in profileRoutes" :key="route.name">
+											<router-link :to="route.path ? `/profile/${route.path}` : '/profile'" class="active" v-text="route.meta.title || route.name"></router-link>
 										</li>
 										<li>
 											<div class="more">
@@ -316,7 +301,10 @@ export default {
   data() {
     return {
       updateHeaderPhotoModal: false,
-      updateAvatarModal: false
+      updateAvatarModal: false,
+      profileRoutes: this.$router.options.routes.find(
+        route => route.name === "Profile"
+      ).children
     };
   },
   methods: {},

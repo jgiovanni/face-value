@@ -33,7 +33,7 @@
 
 									<b-collapse visible id="collapse1" class="collapse show">
 										<ul class="your-profile-menu">
-											<li v-for="route in profileRoutes" :key="route.name">
+											<li v-for="route in profileRoutes" :key="route.path">
 												<router-link :to="route.path ? `/account/${route.path}` : '/account'" v-text="route.meta.title || route.name"></router-link>
 											</li>
 										</ul>

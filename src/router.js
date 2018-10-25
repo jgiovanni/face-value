@@ -105,13 +105,15 @@ const router = new Router({
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "",
-          component: ProfileHome
+          component: ProfileHome,
+          meta: { title: "Profile" }
         },
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "about",
-          component: ProfileAbout
+          component: ProfileAbout,
+          meta: { title: "About" }
         }
       ],
       meta: {
