@@ -35,13 +35,32 @@ const userDataModule = {
 
 const newsFeedModule = {
   firestorePath: "newsFeed",
-  firestoreRefType: "collection", // or "doc"
+  firestoreRefType: "collection",
   moduleName: "newsFeed",
   statePropName: "items",
   sync: {
     where: [
       // ["softDeleted", "==", false],
       ["publish", "==", true]
+    ],
+    orderBy: ["created_at", "desc"],
+    insertHook(updateStore, doc, store) {
+      doc.created_at = {
+        seconds: parseInt(new Date().getTime() / 1000)
+      };
+      updateStore(doc);
+    }
+  }
+};
+const profileFeedModule = {
+  firestorePath: "newsFeed",
+  firestoreRefType: "collection",
+  moduleName: "profileFeed",
+  statePropName: "items",
+  sync: {
+    where: [
+      // ["softDeleted", "==", false],
+      ["author.id", "==", "{userId}"]
     ],
     orderBy: ["created_at", "desc"],
     insertHook(updateStore, doc, store) {
@@ -187,7 +206,8 @@ const easyFirestores = createEasyFirestore(
     chatsModule,
     chatMessagesModule,
     collabsModule,
-    collabRequestsModule
+    collabRequestsModule,
+    profileFeedModule
   ],
   {
     logging: true
@@ -210,9 +230,12 @@ const store = new Vuex.Store({
   },
   mutations: {},
   actions: {
-    init: ({ dispatch }, payload) => {
+    init: ({ dispatch, state }, payload) => {
       dispatch("checkForDefaultUserData", { ...payload });
       dispatch("newsFeed/openDBChannel")
+        .then(console.log)
+        .catch(console.error);
+      dispatch("profileFeed/openDBChannel", { userId: state.user.user.id })
         .then(console.log)
         .catch(console.error);
       dispatch("collabs/openDBChannel")

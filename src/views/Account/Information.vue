@@ -113,55 +113,57 @@
 							<i class="fa fa-globe" style="top: 11px;" aria-hidden="true"></i>
 						</b-form-group>
 
-						<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.socialLinkedIn }"
-						              :state="errorState('socialLinkedIn')"
-						              :invalid-feedback="errors.first('socialLinkedIn')"
-						              label="Your LinkedIn Profile URL" label-class="control-label" label-for="name">
-							<b-input v-validate="'url'" v-model="userData.socialLinkedIn"
-							         :state="errorState('socialLinkedIn')" data-vv-as="LinkedIn Profile"
-							         id="socialLinkedIn" name="socialLinkedIn" type="url"></b-input>
-							<i class="fab fa-linkedin-in c-facebook" style="top: 11px;" aria-hidden="true"></i>
-						</b-form-group>
+						<template v-if="userData.social">
+							<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.social.linkedIn }"
+							              :state="errorState('socialLinkedIn')"
+							              :invalid-feedback="errors.first('socialLinkedIn')"
+							              label="Your LinkedIn Profile URL" label-class="control-label" label-for="name">
+								<b-input v-validate="'url'" v-model="userData.social.linkedIn"
+								         :state="errorState('socialLinkedIn')" data-vv-as="LinkedIn Profile"
+								         id="socialLinkedIn" name="socialLinkedIn" type="url"></b-input>
+								<i class="fab fa-linkedin-in c-facebook" style="top: 11px;" aria-hidden="true"></i>
+							</b-form-group>
 
-						<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.socialInstagram }"
-						              :state="errorState('socialInstagram')"
-						              :invalid-feedback="errors.first('socialInstagram')"
-						              label="Your Instagram Handle" label-class="control-label" label-for="name">
-							<b-input v-validate="''" v-model="userData.socialInstagram"
-							         :state="errorState('socialInstagram')" data-vv-as="Instagram Handle"
-							         id="socialInstagram" name="socialInstagram" type="text"></b-input>
-							<i class="fab fa-instagram c-dribbble" style="top: 11px;" aria-hidden="true"></i>
-						</b-form-group>
+							<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.social.instagram }"
+							              :state="errorState('socialInstagram')"
+							              :invalid-feedback="errors.first('socialInstagram')"
+							              label="Your Instagram Handle" label-class="control-label" label-for="name">
+								<b-input v-validate="''" v-model="userData.social.instagram"
+								         :state="errorState('socialInstagram')" data-vv-as="Instagram Handle"
+								         id="socialInstagram" name="socialInstagram" type="text"></b-input>
+								<i class="fab fa-instagram c-dribbble" style="top: 11px;" aria-hidden="true"></i>
+							</b-form-group>
 
-						<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.socialFacebook }"
-						              :state="errorState('socialFacebook')"
-						              :invalid-feedback="errors.first('socialFacebook')"
-						              label="Your Facebook Profile URL" label-class="control-label" label-for="name">
-							<b-input v-validate="'url'" v-model="userData.socialFacebook"
-							         :state="errorState('socialFacebook')" data-vv-as="Facebook Profile"
-							         id="socialFacebook" name="socialFacebook" type="url"></b-input>
-							<i class="fab fa-facebook-f c-facebook" style="top: 11px;" aria-hidden="true"></i>
-						</b-form-group>
+							<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.social.facebook }"
+							              :state="errorState('socialFacebook')"
+							              :invalid-feedback="errors.first('socialFacebook')"
+							              label="Your Facebook Profile URL" label-class="control-label" label-for="name">
+								<b-input v-validate="'url'" v-model="userData.social.facebook"
+								         :state="errorState('socialFacebook')" data-vv-as="Facebook Profile"
+								         id="socialFacebook" name="socialFacebook" type="url"></b-input>
+								<i class="fab fa-facebook-f c-facebook" style="top: 11px;" aria-hidden="true"></i>
+							</b-form-group>
 
-						<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.socialTwitter }"
-						              :state="errorState('socialTwitter')"
-						              :invalid-feedback="errors.first('socialTwitter')"
-						              label="Your Twitter Handle" label-class="control-label" label-for="name">
-							<b-input v-validate="''" v-model="userData.socialTwitter"
-							         :state="errorState('socialTwitter')" data-vv-as="Twitter Handle"
-							         id="socialTwitter" name="socialTwitter" type="text"></b-input>
-							<i class="fab fa-twitter c-twitter" style="top: 11px;" aria-hidden="true"></i>
-						</b-form-group>
+							<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.social.twitter }"
+							              :state="errorState('socialTwitter')"
+							              :invalid-feedback="errors.first('socialTwitter')"
+							              label="Your Twitter Handle" label-class="control-label" label-for="name">
+								<b-input v-validate="''" v-model="userData.social.twitter"
+								         :state="errorState('socialTwitter')" data-vv-as="Twitter Handle"
+								         id="socialTwitter" name="socialTwitter" type="text"></b-input>
+								<i class="fab fa-twitter c-twitter" style="top: 11px;" aria-hidden="true"></i>
+							</b-form-group>
 
-						<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.socialDribbble }"
-						              :state="errorState('socialDribbble')"
-						              :invalid-feedback="errors.first('socialDribbble')"
-						              label="Your Dribbble Profile URL" label-class="control-label" label-for="name">
-							<b-input v-validate="''" v-model="userData.socialDribbble"
-							         :state="errorState('socialDribbble')" data-vv-as="Dribbble Profile"
-							         id="socialDribbble" name="socialDribbble" type="text"></b-input>
-							<i class="fab fa-dribbble c-dribbble" style="top: 11px;" aria-hidden="true"></i>
-						</b-form-group>
+							<b-form-group class="form-group with-icon label-floating" :class="{ 'is-empty': !userData.social.dribbble }"
+							              :state="errorState('socialDribbble')"
+							              :invalid-feedback="errors.first('socialDribbble')"
+							              label="Your Dribbble Profile URL" label-class="control-label" label-for="name">
+								<b-input v-validate="''" v-model="userData.social.dribbble"
+								         :state="errorState('socialDribbble')" data-vv-as="Dribbble Profile"
+								         id="socialDribbble" name="socialDribbble" type="text"></b-input>
+								<i class="fab fa-dribbble c-dribbble" style="top: 11px;" aria-hidden="true"></i>
+							</b-form-group>
+						</template>
 
 					</div>
 					<div class="col col-lg-6 col-md-6 col-sm-12 col-12">

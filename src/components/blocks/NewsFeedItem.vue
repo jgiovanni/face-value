@@ -47,7 +47,7 @@
 
 			<div class="post-additional-info inline-items">
 
-				<a href="#" @click.prevent="likePost" class="post-add-icon inline-items">
+				<a href="#" @click.prevent="likePost" class="post-add-icon inline-items" :aria-disabled="userIsAuthor" :class="{ 'disabled': userIsAuthor }">
 					<svg class="olymp-heart-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
 					<span v-text="item.likes_count">24</span>
 				</a>
@@ -104,7 +104,7 @@
 
 			<div class="control-block-button post-control-button">
 
-				<a href="#" @click.prevent="likePost" class="btn btn-control">
+				<a href="#" @click.prevent="likePost" class="btn btn-control" :aria-disabled="userIsAuthor" :class="{ 'disabled': userIsAuthor}">
 					<svg class="olymp-like-post-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-like-post-icon"></use></svg>
 				</a>
 
@@ -282,7 +282,11 @@ export default {
     }
   },
   methods: {
-    likePost() {},
+    likePost() {
+      if (!userIsAuthor) {
+
+      }
+    },
     deletePost() {
       this.dialogActive = true;
     },

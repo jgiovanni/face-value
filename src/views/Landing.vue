@@ -984,7 +984,7 @@ export default {
   watch: {
     user(value) {
       if (this.userIsAuthenticated) {
-        this.$router.push("/");
+        this.$router.push("/account ");
       }
     }
   },

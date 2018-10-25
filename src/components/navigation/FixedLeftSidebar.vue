@@ -5,9 +5,9 @@
 		<div class="fixed-sidebar" :class="{ 'open': sidebarState }">
 			<div class="fixed-sidebar-left sidebar--small" id="sidebar-left">
 
-				<router-link to="" class="logo">
+				<router-link to="/" class="logo">
 					<div class="img-wrap">
-						<img src="/img/logo.png" alt="Olympus">
+						<img src="/img/logo.png" alt="Face Value">
 					</div>
 				</router-link>
 
@@ -286,7 +286,7 @@
 </template>
 <style lang="scss">
 .left-menu {
-  li {
+  li * {
     max-height: 59px;
   }
 }

@@ -224,8 +224,12 @@ export default {
         this.state.userData.photoURL !== payload.user.photoURL
       )
         data.photoURL = payload.user.photoURL;
+      if (!this.state.userData.program) data.program = null;
+      if (!this.state.userData.programYear) data.programYear = null;
+      if (!this.state.userData.social) data.social = {};
+      if (!this.state.userData.skills) data.skills = {};
       // If data is not empty, proceed
-      if (!_.isEmpty(data)) dispatch("userData/set", data);
+      if (!_.isEmpty(data)) dispatch("userData/patch", data);
     }
   },
   getters: {

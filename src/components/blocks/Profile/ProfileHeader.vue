@@ -3,33 +3,43 @@
 		<div class="row">
 			<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="ui-block">
-					<div class="top-header">
+					<div class="top-header top-header-favorit">
 						<div class="top-header-thumb">
 							<img src="/img/top-header-ocadu.jpg" alt="header">
+							<div class="top-header-author">
+								<div class="author-thumb">
+										<overdrive id="profile-avatar">
+											<img :src="userData.photoURL" width="124" :alt="userData.name">
+										</overdrive>
+								</div>
+								<div class="author-content">
+									<router-link to="/profile" class="h3 author-name" v-text="userData.name"></router-link>
+									<div class="country">{{ userData.program || 'Digital Futures' }}, {{ userData.programYear || '2019' }}</div>
+								</div>
+							</div>
 						</div>
 						<div class="profile-section">
 							<div class="row">
-								<div class="col col-lg-5 col-md-5 col-sm-12 col-12">
+								<div class="col col-xl-8 m-auto col-lg-8 col-md-12">
 									<ul class="profile-menu">
 										<li>
-											<router-link :to="`/profile/${$route.params.userName}/`">Timeline</router-link>
+											<a href="12-FavouritePage.html" class="active">Timeline</a>
 										</li>
 										<li>
-											<router-link :to="`/profile/${$route.params.userName}/about`" class="active">About</router-link>
+											<a href="13-FavouritePage-About.html">About</a>
 										</li>
-										<!--<li>
-											<a href="06-ProfilePage.html">Friends</a>
-										</li>-->
-									</ul>
-								</div>
-								<div class="col col-lg-5 ml-auto col-md-5 col-sm-12 col-12">
-									<ul class="profile-menu">
-										<!--<li>
+										<li>
 											<a href="07-ProfilePage-Photos.html">Photos</a>
 										</li>
 										<li>
 											<a href="09-ProfilePage-Videos.html">Videos</a>
-										</li>-->
+										</li>
+										<li>
+											<a href="14-FavouritePage-Statistics.html">Statistics</a>
+										</li>
+										<li>
+											<a href="15-FavouritePage-Events.html">Events</a>
+										</li>
 										<li>
 											<div class="more">
 												<svg class="olymp-three-dots-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
@@ -67,21 +77,10 @@
 											<a href="#" @click.prevent="updateHeaderPhotoModal = !updateHeaderPhotoModal">Update Header Photo</a>
 										</li>
 										<li>
-											<router-link to="/settings">Account Settings</router-link>
+											<router-link to="/account">Account Settings</router-link>
 										</li>
 									</ul>
 								</div>
-							</div>
-						</div>
-						<div class="top-header-author">
-							<router-link to="/profile" class="author-thumb">
-								<overdrive id="profile-avatar">
-										<img :src="userData.photoURL" width="124" :alt="userData.name">
-								</overdrive>
-							</router-link>
-							<div class="author-content">
-								<router-link to="/profile" class="h4 author-name" v-text="userData.name"></router-link>
-								<div class="country">{{ userData.program || 'Digital Futures' }}, {{ userData.programYear || '2019' }}</div>
 							</div>
 						</div>
 					</div>

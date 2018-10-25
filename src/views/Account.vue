@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<ProfileHeader />
+		<!--<ProfileHeader />-->
 
 		<div class="container">
 			<div class="row">
 				<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
-					<transition name="fade">
+					<!--<transition name="fade">-->
 						<router-view/>
-					</transition>
+					<!--</transition>-->
 				</div>
 
 				<div class="col col-xl-3 order-xl-1 col-lg-3 order-lg-1 col-md-12 order-md-2 col-sm-12  responsive-display-none">
