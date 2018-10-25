@@ -12,7 +12,7 @@
 <style>
 </style>
 <script type="text/javascript">
-import ProfileHeader from "../components/blocks/ProfileHeader";
+import ProfileHeader from "../components/blocks/Profile/ProfileHeader";
 export default {
   name: "Profile",
   components: { ProfileHeader },

@@ -7,8 +7,8 @@
 
 					<a href="#" class="logo">
 						<div class="img-wrap">
-							<img src="img/logo.png" width="34" alt="FaceValue">
-							<img src="img/logo.png" width="34" alt="FaceValue" class="logo-colored">
+							<img src="/img/logo.png" width="34" alt="FaceValue">
+							<img src="/img/logo.png" width="34" alt="FaceValue" class="logo-colored">
 						</div>
 						<div class="title-block">
 							<h6 class="logo-title">FaceValue</h6>
@@ -17,7 +17,7 @@
 					</a>
 
 					<a href="#" class="open-responsive-menu js-open-responsive-menu">
-						<svg class="olymp-menu-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
+						<svg class="olymp-menu-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
 					</a>
 
 					<div class="nav nav-pills nav1 header-menu" :class="{ 'expanded-menu': expanded }">
@@ -30,12 +30,12 @@
 									<router-link :to="route.path" class="nav-link" v-text="route.name"></router-link>
 								</li>
 								<li class="close-responsive-menu js-close-responsive-menu">
-									<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+									<svg class="olymp-close-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
 								</li>
 								<li class="nav-item js-expanded-menu">
 									<a @click.prevent="expanded = !expanded" class="nav-link">
-										<svg class="olymp-menu-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
-										<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+										<svg class="olymp-menu-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-menu-icon"></use></svg>
+										<svg class="olymp-close-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
 									</a>
 								</li>
 							</ul>

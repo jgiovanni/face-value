@@ -3,7 +3,7 @@
 		<div class="ui-block">
 			<!-- W-Action -->
 			<div class="widget w-action">
-				<img src="img/logo.png" alt="Face Value">
+				<img src="/img/logo.png" alt="Face Value">
 				<div class="content">
 					<h4 class="title">AD SPACE</h4>
 					<span>PREMIUM AD SPACE HERE!</span>

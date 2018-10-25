@@ -5,7 +5,10 @@ import Home from "./views/Home.vue";
 import Landing from "./views/Landing.vue";
 import TermsOfService from "./views/TermsOfService.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
-import MyAccount from "./views/MyAccount.vue";
+import Account from "./views/Account.vue";
+import AccountInformation from "./views/Account/Information.vue";
+import AccountSkills from "./views/Account/Skills.vue";
+import AccountChangePassword from "./views/Account/ChangePassword.vue";
 import Profile from "./views/Profile.vue";
 import ProfileHome from "./views/Profile/Home.vue";
 import ProfileAbout from "./views/Profile/About.vue";
@@ -117,8 +120,29 @@ const router = new Router({
     },
     {
       path: "/account",
-      name: "settings",
-      component: MyAccount,
+      name: "Account",
+      component: Account,
+      children: [
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: "",
+          component: AccountInformation,
+          meta: { title: "Personal Information", navigation: "settings" }
+        },
+        {
+          path: "skills",
+          component: AccountSkills,
+          meta: { title: "My Skills", navigation: "settings" }
+        },
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: "change-password",
+          component: AccountChangePassword,
+          meta: { title: "Change Password", navigation: "settings" }
+        }
+      ],
       meta: {
         access: true
       }

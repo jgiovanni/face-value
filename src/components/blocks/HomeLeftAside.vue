@@ -7,7 +7,7 @@
 			<div class="widget w-wethear">
 				<a href="#" class="more">
 					<svg class="olymp-three-dots-icon">
-						<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 					</svg>
 				</a>
 
@@ -19,7 +19,7 @@
 					</div>
 
 					<svg class="olymp-weather-partly-sunny-icon">
-						<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-partly-sunny-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-partly-sunny-icon"></use>
 					</svg>
 				</div>
 
@@ -34,7 +34,7 @@
 					<li>
 						<div class="day">sun</div>
 						<svg class="olymp-weather-sunny-icon">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-sunny-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-sunny-icon"></use>
 						</svg>
 
 						<div class="temperature-sensor-day">60°</div>
@@ -43,7 +43,7 @@
 					<li>
 						<div class="day">mon</div>
 						<svg class="olymp-weather-partly-sunny-icon">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-partly-sunny-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-partly-sunny-icon"></use>
 						</svg>
 						<div class="temperature-sensor-day">58°</div>
 					</li>
@@ -51,7 +51,7 @@
 					<li>
 						<div class="day">tue</div>
 						<svg class="olymp-weather-cloudy-icon">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-cloudy-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-cloudy-icon"></use>
 						</svg>
 
 						<div class="temperature-sensor-day">67°</div>
@@ -60,7 +60,7 @@
 					<li>
 						<div class="day">wed</div>
 						<svg class="olymp-weather-rain-icon">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-rain-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-rain-icon"></use>
 						</svg>
 
 						<div class="temperature-sensor-day">70°</div>
@@ -69,7 +69,7 @@
 					<li>
 						<div class="day">thu</div>
 						<svg class="olymp-weather-storm-icon">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-storm-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-storm-icon"></use>
 						</svg>
 
 						<div class="temperature-sensor-day">58°</div>
@@ -78,7 +78,7 @@
 					<li>
 						<div class="day">fri</div>
 						<svg class="olymp-weather-snow-icon">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-snow-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-snow-icon"></use>
 						</svg>
 
 						<div class="temperature-sensor-day">68°</div>
@@ -88,7 +88,7 @@
 						<div class="day">sat</div>
 
 						<svg class="olymp-weather-wind-icon-header">
-							<use xlink:href="svg-icons/sprites/icons-weather.svg#olymp-weather-wind-icon-header"></use>
+							<use xlink:href="/svg-icons/sprites/icons-weather.svg#olymp-weather-wind-icon-header"></use>
 						</svg>
 
 						<div class="temperature-sensor-day">65°</div>
@@ -189,7 +189,7 @@
 										<time datetime="2004-07-24T18:18">9:00am</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -198,7 +198,7 @@
 										   aria-expanded="true" aria-controls="collapseOne-1">
 											Breakfast at the Agency
 											<svg class="olymp-dropdown-arrow-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 											</svg>
 										</a>
 									</h5>
@@ -212,7 +212,7 @@
 									</div>
 									<div class="place inline-items">
 										<svg class="olymp-add-a-place-icon">
-											<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
+											<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
 										</svg>
 										<span>Daydreamz Agency</span>
 									</div>
@@ -220,27 +220,27 @@
 									<ul class="friends-harmonic inline-items">
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic5.jpg" alt="friend">
+												<img src="/img/friend-harmonic5.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic10.jpg" alt="friend">
+												<img src="/img/friend-harmonic10.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic7.jpg" alt="friend">
+												<img src="/img/friend-harmonic7.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic8.jpg" alt="friend">
+												<img src="/img/friend-harmonic8.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic2.jpg" alt="friend">
+												<img src="/img/friend-harmonic2.jpg" alt="friend">
 											</a>
 										</li>
 										<li class="with-text">
@@ -257,7 +257,7 @@
 										<time datetime="2004-07-24T18:18">9:00am</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -266,7 +266,7 @@
 										   aria-expanded="true" aria-controls="collapseTwo-1">
 											Send the new “Olympus” project files to the Agency
 											<svg class="olymp-dropdown-arrow-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 											</svg>
 										</a>
 									</h5>
@@ -289,7 +289,7 @@
 										<time datetime="2004-07-24T18:18">6:30am</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -302,7 +302,7 @@
 								</div>
 								<div class="place inline-items">
 									<svg class="olymp-add-a-place-icon">
-										<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
+										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
 									</svg>
 									<span>Daydreamz Agency</span>
 								</div>
@@ -323,7 +323,7 @@
 										<time datetime="2004-07-24T18:18">9:00am</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -332,7 +332,7 @@
 										   aria-expanded="true" aria-controls="collapseOne-2">
 											Breakfast at the Agency
 											<svg class="olymp-dropdown-arrow-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 											</svg>
 										</a>
 									</h5>
@@ -346,7 +346,7 @@
 									</div>
 									<div class="place inline-items">
 										<svg class="olymp-add-a-place-icon">
-											<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
+											<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
 										</svg>
 										<span>Daydreamz Agency</span>
 									</div>
@@ -354,27 +354,27 @@
 									<ul class="friends-harmonic inline-items">
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic5.jpg" alt="friend">
+												<img src="/img/friend-harmonic5.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic10.jpg" alt="friend">
+												<img src="/img/friend-harmonic10.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic7.jpg" alt="friend">
+												<img src="/img/friend-harmonic7.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic8.jpg" alt="friend">
+												<img src="/img/friend-harmonic8.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic2.jpg" alt="friend">
+												<img src="/img/friend-harmonic2.jpg" alt="friend">
 											</a>
 										</li>
 										<li class="with-text">
@@ -400,7 +400,7 @@
 										<time datetime="2004-07-24T18:18">9:00am</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -409,7 +409,7 @@
 										   aria-expanded="true" aria-controls="collapseOne-3">
 											Breakfast at the Agency
 											<svg class="olymp-dropdown-arrow-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 											</svg>
 										</a>
 									</h5>
@@ -424,7 +424,7 @@
 
 									<div class="place inline-items">
 										<svg class="olymp-add-a-place-icon">
-											<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
+											<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
 										</svg>
 										<span>Daydreamz Agency</span>
 									</div>
@@ -432,27 +432,27 @@
 									<ul class="friends-harmonic inline-items">
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic5.jpg" alt="friend">
+												<img src="/img/friend-harmonic5.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic10.jpg" alt="friend">
+												<img src="/img/friend-harmonic10.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic7.jpg" alt="friend">
+												<img src="/img/friend-harmonic7.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic8.jpg" alt="friend">
+												<img src="/img/friend-harmonic8.jpg" alt="friend">
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<img src="img/friend-harmonic2.jpg" alt="friend">
+												<img src="/img/friend-harmonic2.jpg" alt="friend">
 											</a>
 										</li>
 										<li class="with-text">
@@ -470,7 +470,7 @@
 										<time datetime="2004-07-24T18:18">12:00pm</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -479,7 +479,7 @@
 										   aria-expanded="true" aria-controls="collapseTwo-3">
 											Send the new “Olympus” project files to the Agency
 											<svg class="olymp-dropdown-arrow-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 											</svg>
 										</a>
 									</h5>
@@ -502,7 +502,7 @@
 										<time datetime="2004-07-24T18:18">6:30pm</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -515,7 +515,7 @@
 								</div>
 								<div class="place inline-items">
 									<svg class="olymp-add-a-place-icon">
-										<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
+										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
 									</svg>
 									<span>Daydreamz Agency</span>
 								</div>
@@ -536,7 +536,7 @@
 										<time datetime="2004-07-24T18:18">9:00am</time>
 										<a href="#" class="more">
 											<svg class="olymp-three-dots-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</a>
 									</div>
@@ -545,7 +545,7 @@
 										   aria-expanded="true" aria-controls="collapseOne-4">
 											Breakfast at the Agency
 											<svg class="olymp-dropdown-arrow-icon">
-												<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
+												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 											</svg>
 										</a>
 									</h5>
@@ -560,7 +560,7 @@
 									</div>
 									<div class="place inline-items">
 										<svg class="olymp-add-a-place-icon">
-											<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
+											<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-a-place-icon"></use>
 										</svg>
 										<span>Daydreamz Agency</span>
 									</div>

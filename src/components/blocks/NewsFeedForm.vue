@@ -4,22 +4,22 @@
 			<!-- Nav tabs -->
 			<b-nav tabs>
 				<!--<b-nav-item :active="post.type === 'status'" @click="post.type = 'status'">
-					<svg class="olymp-status-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
+					<svg class="olymp-status-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
 					<span>Status</span>
 				</b-nav-item>-->
 				<b-nav-item :active="post.type === 'skill-share'" @click="post.type = 'skill-share'">
 					<i class="fa fa-handshake fa-2x"></i>
-					<!--<svg class="olymp-share-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>-->
+					<!--<svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>-->
 					<span>Skill Share</span>
 				</b-nav-item>
 				<!--<b-nav-item :active="post.type === 'skill-learn'" @click="post.type = 'skill-learn'">
-					&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
+					&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
 					<i class="fa fa-graduation-cap fa-2x"></i>
 					<span>Skill Learn</span>
 				</b-nav-item>-->
 				<b-nav-item :active="post.type === 'collab'" @click="post.type = 'collab'">
 					<i class="fa fa-users fa-2x"></i>
-					<!--<svg class="olymp-multimedia-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>-->
+					<!--<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>-->
 					<span>Collaboration</span>
 				</b-nav-item>
 			</b-nav>
@@ -48,13 +48,13 @@
 						<!--</b-form-group>-->
 						<div class="add-options-message">
 							<a href="#" @click.prevent="" class="options-message" v-b-tooltip.hover title="ADD PHOTOS">
-								<svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo"><use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use></svg>
+								<svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"></use></svg>
 							</a>
 							<!--<a href="#" class="options-message" v-b-tooltip.hover title="TAG YOUR FRIENDS">
-								<svg class="olymp-computer-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
+								<svg class="olymp-computer-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
 							</a>-->
 							<!--<a href="#" class="options-message" v-b-tooltip.hover title="ADD LOCATION">
-								<svg class="olymp-small-pin-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-small-pin-icon"></use></svg>
+								<svg class="olymp-small-pin-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-small-pin-icon"></use></svg>
 							</a>-->
 
 							<button type="button" @click.prevent.stop="createItem" class="btn btn-primary btn-md-2">Post Status</button>
@@ -138,7 +138,7 @@
 </style>
 <script type="text/javascript">
 import _ from "lodash";
-import Defiant from "defiant.js/dist/defiant";
+// import Defiant from "defiant.js/dist/defiant";
 import SkillsList from "../../assets/skills.json";
 
 export default {

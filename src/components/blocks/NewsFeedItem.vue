@@ -19,7 +19,7 @@
 
 				<div class="more" v-if="userIsAuthor">
 					<svg class="olymp-three-dots-icon">
-						<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 					</svg>
 					<ul class="more-dropdown">
 						<!--<li>
@@ -48,7 +48,7 @@
 			<div class="post-additional-info inline-items">
 
 				<a href="#" @click.prevent="likePost" class="post-add-icon inline-items">
-					<svg class="olymp-heart-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
+					<svg class="olymp-heart-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
 					<span v-text="item.likes_count">24</span>
 				</a>
 
@@ -88,13 +88,13 @@
 
 				<div class="comments-shared">
 					<a href="#" @click.prevent="startConversation" class="post-add-icon inline-items" :class="{'active': hasChatted}" v-if="!userIsAuthor">
-						<svg class="olymp-speech-balloon-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
+						<svg class="olymp-speech-balloon-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
 						Direct Message {{ item.author.displayName }}
 						<!--<span v-text="item.comments_count">17</span>-->
 					</a>
 
 					<!--<a href="#" class="post-add-icon inline-items">
-						<svg class="olymp-share-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
+						<svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
 						<span v-text="item.share_count">24</span>
 					</a>-->
 				</div>
@@ -105,15 +105,15 @@
 			<div class="control-block-button post-control-button">
 
 				<a href="#" @click.prevent="likePost" class="btn btn-control">
-					<svg class="olymp-like-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-like-post-icon"></use></svg>
+					<svg class="olymp-like-post-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-like-post-icon"></use></svg>
 				</a>
 
 				<a href="#" @click.prevent="startConversation" class="btn btn-control" :class="{'active': hasChatted}" v-if="!userIsAuthor">
-					<svg class="olymp-comments-post-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
+					<svg class="olymp-comments-post-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
 				</a>
 
 				<!--<a href="#" @click.prevent="sharePost" class="btn btn-control">
-					<svg class="olymp-share-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
+					<svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
 				</a>-->
 
 			</div>
@@ -137,14 +137,14 @@
 							</div>
 						</div>
 
-						<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+						<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
 
 					</div>
 
 					<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium der doloremque laudantium.</p>
 
 					<a href="#" class="post-add-icon inline-items">
-						<svg class="olymp-heart-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
+						<svg class="olymp-heart-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
 						<span>3</span>
 					</a>
 					<a href="#" class="reply">Reply</a>
@@ -162,7 +162,7 @@
 							</div>
 						</div>
 
-						<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
+						<a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
 
 					</div>
 
@@ -171,7 +171,7 @@
 					</p>
 
 					<a href="#" class="post-add-icon inline-items">
-						<svg class="olymp-heart-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
+						<svg class="olymp-heart-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
 						<span>8</span>
 					</a>
 					<a href="#" class="reply">Reply</a>
@@ -195,7 +195,7 @@
 						<div class="add-options-message">
 							<a href="#" class="options-message" @click.prevent="" data-toggle="modal" data-target="#update-header-photo">
 								<svg class="olymp-camera-icon">
-									<use xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
 								</svg>
 							</a>
 						</div>
@@ -237,7 +237,7 @@
   }
 }
 
-.md-chip {
+.post .md-chip {
   /*font-size: .875rem !important;*/
   background-color: #ff5e3a;
   color: #fff;

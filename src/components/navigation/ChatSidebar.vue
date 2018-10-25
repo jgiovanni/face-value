@@ -19,14 +19,14 @@
 				<div class="search-friend inline-items">
 					<a href="#" @click.prevent="toggleSidebar" class="">
 						<svg class="olymp-menu-icon">
-							<use xlink:href="svg-icons/sprites/icons.svg#olymp-menu-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons.svg#olymp-menu-icon"></use>
 						</svg>
 					</a>
 				</div>
 
 				<router-link to="/messages" class="olympus-chat inline-items">
 					<svg class="olymp-chat---messages-icon">
-						<use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
 					</svg>
 				</router-link>
 
@@ -56,7 +56,7 @@
 
 						<div class="more">
 							<svg class="olymp-three-dots-icon">
-								<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 							</svg>
 
 							<ul class="more-icons">
@@ -64,7 +64,7 @@
 									<svg v-b-tooltip.hover
 									     title="START CONVERSATION"
 									     class="olymp-comments-post-icon">
-										<use xlink:href="svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use>
+										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use>
 									</svg>
 								</li>
 
@@ -72,7 +72,7 @@
 									<svg v-b-tooltip.hover
 									     title="ADD TO CONVERSATION"
 									     class="olymp-add-to-conversation-icon">
-										<use xlink:href="svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use>
+										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-add-to-conversation-icon"></use>
 									</svg>
 								</li>
 
@@ -80,7 +80,7 @@
 									<svg v-b-tooltip.hover
 									     title="BLOCK FROM CHAT"
 									     class="olymp-block-from-chat-icon">
-										<use xlink:href="svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use>
+										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-block-from-chat-icon"></use>
 									</svg>
 								</li>
 							</ul>
@@ -99,13 +99,13 @@
 
 					<a href="29-YourAccount-AccountSettings.html" class="settings" @click.prevent="" style="visibility: hidden;">
 						<svg class="olymp-settings-icon">
-							<use xlink:href="svg-icons/sprites/icons.svg#olymp-settings-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons.svg#olymp-settings-icon"></use>
 						</svg>
 					</a>
 
 					<a href="#" @click.prevent="toggleSidebar" class="">
 						<svg class="olymp-close-icon">
-							<use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use>
+							<use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use>
 						</svg>
 					</a>
 				</div>
@@ -114,7 +114,7 @@
 
 					<h6 class="olympus-chat-title">CHAT</h6>
 					<svg class="olymp-chat---messages-icon">
-						<use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
 					</svg>
 				</a>
 
@@ -132,7 +132,7 @@
 
 				<a href="#" class="olympus-chat inline-items js-chat-open">
 					<svg class="olymp-chat---messages-icon">
-						<use xlink:href="svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
 					</svg>
 				</a>
 
