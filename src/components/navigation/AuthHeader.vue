@@ -245,7 +245,7 @@
 										</div>
 									</li>
 
-									<li class="chat-group">
+									<!--<li class="chat-group">
 										<div class="author-thumb">
 											<img src="/img/avatar11-sm.jpg" alt="author">
 											<img src="/img/avatar12-sm.jpg" alt="author">
@@ -261,15 +261,14 @@
 											                                      datetime="2004-07-24T18:18">March 16th at 10:23am</time></span>
 										</div>
 										<span class="notification-icon">
-										<svg class="olymp-chat---messages-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-									</span>
+											<svg class="olymp-chat-&#45;&#45;messages-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use></svg>
+										</span>
 										<div class="more">
 											<svg class="olymp-three-dots-icon">
 												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 											</svg>
 										</div>
-									</li>
+									</li>-->
 								</ul>
 							</div>
 
@@ -844,7 +843,7 @@
 								</div>
 							</li>
 
-							<li class="chat-group">
+							<!--<li class="chat-group">
 								<div class="author-thumb">
 									<img src="/img/avatar11-sm.jpg" alt="author">
 									<img src="/img/avatar12-sm.jpg" alt="author">
@@ -859,15 +858,15 @@
 									                                      datetime="2004-07-24T18:18">March 16th at 10:23am</time></span>
 								</div>
 								<span class="notification-icon">
-											<svg class="olymp-chat---messages-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
+											<svg class="olymp-chat-&#45;&#45;messages-icon"><use
+													xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use></svg>
 										</span>
 								<div class="more">
 									<svg class="olymp-three-dots-icon">
 										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 									</svg>
 								</div>
-							</li>
+							</li>-->
 						</ul>
 
 						<a href="#" class="view-all bg-purple">View All Messages</a>
