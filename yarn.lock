@@ -762,10 +762,10 @@
   resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-0.7.0.tgz#bded7892868cf6b189a121d0f0cec468f1609995"
   integrity sha512-jyKRcKnSh3CSEPL4xGOZNoOXEiv7YmFK/JEcdd/4cAH17/Xo+Pk67gk1E648LRKh6QPghgNvzNTY5R10mKbQNw==
 
-"@firebase/firestore@0.8.5":
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.8.5.tgz#fa11449654a9894237adb23ab8c5ae00f745a142"
-  integrity sha512-3+XIzTX8lGJuZ6mYo4tNmJF3kmdADBw2H2d0eiUHZLY4Hj3xW3UGhLOu4KWJlmYLcZj/C1o0w7N0GnVidIuXVQ==
+"@firebase/firestore@0.8.6":
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.8.6.tgz#c088f8a6c2625ad53e476dede940237d09c6522a"
+  integrity sha512-/mEnGgGJxXJfAW6hvMOiPGv3cPS5z0azCMzcKlAQ2/lhXyQotubqWDnJmNcdyi1LGZ3QGBesB3K8U4x6tZXTIQ==
   dependencies:
     "@firebase/firestore-types" "0.7.0"
     "@firebase/logger" "0.1.1"
@@ -859,13 +859,6 @@
     lodash.difference "^4.5.0"
     vue "^2.5.16"
     vue-click-outside "^1.0.7"
-
-"@johmun/vue-tags-input@^1.5.6":
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/@johmun/vue-tags-input/-/vue-tags-input-1.5.9.tgz#2f2b2995b533eb1f5bf0ac11fd3e0a0bcf206eec"
-  integrity sha512-5jsQI/o/KNchVoccB8amJVkMRIVuPPzCz5yeX6QAggBWgK46PqRvWX7xTW35IcTtX/AHVJINc7eDVBs6Bny57A==
-  dependencies:
-    vue "^2.5.16"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -3701,15 +3694,15 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-firebase@^5.5.5:
-  version "5.5.5"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.5.5.tgz#41584a15bf40e3ce474880bb82478de35cc21dbb"
-  integrity sha512-glnN/ru3CM3fTqsxbUEGyWbHYREZmC12tXYZ9q/l/qtHfLSN8hSOkVGNeSVuq7jfNmhGERhesMEu9jgdPyw02w==
+firebase@^5.5.6:
+  version "5.5.6"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.5.6.tgz#035f838b0e01b2a781c765fb119c0a5a9e3a1e86"
+  integrity sha512-fHqI7iOqUSyyU90xGeHejm/niVyA5uNs7C52IBezYRlDjXimz/FgaGoEgXrdhPOJdDnmzMgvtms+Wf5oWfh9OQ==
   dependencies:
     "@firebase/app" "0.3.4"
     "@firebase/auth" "0.7.8"
     "@firebase/database" "0.3.6"
-    "@firebase/firestore" "0.8.5"
+    "@firebase/firestore" "0.8.6"
     "@firebase/functions" "0.3.1"
     "@firebase/messaging" "0.3.6"
     "@firebase/polyfill" "0.3.3"
@@ -8446,6 +8439,13 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
+v-calendar@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/v-calendar/-/v-calendar-0.9.7.tgz#a0c770d9132ada9dea1684f18f7a35c0da7f9838"
+  integrity sha512-xwSS7i81WGKkQfbNQ0SFdjPBKuXVK4F4y2rT1SGI8oiQbYyoI0PgT1NT0RZ+8FaFeEog6pms6ZMUAswrUe8QHg==
+  dependencies:
+    vue "^2.5.0"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -8459,10 +8459,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vee-validate@^2.1.0-beta.11:
-  version "2.1.0-beta.11"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.1.0-beta.11.tgz#d1e7c9996a9aeff173a36b3308c2201faee23e30"
-  integrity sha512-dnH2oQQ40+0g9L7H9oMrVxnP9unWEXLNAbFaeEumklnjOrjPv20lpykZqyGSyuK/pi3dhsKb2x1VixWsCITRvw==
+vee-validate@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.1.1.tgz#87dccf754d3e68a838a7eb258578fe7c1ad6da3c"
+  integrity sha512-+FldPoiLkr0EHrdXX3tH4o9CICYFkl1J5bmJePdUOjMqIeAQEM3rzO/EIoX49TQfibNvTDu/U2wuGR0qnWCq1Q==
 
 vendors@^1.0.0:
   version "1.0.2"
@@ -8583,7 +8583,7 @@ vue2-animate@^2.1.0:
   resolved "https://registry.yarnpkg.com/vue2-animate/-/vue2-animate-2.1.0.tgz#93eee5f381d8d6493bae0507bcad6b615fdacb7f"
   integrity sha512-OEuwx9Y2dmx3+hQ/K7zLc514v4xhc8tGDQl/ZTJh06r+/EG/oYQkhy2Fo4OOhDwiRJYFuTfkFhGlDtTnT4XGsw==
 
-vue@^2.5.16, vue@^2.5.17:
+vue@^2.5.0, vue@^2.5.16, vue@^2.5.17:
   version "2.5.17"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
   integrity sha512-mFbcWoDIJi0w0Za4emyLiW72Jae0yjANHbCVquMKijcavBGypqlF7zHRgMa5k4sesdv7hv2rB4JPdZfR+TPfhQ==
@@ -8597,10 +8597,10 @@ vuex-easy-access@^3.1.1:
     is-what "^2.5.0"
     merge-anything "^2.1.1"
 
-vuex-easy-firestore@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.16.0.tgz#25758537f942215de3557fa4b2c5bc1ce32fa17e"
-  integrity sha512-zFwwz5UqVW+aAB6ooFDMzQeFO1t7lisFA6OlOFuhVk4mxOBqqQ64wSVN/YBLlnZxsEboYam0O5w8gQTUpyfxyA==
+vuex-easy-firestore@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.16.1.tgz#a2b5239817d3330b1e7a6683240e954631a42fa3"
+  integrity sha512-Z6tlIMOWtFaAwq1FpLoVpVgPgijGvVabCwqp4/1nVdOR6pNjSTwELNbyKOOH/XTd9uGpzArUkWLcGk8ukOJDoQ==
   dependencies:
     find-and-replace-anything "^1.2.0"
     is-what "^3.0.1"

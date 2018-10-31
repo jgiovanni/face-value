@@ -40,8 +40,6 @@
 						{{ key }}
 					</a>
 				</div>
-
-
 				<!-- ... end W-Socials -->
 			</div>
 		</div>

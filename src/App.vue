@@ -7,29 +7,34 @@
 			<template v-if="userIsAuthenticated">
 				<FixedLeftSidebar />
 				<ChatSidebar v-if="$route.name !== 'Messenger'" />
+
+				<AuthHeader v-if="userIsAuthenticated" />
+
+				<!-- Main Content -->
+				<transition name="fade">
+					<router-view/>
+				</transition>
+				<!-- ...end Main Content -->
+
+				<a v-if="userIsAuthenticated && $route.name !== 'Messenger'" class="back-to-top" href="#" @click.prevent="">
+					<img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
+				</a>
+
+				<!-- Window-popup-CHAT for responsive min-width: 768px -->
+
+				<ChatModal v-if="userIsAuthenticated && $route.name !== 'Messenger'" />
+
+				<!-- ... end Window-popup-CHAT for responsive min-width: 768px -->
 			</template>
+			<template v-else>
+				<!-- Main Content -->
+				<transition name="fade">
+					<router-view/>
+				</transition>
+				<!-- ...end Main Content -->
 
-			<AuthHeader v-if="userIsAuthenticated" />
-
-			<!-- Main Content -->
-
-			<transition name="fade">
-				<router-view/>
-			</transition>
-
-
-			<!-- ...end Main Content -->
-
-			<a v-if="userIsAuthenticated && $route.name !== 'Messenger'" class="back-to-top" href="#" @click.prevent="">
-				<img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
-			</a>
-
-
-			<!-- Window-popup-CHAT for responsive min-width: 768px -->
-
-			<ChatModal v-if="userIsAuthenticated && $route.name !== 'Messenger'" />
-
-			<!-- ... end Window-popup-CHAT for responsive min-width: 768px -->
+				<AuthModal v-if="$route.name !== 'Hello'" />
+			</template>
 		</template>
 		
 		<div id="alerts-section">
@@ -48,9 +53,11 @@ import AuthHeader from "./components/navigation/AuthHeader";
 import PublicHeader from "./components/navigation/PublicHeader";
 import ChatSidebar from "./components/navigation/ChatSidebar";
 import ChatModal from "./components/modals/Chat";
+import AuthModal from "./components/modals/AuthModal";
 
 export default {
   components: {
+    AuthModal,
     ChatSidebar,
     FixedLeftSidebar,
     AuthHeader,

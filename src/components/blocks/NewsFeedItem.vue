@@ -3,7 +3,7 @@
 		<article class="hentry post">
 
 			<div class="post__author author vcard inline-items">
-				<img :src="item.author.photoUrl" width="36" alt="author">
+				<img :src="item.author.photoURL" width="36" alt="author">
 
 				<div class="author-date">
 					<router-link class="h6 post__author-name fn" :to="`/${item.author.userName}`" v-text="item.author.displayName"></router-link>
@@ -54,25 +54,15 @@
 
 				<ul class="friends-harmonic">
 					<li v-for="liker in item.recent_likes" :key="liker.user.id">
-						<a href="#">
-							<img :src="liker.user.photoUrl" :alt="liker.user.name">
-						</a>
+						<router-link :to="`/${liker.userName}`">
+							<img :src="liker.user.photoURL" :alt="liker.user.name">
+						</router-link>
 					</li>
 				</ul>
 
 				<div class="names-people-likes">
-					<template v-if="!!liked"><router-link :to="`/users/${userData.userName}`">You</router-link><template v-if="item.recent_likes && item.recent_likes.length > 1 && randomLikerNotUser">, </template></template>
-					<template v-if="item.recent_likes && item.recent_likes.length">
-						<template v-if="item.recent_likes.length > 1">
-							<template v-if="randomLikerNotUser">
-								<router-link href="#">{{ randomLikerNotUser.user.name }}</router-link>
-							</template>
-							<template v-if="item.recent_likes.length > 2">&nbsp;and <br>{{ item.like_count - 2 }} more </template>
-						</template>
-						liked this
-					</template>
+					<Aggregator :item="item" count-prop="like_count" :user-included="liked" recents-prop="recent_likes" verb="liked" />
 				</div>
-
 
 				<div class="comments-shared">
 					<a href="#" @click.prevent="startConversation" class="post-add-icon inline-items" :class="{'active': hasChatted}" v-if="!userIsAuthor">
@@ -112,7 +102,7 @@
 			<form v-show="showMessageForm" class="comment-form inline-items" @submit.prevent="sendMessage" @reset.prevent="resetForm">
 
 				<div class="post__author author vcard inline-items">
-					<img :src="user.photoUrl" alt="author">
+					<img :src="user.photoURL" alt="author">
 
 					<div class="form-group with-icon-right ">
 						<b-form-textarea class="form-control" v-model="message" placeholder="Type Message Here..."></b-form-textarea>
@@ -176,9 +166,11 @@ import _ from "lodash";
 import firebase from "firebase/app";
 import { mapState } from "vuex";
 import { DateTime } from "luxon";
+import Aggregator from "../Aggregator";
 
 export default {
   name: "NewsFeedItem",
+  components: { Aggregator },
   props: {
     item: {
       type: Object,
@@ -194,23 +186,12 @@ export default {
     };
   },
   computed: {
-    // ...mapState(['newsFeed']),
+    ...mapState(["likes"]),
     liked() {
-      return _.find(
-        this.userData.likes,
-        like => like.newsFeed === this.item.id
-      );
-    },
-    randomLikerNotUser() {
-      const likers = _.without(
-        this.item.recent_likes,
-        liker => liker.user.id === this.user.id
-      );
-      if (likers.length) return likers[_.random(likers.length - 1)];
-      return null;
+      return _.find(this.likes, like => like.newsFeed === this.item.id);
     },
     userIsAuthor() {
-      return this.user.id === this.item.author.id;
+      return this.user && this.user.id === this.item.author.id;
     },
     timestamp() {
       return DateTime.fromMillis(this.item.created_at.seconds * 1000);
@@ -228,8 +209,7 @@ export default {
             .collection("likes")
             .doc(`${this.user.id}_${this.item.id}`)
             .delete()
-            .then(console.log)
-            .then(console.log);
+            .catch(console.log);
 
           this.$db
             .collection("newsFeed")
@@ -237,8 +217,7 @@ export default {
             .collection("likes")
             .doc(this.liked.newsFeedLike)
             .delete()
-            .then(console.log)
-            .then(console.log);
+            .catch(console.log);
           this.item.like_count--;
         } else {
           // like
@@ -250,7 +229,7 @@ export default {
               like: `${this.user.id}_${this.item.id}`,
               user: {
                 id: this.user.id,
-                photoUrl: this.user.photoUrl,
+                photoURL: this.user.photoURL,
                 displayName: this.user.name,
                 userName: this.userData.userName
               },
@@ -269,11 +248,10 @@ export default {
                   newsFeedAuthor: this.item.author,
                   created_at: firebase.firestore.FieldValue.serverTimestamp()
                 })
-                .then(console.log)
-                .then(console.log);
+                .catch(console.log);
               this.item.like_count++;
             })
-            .then(console.log);
+            .catch(console.log);
         }
       }
     },
@@ -308,13 +286,13 @@ export default {
       const me = {
         enabled: true,
         displayName: this.user.name,
-        photoUrl: this.user.photoUrl,
+        photoURL: this.user.photoURL,
         userName: this.userData.userName
       };
       const author = {
         enabled: true,
         displayName: this.item.author.displayName,
-        photoUrl: this.item.author.photoUrl,
+        photoURL: this.item.author.photoURL,
         userName: this.item.author.userName
       };
       let conversation = {
@@ -333,7 +311,7 @@ export default {
         author: {
           id: this.user.id,
           displayName: this.user.name,
-          photoUrl: this.user.photoUrl,
+          photoURL: this.user.photoURL,
           userName: this.userData.userName
         }
       };
@@ -357,7 +335,6 @@ export default {
           this.item.chats_with[this.user.id] = true;
           this.$store
             .dispatch("newsFeed/patch", this.item)
-            .then(console.log)
             .catch(console.error);
           // open chat channel and 2-way bind
           this.$store
@@ -365,7 +342,6 @@ export default {
             .then(() => {
               this.$store
                 .dispatch("chats/messages/set", msg)
-                .then(console.log)
                 .catch(console.error);
               this.$root.$emit("openChatModal", thisChat);
               this.resetForm();

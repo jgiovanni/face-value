@@ -29,7 +29,7 @@
 				<div class="tab-pane active" role="tabpanel" aria-expanded="true">
 					<b-form @submit.prevent.stop>
 						<div class="author-thumb">
-							<img :src="user.photoUrl" height="36" width="36" alt="author">
+							<img :src="userData.photoURL" height="36" width="36" :alt="user.displayName">
 						</div>
 						<b-form-group class="form-group with-icon label-floating is-empty" :label="postTypeLabels[post.type]" label-class="control-label" label-for="postBody">
 							<b-form-textarea id="postBody" class="form-control" v-model="post.body"></b-form-textarea>
@@ -168,7 +168,8 @@ export default {
         attachments: [],
         publish: true,
         created_at: null,
-        softDeleted: false
+        softDeleted: false,
+        closed: false
       },
       tagInputConfig: {
         seperators: [";", ","],
@@ -213,7 +214,7 @@ export default {
       this.post.author = {
         id: this.user.id,
         displayName: this.user.name,
-        photoUrl: this.user.photoUrl,
+        photoURL: this.user.photoURL,
         userName: this.userData.userName
       };
       this.post.authorRef = this.$db.collection("users").doc(this.user.id); // document reference
@@ -238,7 +239,8 @@ export default {
         attachments: [],
         publish: true,
         created_at: null,
-        softDeleted: false
+        softDeleted: false,
+        closed: false
       };
     },
     formatName(str) {

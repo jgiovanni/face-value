@@ -43,7 +43,7 @@ export default {
                   id: updatedUser.uid,
                   name: updatedUser.displayName,
                   email: updatedUser.email,
-                  photoUrl: updatedUser.photoURL
+                  photoURL: updatedUser.photoURL
                 };
                 dispatch("checkForDefaultUserData", {
                   user: newUser,
@@ -77,7 +77,7 @@ export default {
               id: user.uid,
               name: user.displayName,
               email: user.email,
-              photoUrl: user.photoURL
+              photoURL: user.photoURL
             };
             commit("setUser", newUser);
             resolve(user);
@@ -102,10 +102,14 @@ export default {
             id: user.user.uid,
             name: user.user.displayName,
             email: user.user.email,
-            photoUrl: user.user.photoURL,
+            photoURL: user.user.photoURL,
             ...user.user
           };
-          dispatch("checkForDefaultUserData", { user: newUser, ...payload });
+          dispatch("checkForDefaultUserData", {
+            user: newUser,
+            ...payload,
+            userName: newUser.email.split("@")[0].toString()
+          });
           commit("setUser", newUser);
         })
         .catch(error => {
@@ -136,10 +140,14 @@ export default {
             id: user.uid,
             name: user.displayName,
             email: user.email,
-            photoUrl: user.photoURL,
+            photoURL: user.photoURL,
             ...user
           };
-          dispatch("checkForDefaultUserData", { user: newUser, ...payload });
+          dispatch("checkForDefaultUserData", {
+            user: newUser,
+            ...payload,
+            userName: newUser.email.split("@")[0].toString()
+          });
           commit("setUser", newUser);
         })
         .catch(error => {
@@ -160,7 +168,7 @@ export default {
             id: user.uid,
             name: user.displayName,
             email: user.email,
-            photoUrl: user.photoURL
+            photoURL: user.photoURL
           };
           dispatch("checkForDefaultUserData", { user: newUser, ...payload });
           commit("setUser", newUser);
@@ -176,7 +184,7 @@ export default {
         id: payload.uid,
         name: payload.displayName,
         email: payload.email,
-        photoUrl: payload.photoURL
+        photoURL: payload.photoURL
       });
     },
     resetPasswordWithEmail({ commit }, payload) {
@@ -199,36 +207,36 @@ export default {
       firebase.auth().signOut();
       commit("setUser", null);
       // dispatch("unbindRef", "userData");
-      commit("setUserData", null);
+      // this.$store.commit("setUserData", null);
+      this.dispatch("userData/closeDBChannel", { clearModule: true });
+      this.dispatch("likes/closeDBChannel", { clearModule: true });
+      this.dispatch("newsFeed/closeDBChannel", { clearModule: true });
+      this.dispatch("profileFeed/closeDBChannel", { clearModule: true });
+      this.dispatch("collabs/closeDBChannel", { clearModule: true });
+      this.dispatch("collabRequests/closeDBChannel", {
+        clearModule: true
+      });
+      this.dispatch("chats/closeDBChannel", { clearModule: true });
     },
     checkForDefaultUserData({ commit, state, dispatch }, payload) {
       let data = {};
       if (
-        !this.state.userData.name ||
-        this.state.userData.name !== payload.user.displayName
+        !this.getters.userData.name ||
+        this.getters.userData.name !== payload.user.displayName
       )
         data.name = payload.user.displayName;
       if (
-        !this.state.userData.email ||
-        this.state.userData.email !== payload.user.email
+        !this.getters.userData.email ||
+        this.getters.userData.email !== payload.user.email
       )
         data.email = payload.user.email;
       if (
-        !this.state.userData.userName ||
-        this.state.userData.userName !== payload.user.userName
-      )
-        data.userName =
-          payload.user.userName || payload.user.email.split("@")[0].toString();
-      if (
-        !this.state.userData.photoURL ||
-        this.state.userData.photoURL !== payload.user.photoURL
+        !this.getters.userData.photoURL ||
+        this.getters.userData.photoURL !== payload.user.photoURL
       )
         data.photoURL = payload.user.photoURL;
-      if (!this.state.userData.program) data.program = null;
-      if (!this.state.userData.programYear) data.programYear = null;
-      if (!this.state.userData.social) data.social = {};
-      if (!this.state.userData.skills) data.skills = {};
       // If data is not empty, proceed
+      console.log(data);
       if (!_.isEmpty(data)) dispatch("userData/patch", data);
     }
   },

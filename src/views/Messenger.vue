@@ -16,7 +16,7 @@
 										<img :src="otherMemberPhoto(chat)" width="36" :alt="otherMember(chat).displayName">
 									</div>
 									<div class="notification-event">
-										<router-link :to="`/user/${otherMember(chat).userName}`" @click.prevent="" class="h6 notification-friend" v-text="otherMember(chat).displayName"></router-link>
+										<router-link :to="`/${otherMember(chat).userName}`" @click.prevent="" class="h6 notification-friend" v-text="otherMember(chat).displayName"></router-link>
 										<span class="chat-message-item" v-text="chat.latestMessage">Hi James! It’s Diana, I just wanted to let you know that we have to reschedule...</span>
 										<span class="notification-date">
 											<time v-if="chat && getTimestamp(chat)" class="entry-date updated" :datetime="getTimestamp(chat).toISO()">
@@ -89,11 +89,11 @@
 										<transition-group tag="ul" class="notification-list chat-message chat-message-field" name="slideUp" >
 											<li class="" v-for="message in chats.messages.items" :key="message.id">
 												<div class="author-thumb">
-													<img :src="message.author.photoUrl" width="36" :alt="message.author.displayName">
+													<img :src="message.author.photoURL" width="36" :alt="message.author.displayName">
 												</div>
 												<div class="notification-event" style="width: 90%;">
 													<div style="width: 100%;height: 20px;">
-														<router-link :to="`/users/${message.author.userName}`" class="h6 notification-friend" v-text="message.author.displayName"></router-link>
+														<router-link :to="`/${message.author.userName}`" class="h6 notification-friend" v-text="message.author.displayName"></router-link>
 														<span class="notification-date">
 														<time v-if="message.created_at && getTimestamp(message)" class="entry-date updated" :datetime="getTimestamp(message).toISO()">
 															<timeago :datetime="getTimestamp(message)" :auto-update="300"></timeago>
@@ -345,7 +345,7 @@ export default {
     },
     otherMemberPhoto(chat) {
       return _.find(chat.membersData, (member, key) => key !== this.user.id)
-        .photoUrl;
+        .photoURL;
     },
     closeChat() {
       // this.activeChat = null;

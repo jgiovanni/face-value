@@ -21,7 +21,7 @@
 						<li v-for="route in routes" :key="route.name">
 							<router-link :to="route.path">
 								<svg class="left-menu-icon" :class="route.meta.navigationIcon" v-b-tooltip.hover.right :title="route.meta.navigationTitle">
-									<use v-bind:xlink:href="`svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use>
+									<use v-bind:xlink:href="`/svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use>
 								</svg>
 							</router-link>
 						</li>
@@ -50,7 +50,7 @@
 						<li v-for="route in routes" :key="route.name">
 							<router-link :to="route.path">
 								<svg class="left-menu-icon" :class="route.meta.navigationIcon" v-b-tooltip.hover.right :title="route.meta.navigationTitle">
-									<use v-bind:xlink:href="`svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use>
+									<use v-bind:xlink:href="`/svg-icons/sprites/icons.svg#${route.meta.navigationIcon}`"></use>
 								</svg>
 								<span class="left-menu-title" v-text="route.meta.navigationTitle"></span>
 							</router-link>
@@ -291,7 +291,7 @@
   }
 }
 .progress-bar.bg-success.progress-bar-striped.progress-bar-animated {
-	height: 100%;
+  height: 100%;
 }
 </style>
 <script type="text/javascript">

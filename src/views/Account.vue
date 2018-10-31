@@ -22,12 +22,12 @@
 								<div class="card">
 									<div class="card-header" role="tab" id="headingOne">
 										<h6 class="mb-0">
-											<a v-b-toggle.collapse1>
+											<b-link v-b-toggle.collapse1>
 												Profile Settings
 												<svg class="olymp-dropdown-arrow-icon">
 													<use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
 												</svg>
-											</a>
+											</b-link>
 										</h6>
 									</div>
 
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       profileRoutes: this.$router.options.routes
-        .find(route => route.name === "Account")
+        .find(route => route.path === "/account")
         .children.filter(route => route.meta.navigation === "settings")
     };
   },

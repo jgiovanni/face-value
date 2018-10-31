@@ -151,7 +151,7 @@
 											              label="User Name" label-class="control-label" label-for="newUserName">
 												<b-input v-model="newUser.userName"
 												         :state="errorState('userName', 'register')"
-												         v-validate="'required|min:3'"
+												         v-validate="'required|alpha_num|min:5'"
 												         data-vv-as="User Name"
 												         id="newUserName" name="userName" type="text"></b-input>
 											</b-form-group>

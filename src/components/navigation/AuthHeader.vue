@@ -12,7 +12,7 @@
 				<form @submit.prevent="searchSkill" class="search-bar w-search notification-list friend-requests">
 					<div class="form-group with-button">
 						<input v-model="searchSkillInput" class="form-control js-user-search" placeholder="Search posts on skills..."
-						       type="text">
+						       type="text" @keydown.enter.stop="searchSkill">
 						<button type="submit">
 							<svg class="olymp-magnifying-glass-icon">
 								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
@@ -443,10 +443,10 @@
 						<div class="author-thumb">
 							<router-link to="/profile">
 								<overdrive id="profile-avatar">
-									<img :src="userData.photoURL" height="36" width="36" alt="author" class="avatar">
+									<img :src="userData.photoURL" height="36" width="36" :alt="userData.name" class="avatar">
 								</overdrive>
 							</router-link>
-							<span class="icon-status" :class="currentStatusType"></span>
+							<span class="icon-status" :class="[myStatus && myStatus.state]"></span>
 							<div class="more-dropdown more-with-triangle">
 								<div class="mCustomScrollbar" data-mcs-theme="dark">
 									<div class="ui-block-title ui-block-title-small">
@@ -490,32 +490,32 @@
 
 									<ul class="chat-settings">
 										<li>
-											<a href="#" @click.prevent="currentStatusType = 'online'">
+											<a href="#" @click.prevent="changeStatus('on-campus')">
 												<span class="icon-status online"></span>
 												<span>On Campus</span>
 											</a>
 										</li>
 										<li>
-											<a href="#" @click.prevent="currentStatusType = 'online'">
+											<a href="#" @click.prevent="changeStatus('online')">
 												<span class="icon-status online"></span>
 												<span>Online</span>
 											</a>
 										</li>
 										<li>
-											<a href="#" @click.prevent="currentStatusType = 'away'">
+											<a href="#" @click.prevent="changeStatus('away')">
 												<span class="icon-status away"></span>
 												<span>Away</span>
 											</a>
 										</li>
 										<li>
-											<a href="#" @click.prevent="currentStatusType = 'disconected'">
+											<a href="#" @click.prevent="changeStatus('disconected')">
 												<span class="icon-status disconected"></span>
 												<span>Disconnected</span>
 											</a>
 										</li>
 
 										<li>
-											<a href="#" @click.prevent="currentStatusType = 'status-invisible'">
+											<a href="#" @click.prevent="changeStatus('status-invisible')">
 												<span class="icon-status status-invisible"></span>
 												<span>Invisible</span>
 											</a>
@@ -1057,16 +1057,22 @@
   width: 20px;
   height: 20px;
 }
+.icon-status.on-campus {
+  background-color: #32e4cd;
+}
 </style>
 <script type="text/javascript">
+import { mapState } from "vuex";
+
 export default {
   name: "AuthHeader",
   data() {
     return {
-      searchSkillInput: null,
+      searchSkillInput: this.$route.query.skill || null,
       currentStatusType: "online",
       statusTypes: ["online", "away", "disconected", "status-invisible"],
       statuses: {
+        "on-campus": "On Campus",
         online: "Online",
         away: "Away",
         disconected: "Disconnected",
@@ -1075,9 +1081,33 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(["status"]),
+    /*searchSkillInput: {
+      get() {
+        return this.$route.query.skill || null;
+      },
+      set(val) {
+        return val;
+      }
+    },*/
+    myStatus() {
+      return this.status[this.user.id];
+    }
+  },
+  watch: {
+    $route: "updateSearchText"
+  },
   methods: {
+    changeStatus(status) {
+      this.currentStatusType = status;
+      this.$store.dispatch("updateStatus", status);
+    },
+    updateSearchText() {
+      this.searchSkillInput = this.$route.query.skill || null;
+    },
     searchSkill() {
-      return this.$router.push({
+      this.$router.push({
         path: "",
         query: { skill: this.searchSkillInput }
       });

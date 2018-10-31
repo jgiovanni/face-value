@@ -12,6 +12,8 @@ import AccountChangePassword from "./views/Account/ChangePassword.vue";
 import Profile from "./views/Profile.vue";
 import ProfileHome from "./views/Profile/Home.vue";
 import ProfileAbout from "./views/Profile/About.vue";
+import UserProfile from "./views/ProfileView.vue";
+import UserHome from "./views/User/Home.vue";
 import Messenger from "./views/Messenger.vue";
 import Collabs from "./views/Collabs.vue";
 
@@ -98,22 +100,22 @@ const router = new Router({
     },
     {
       path: "/profile",
-      name: "Profile",
       component: Profile,
       children: [
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "",
+          name: "Profile",
           component: ProfileHome,
-          meta: { title: "Profile" }
+          meta: { title: "Profile", navigation: "profile" }
         },
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "about",
           component: ProfileAbout,
-          meta: { title: "About" }
+          meta: { title: "About", navigation: "profile" }
         }
       ],
       meta: {
@@ -122,13 +124,13 @@ const router = new Router({
     },
     {
       path: "/account",
-      name: "Account",
       component: Account,
       children: [
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "",
+          name: "Account",
           component: AccountInformation,
           meta: { title: "Personal Information", navigation: "settings" }
         },
@@ -147,6 +149,31 @@ const router = new Router({
       ],
       meta: {
         access: true
+      }
+    },
+    // s
+    {
+      path: "/:username",
+      component: UserProfile,
+      props: true,
+      children: [
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: "",
+          component: UserHome,
+          meta: { title: "Profile", access: false }
+        },
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: "about",
+          component: ProfileAbout,
+          meta: { title: "About" }
+        }
+      ],
+      meta: {
+        access: false
       }
     }
   ],

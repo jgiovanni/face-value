@@ -28,9 +28,11 @@
 <style>
 </style>
 <script type="text/javascript">
+import _ from "lodash";
 import { mapState } from "vuex";
 import LeftSidebar from "../../components/blocks/Profile/LeftSidebar";
 import NewsFeedItemBlock from "../../components/blocks/NewsFeedItem";
+
 export default {
   name: "Home",
   components: { LeftSidebar, NewsFeedItemBlock },

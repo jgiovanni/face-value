@@ -10,7 +10,7 @@
 						<div class="form-group label-floating">
 							<md-chip v-for="(val, skill) in userData.skills" :key="skill" class="md-primary" style="font-size: .875rem;" md-deletable @md-delete="removeSkill(skill)">{{ skill }}</md-chip>
 							<md-autocomplete v-model="skill" :md-options="skillsList" @md-selected="addSkill" @md-changed="searchSkills" @md-opened="searchSkills" md-dense>
-								<label>Add skills you are looking for here...</label>
+								<label>Add your skills here...</label>
 								<template slot="md-autocomplete-item" slot-scope="{ item }">{{ item }}</template>
 							</md-autocomplete>
 						</div>

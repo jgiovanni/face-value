@@ -20,7 +20,7 @@
 					<transition-group tag="ul" class="notification-list chat-message chat-message-field" name="fadeUp">
 						<li v-for="message in chats.messages.items" :key="message.id" :class="{'other-author': isOtherMember(message)}">
 							<div class="author-thumb">
-								<img :src="message.author.photoUrl" :alt="message.author.displayName" :width="[ isOtherMember(message) ? '28' : '36']" class="mCS_img_loaded">
+								<img :src="message.author.photoURL" :alt="message.author.displayName" :width="[ isOtherMember(message) ? '28' : '36']" class="mCS_img_loaded">
 							</div>
 							<div class="notification-event">
 								<div class="chat-message-item" v-text="message.body"></div>
@@ -35,7 +35,6 @@
 				</div>
 
 				<form class="need-validation">
-
 					<b-form-group class="form-group label-floating is-empty"
 					              label="Press enter to send..." label-class="control-label" label-for="chatMessage">
 						<b-form-textarea class="form-control" id="chatMessage" v-model="message" @keydown.native.enter="submitMessage"></b-form-textarea>
@@ -308,7 +307,7 @@ export default {
         author: {
           id: this.user.id,
           displayName: this.user.name,
-          photoUrl: this.user.photoUrl,
+          photoURL: this.user.photoURL,
           userName: this.userData.userName
         }
       };

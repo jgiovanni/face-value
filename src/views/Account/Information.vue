@@ -31,6 +31,14 @@
 							</b-form-select>
 						</b-form-group>
 
+						<b-form-group class="form-group label-floating"
+						              :state="errorState('programYear')"
+						              :invalid-feedback="errors.first('programYear')"
+						              label="Your Graduation Year" label-class="control-label" label-for="programYear">
+							<b-input v-validate="'required|date_format:YYYY'" v-model="userData.programYear"
+							         :state="errorState('programYear')" placeholder="2020" min="2018"
+							         id="programYear" name="programYear" type="number"></b-input>
+						</b-form-group>
 					</div>
 
 					<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
@@ -44,13 +52,16 @@
 							         id="email" name="email" type="email"></b-input>
 						</b-form-group>
 
-						<b-form-group class="form-group label-floating"
-						              :state="errorState('programYear')"
-						              :invalid-feedback="errors.first('programYear')"
-						              label="Your Graduation Year" label-class="control-label" label-for="programYear">
-							<b-input v-validate="'required|date_format:YYYY'" v-model="userData.programYear"
-							         :state="errorState('programYear')" placeholder="2020"
-							         id="programYear" name="programYear" type="text"></b-input>
+						<b-form-group class="form-group label-floating" :class="{ 'is-empty': !userData.userName }"
+						              :state="errorState('userName')" :disabled="userData.userNameChanged"
+						              :invalid-feedback="errors.first('userName')"
+						              description="You can change your user name once."
+						              label="User Name" label-class="control-label" label-for="userData">
+							<b-input v-model="userData.userName"
+							         :state="errorState('userName')"
+							         v-validate="'required|alpha_num|min:5'"
+							         data-vv-as="User Name"
+							         id="userData" name="userName" type="text"></b-input>
 						</b-form-group>
 					</div>
 
@@ -266,17 +277,21 @@ export default {
         this.$db.app.auth().currentUser.updateProfile({
           displayName: this.userData.name,
           phoneNumber: this.userData.phoneNumber,
-          photoUrl: this.userData.photoURL
+          photoURL: this.userData.photoURL
         });
         this.$store.dispatch("autoSignIn", {
           id: this.$db.app.auth().currentUser.uid,
           name: this.userData.name,
-          photoUrl: this.userData.photoURL
+          photoURL: this.userData.photoURL
         });
         this.$root.$emit("showAlert", "Profile Updated Successfully!");
       });
     }
   },
-  mounted() {}
+  mounted() {
+    if (this.userData && !this.userData.social) {
+      this.userData.social = {};
+    }
+  }
 };
 </script>

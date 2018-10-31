@@ -6,8 +6,8 @@ import VueAnalytics from "vue-analytics";
 import VueMaterial from "vue-material";
 import VeeValidate from "vee-validate";
 import VueTimeago from "vue-timeago";
+import VCalendar from "v-calendar";
 import Overdrive from "vue-overdrive";
-import VueTagsInput from "@johmun/vue-tags-input";
 import vSelect from "vue-select";
 import router from "./router";
 import { store, firebaseApp } from "./store/index";
@@ -21,9 +21,14 @@ import "vue-material/dist/vue-material.min.css";
 import "selectize/dist/css/selectize.css";
 import "./vendor/sass/main.scss";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "v-calendar/lib/v-calendar.min.css";
+// import "./vendor/slim/slim.css";
 
 Vue.config.productionTip = false;
 
+Vue.use(VCalendar, {
+  firstDayOfWeek: 2  // Monday
+});
 Vue.use(Overdrive);
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
@@ -41,8 +46,8 @@ Vue.use(VueTimeago, {
   locale: "en"
 });
 
+// Register component(s)
 Vue.component("v-select", vSelect);
-Vue.component("tags-input", VueTagsInput);
 
 Vue.mixin({
   computed: {
@@ -77,6 +82,13 @@ Vue.mixin({
     },
     errorState(field, scope) {
       return !(this.errors && this.errors.has(field, scope));
+    },
+    // Auth Modal Show/Hide
+    showAuthModal() {
+      this.$root.$emit("bv::show::modal", "registration-login-form-popup");
+    },
+    hideAuthModal() {
+      this.$root.$emit("bv::hide::modal", "registration-login-form-popup");
     }
   },
   created() {}
@@ -130,7 +142,7 @@ new Vue({
       if (user) {
         self.$store.dispatch("autoSignIn", user.toJSON()).then(() => {
           self.$store
-            .dispatch("userData/openDBChannel")
+            .dispatch("userData/openDBChannel", { userId: user.uid })
             .then(result => {
               self.$store.dispatch("init", { user });
               self.appReady = true;

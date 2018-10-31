@@ -19,27 +19,15 @@
 					<NewsFeedItemBlock v-for="item in orderedNewsFeed" :key="item.id" :item="item" />
 				</transition-group>
 
-				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more" data-load-link="items-to-load.html"
-				   data-container="newsfeed-items-grid">
+				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more">
 					<svg class="olymp-three-dots-icon">
-						<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 					</svg>
 				</a>
 
 			</main>
 
 			<!-- ... end Main Content -->
-
-
-			<!-- Left Sidebar -->
-			<HomeLeftAside />
-			<!-- ... end Left Sidebar -->
-
-
-			<!-- Right Sidebar -->
-			<HomeRightAside />
-			<!-- ... end Right Sidebar -->
-
 		</div>
 	</div>
 </template>
@@ -51,17 +39,10 @@ import { mapState } from "vuex";
 // @ is an alias to /src
 import NewsFeedFormBlock from "../components/blocks/NewsFeedForm";
 import NewsFeedItemBlock from "../components/blocks/NewsFeedItem";
-import HomeLeftAside from "../components/blocks/Home/LeftAside";
-import HomeRightAside from "../components/blocks/Home/RightAside";
 
 export default {
-  name: "Home",
-  components: {
-    NewsFeedFormBlock,
-    NewsFeedItemBlock,
-    HomeLeftAside,
-    HomeRightAside
-  },
+  name: "SearchResults",
+  components: { NewsFeedFormBlock, NewsFeedItemBlock },
   data() {
     return {};
   },

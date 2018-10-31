@@ -10,7 +10,7 @@
 						<li class="inline-items" @click.prevent="openChatModal(chat)" v-for="chat in chats.items" :key="chat.id">
 							<div class="author-thumb">
 								<img alt="author" :src="otherMemberPhoto(chat)" width="34" class="avatar">
-								<span class="icon-status online"></span>
+								<span class="icon-status" :class="[otherMemberStatus(chat)]"></span>
 							</div>
 						</li>
 					</transition-group>
@@ -46,7 +46,7 @@
 
 						<div class="author-thumb">
 							<img alt="author" :src="otherMemberPhoto(chat)" width="34" class="avatar">
-							<span class="icon-status online"></span>
+							<span class="icon-status" :class="[otherMemberStatus(chat)]"></span>
 						</div>
 
 						<div class="author-status">
@@ -152,6 +152,10 @@
     width: 150px;
   }
 }
+.icon-status.on-campus {
+	background-color: #32e4cd;
+}
+
 </style>
 <script type="text/javascript">
 import _ from "lodash";
@@ -167,7 +171,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["chats"]),
+    ...mapState(["chats", "status"]),
     filteredChats() {
       let self = this;
       return (
@@ -187,9 +191,14 @@ export default {
     otherMember(chat) {
       return _.find(chat.membersData, (member, key) => key !== this.user.id);
     },
+    otherMemberStatus(chat) {
+      const id = this.otherMember(chat).id;
+      if (this.status[id]) return this.status[id].state;
+      return "disconected";
+    },
     otherMemberPhoto(chat) {
       return _.find(chat.membersData, (member, key) => key !== this.user.id)
-        .photoUrl;
+        .photoURL;
     },
     toggleSidebar() {
       this.sidebarState = !this.sidebarState;
