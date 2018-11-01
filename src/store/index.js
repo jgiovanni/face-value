@@ -21,10 +21,14 @@ const firebaseApp = Firebase.initializeApp({
 
 const db = Firebase.firestore();
 const rtdb = Firebase.database();
-const messaging = Firebase.messaging();
-messaging.usePublicVapidKey(
-  "BElMLZYkQaSdPof35PbPP-CLdGebTt2iuKrGlg6c8IwFhAE_xgL75IzyGLVNDu2FdNetLGfJG-eqGp19TUV0Z5I"
-);
+let messaging = null;
+if (Firebase.messaging.isSupported()) {
+  messaging = Firebase.messaging();
+  messaging.usePublicVapidKey(
+    "BElMLZYkQaSdPof35PbPP-CLdGebTt2iuKrGlg6c8IwFhAE_xgL75IzyGLVNDu2FdNetLGfJG-eqGp19TUV0Z5I"
+  );
+}
+
 db.settings({ timestampsInSnapshots: true });
 Vue.prototype.$db = db;
 
@@ -299,46 +303,37 @@ const store = new Vuex.Store({
       dispatch("chats/openDBChannel", {
         userId: payload.uid
       }).catch(console.error);
-
-      // Initialize Push Notifications
-      // Request Permission for notifications
-      messaging
-        .requestPermission()
-        .then(() => {
+      if (messaging) {
+        // Initialize Push Notifications
+        // Request Permission for notifications
+        messaging.requestPermission().then(() => {
           console.log("Notification permission granted.");
           // Get Instance ID token. Initially this makes a network call, once retrieved
           // subsequent calls to getToken will return from cache.
-          messaging
-            .getToken()
-            .then(currentToken => {
-              if (currentToken) {
-                sendTokenToServer(currentToken);
-                // updateUIForPushEnabled(currentToken);
-              } else {
-                // Show permission request.
-                console.log(
-                  "No Instance ID token available. Request permission to generate one."
-                );
-                // Show permission UI.
-                // updateUIForPushPermissionRequired();
-                setTokenSentToServer(false);
-              }
-            })
-            .catch(err => {
-              console.log("An error occurred while retrieving token. ", err);
-              // showToken("Error retrieving Instance ID token. ", err);
+          messaging.getToken().then(currentToken => {
+            if (currentToken) {
+              sendTokenToServer(currentToken);
+              // updateUIForPushEnabled(currentToken);
+            } else {
+              // Show permission request.
+              console.log(
+                "No Instance ID token available. Request permission to generate one."
+              );
+              // Show permission UI.
+              // updateUIForPushPermissionRequired();
               setTokenSentToServer(false);
-            });
-        })
-        .catch(err => {
+            }
+          }).catch(err => {
+            console.log("An error occurred while retrieving token. ", err);
+            // showToken("Error retrieving Instance ID token. ", err);
+            setTokenSentToServer(false);
+          });
+        }).catch(err => {
           console.log("Unable to get permission to notify.", err);
         });
-
-      // Callback fired if Instance ID token is updated.
-      messaging.onTokenRefresh(function() {
-        messaging
-          .getToken()
-          .then(refreshedToken => {
+        // Callback fired if Instance ID token is updated.
+        messaging.onTokenRefresh(function() {
+          messaging.getToken().then(refreshedToken => {
             console.log("Token refreshed.");
             // Indicate that the new Instance ID token has not yet been sent to the
             // app server.
@@ -346,12 +341,12 @@ const store = new Vuex.Store({
             // Send Instance ID token to app server.
             sendTokenToServer(refreshedToken);
             // ...
-          })
-          .catch(err => {
+          }).catch(err => {
             console.log("Unable to retrieve refreshed token ", err);
             // showToken("Unable to retrieve refreshed token ", err);
           });
-      });
+        });
+      }
 
       // Fetch the current user's ID from Firebase Authentication.
       const uid = Firebase.auth().currentUser.uid;

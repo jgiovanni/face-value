@@ -17,7 +17,7 @@
 				<!-- ...end Main Content -->
 
 				<a v-if="userIsAuthenticated && $route.name !== 'Messenger'" class="back-to-top" href="#" @click.prevent="">
-					<img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
+					<img src="/svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
 				</a>
 
 				<!-- Window-popup-CHAT for responsive min-width: 768px -->
