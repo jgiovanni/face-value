@@ -291,8 +291,7 @@
 					<div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
 						<div class="crumina-module crumina-heading">
 							<h2 class="heading-title">Meet New People <span class="c-primary">all over the World</span></h2>
-							<p class="heading-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-								Excepteur sint occaecat cupidatat non proident, sunt in culpa.
+							<p class="heading-text">Vector files need fine tuning? Struggling with Adobe Premier? Tangled in your Arduino Project? Or Maybe this is your second time printing and you need an expert peer, to tell you if your files are print ready.I mean sure you could ask a classmate... and yes you can ask a friend but, that doesn't always work out so great, theres no accountability and quite frankly you feel like a pain in the neck. Our website, Face Value, brings together students from different programs, with different skill sets, to collaborate and learn from each other in a “less pressure” environment. Users create a profile that lists the skills they are willing to share with each other without asking for anything in return. Contribution is encouraged, but everyone is welcome even if they don't have a skill to share. As users connect with each other, these purposed engagements help users increase their network which can potentially lead to collabs, paid gigs, and even employment.
 							</p>
 						</div>
 					</div>
@@ -315,8 +314,10 @@
 					<div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
 						<div class="crumina-module crumina-heading">
 							<h2 class="heading-title">The Best UI/UX and <span class="c-primary">Awesome Features</span></h2>
-							<p class="heading-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-								Excepteur sint occaecat cupidatat non proident, sunt in culpa.
+							<p class="heading-text">
+                                
+                                By starting with the OCAD student body we feel we can develop a model which can then grow to include a wider demographic of artists, individuals, and small businesses. More and more our economy seeks diverse skill sets in individuals, but the resources aren’t always there (Google only helps when you know what to look for). Our web platform answers this need by connecting individuals with people who have specific skill sets, providing help in areas of interest, or weakness.
+                        
 							</p>
 						</div>
 					</div>
@@ -330,8 +331,7 @@
 					<div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
 						<div class="crumina-module crumina-heading">
 							<h2 class="heading-title">Find People with <span class="c-primary">Your Same Interests</span></h2>
-							<p class="heading-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-								Excepteur sint occaecat cupidatat non proident, sunt in culpa.
+							<p class="heading-text"> The mission of  Face Value  is to foster a community of collaborative thinking and sharing, by connecting students from cross disciplinary faculties. 
 							</p>
 						</div>
 					</div>
@@ -397,14 +397,14 @@
 											</li>
 										</ul>
 
-										<p class="testimonial-message">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-											incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-											exercitation ullamco.
+										<p class="testimonial-message">
+                                            
+                                             Never thought going out of my way to help somebody else would be so rewarding! What goes around comes around folks! Amazing interface, cant wait to actually start some projects....
 										</p>
 
 										<div class="author-content">
 											<a href="#" class="h6 author-name">Mathilda Brinker</a>
-											<div class="country">Los Angeles, CA</div>
+											<div class="country">Toronto, ON</div>
 										</div>
 									</div>
 								</div>
@@ -447,13 +447,14 @@
 											</li>
 										</ul>
 
-										<p class="testimonial-message">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-											nulla pariatur laborum.
+										<p class="testimonial-message">
+                                            
+                                            Got amazing feedback on my thesis, actually got my prototye to work with some phyical computing help from Ted Halloway on Face Value. So excited to present it!
 										</p>
 
 										<div class="author-content">
 											<a href="#" class="h6 author-name">Marina Valentine</a>
-											<div class="country">Long Island, NY</div>
+											<div class="country"> Brampton, ON</div>
 										</div>
 									</div>
 								</div>
@@ -533,9 +534,8 @@
 					<div class="col col-xl-5 col-lg-5 m-auto col-md-12 col-sm-12 col-12">
 						<div class="crumina-module crumina-heading">
 							<h2 class="h1 heading-title">Release all the Power with the <span class="c-primary">FaceValue App!</span></h2>
-							<p class="heading-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-								ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							<p class="heading-text">Face Value provides a new way to collaborate on projects, ask our fellow peers/artists for help and network within our own community.
+
 							</p>
 						</div>
 
