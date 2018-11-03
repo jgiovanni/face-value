@@ -9,18 +9,29 @@
 		</div>
 	</div>
 </template>
-<style></style>
+<style>
+</style>
 <script type="text/javascript">
-  export default {
-    name: "CollabView",
-    data() {
-      return {
-        msg: null
-      };
-    },
-    methods: {},
-    mounted() {
-      
+import _ from "lodash";
+// import Collab from "../mixins/collab";
+import { mapState } from "vuex";
+import EditCollabModal from "../components/modals/EditCollabModal";
+import InviteCollabModal from "../components/modals/InviteCollabModal";
+export default {
+  name: "CollabView",
+  components: { EditCollabModal, InviteCollabModal },
+  // mixins: [Collab],
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(["collabs"]),
+    collab() {
+      return _.find(this.collabs.items, (item, key) => key === this.$route.params.id);
     }
-  };
+  },
+  watch: {},
+  methods: {},
+  mounted() {}
+};
 </script>

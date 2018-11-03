@@ -24,11 +24,10 @@
 					<b-tab>
 						<b-row>
 							<b-col sm="6" md="6" lg="=4" xl="3">
-								<div class="friend-item friend-groups create-group" data-mh="friend-groups-item"
-								     style="margin-bottom: 15px;height: calc(100% - 15px);">
-									<a href="#" class="  full-block" data-toggle="modal" data-target="#create-friend-group-1"></a>
+								<div class="friend-item friend-groups create-group" data-mh="friend-groups-item">
+									<b-link @click="showModal('create-friend-group-1')" class="full-block" ></b-link>
 									<div class="content">
-										<b-link @click="showModal('create-friend-group-1')" class="btn btn-control bg-blue">
+										<b-link class="btn btn-control bg-blue">
 											<svg class="olymp-plus-icon">
 												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-plus-icon"></use>
 											</svg>
@@ -65,7 +64,7 @@
 												</b-link>
 												<div class="author-content">
 													<b-link :to="`/collabs/${collab.id}`" class="h5 author-name">{{ collab.name }}</b-link>
-													<div class="country">{{ Object.keys(collab.users).length }} students in the group</div>
+													<div class="country">{{ collab.users && Object.keys(collab.users).length }} students in the group</div>
 												</div>
 											</div>
 
@@ -219,51 +218,61 @@
 	</div>
 </template>
 <style lang="scss">
-	.hide-nav {
-		display: none;
-	}
+.hide-nav {
+  display: none;
+}
 
-	@media (max-width: 768px) {
-		.nav-item {
-			width: auto !important;
-		}
-		.calendar-events-tabs .nav-item + .nav-item {
-			margin-left: 20px !important;
-		}
-	}
+@media (max-width: 768px) {
+  .nav-item {
+    width: auto !important;
+  }
+  .calendar-events-tabs .nav-item + .nav-item {
+    margin-left: 20px !important;
+  }
+}
+.create-group {
+  /*height: 390px;*/
+  /*margin-bottom: 15px;*/
+  height: calc(100% - 15px);
+}
+@media (min-width: 320px) {
+  .create-group {
+    height: 390px;
+  }
+}
 </style>
 <script type="text/javascript">
-  import _ from "lodash";
-  import Collab from "../mixins/collab";
-  import CreateCollabModal from "../components/modals/CreateCollabModal";
-  import EditCollabModal from "../components/modals/EditCollabModal";
-  import InviteCollabModal from "../components/modals/InviteCollabModal";
+import _ from "lodash";
+import Collab from "../mixins/collab";
+import CreateCollabModal from "../components/modals/CreateCollabModal";
+import EditCollabModal from "../components/modals/EditCollabModal";
+import InviteCollabModal from "../components/modals/InviteCollabModal";
 
-  export default {
-    name: "Collabs",
-    components: { EditCollabModal, CreateCollabModal, InviteCollabModal },
-    mixins: [Collab],
-    data() {
-      return {
-        selectedCollab: null,
-        activeTab: null,
-        tabIndex: 0
-      };
+export default {
+  name: "Collabs",
+  components: { EditCollabModal, CreateCollabModal, InviteCollabModal },
+  mixins: [Collab],
+  data() {
+    return {
+      selectedCollab: null,
+      activeTab: null,
+      tabIndex: 0
+    };
+  },
+  computed: {
+    orderedCollabs() {
+      return this.collabs ? _.toArray(this.collabs.items) : [];
     },
-    computed: {
-      orderedCollabs() {
-        return this.collabs ? _.toArray(this.collabs.items) : [];
-      },
-      orderedRequests() {
-        return this.collabRequests ? _.toArray(this.collabRequests.items) : [];
-      }
-    },
-    methods: {
-      editCollab(collab) {
-        this.selectedCollab = collab;
-        this.showModal("edit-friend-group");
-      }
-    },
-    mounted() {}
-  };
+    orderedRequests() {
+      return this.collabRequests ? _.toArray(this.collabRequests.items) : [];
+    }
+  },
+  methods: {
+    editCollab(collab) {
+      this.selectedCollab = collab;
+      this.showModal("edit-friend-group");
+    }
+  },
+  mounted() {}
+};
 </script>
