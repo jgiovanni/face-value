@@ -195,6 +195,7 @@
 <script type="text/javascript">
 import _ from "lodash";
 import { mapState } from "vuex";
+import * as Firebase from "firebase/app";
 // import Defiant from "defiant.js/dist/defiant";
 import SkillsList from "../../assets/skills.json";
 
@@ -273,16 +274,17 @@ export default {
       this.$delete(this.userData.skills, skill);
     },
     updateProfile() {
+      let self = this;
       this.$store.dispatch("userData/patch", this.userData).then(() => {
-        this.$db.app.auth().currentUser.updateProfile({
-          displayName: this.userData.name,
-          phoneNumber: this.userData.phoneNumber,
-          photoURL: this.userData.photoURL
+        Firebase.auth().currentUser.updateProfile({
+          displayName: self.userData.name,
+          phoneNumber: self.userData.phoneNumber,
+          photoURL: self.userData.photoURL
         });
         this.$store.dispatch("autoSignIn", {
-          id: this.$db.app.auth().currentUser.uid,
-          name: this.userData.name,
-          photoURL: this.userData.photoURL
+          uid: self.user.id,
+          displayName: self.userData.name,
+          photoURL: self.userData.photoURL
         });
         this.$root.$emit("showAlert", "Profile Updated Successfully!");
       });

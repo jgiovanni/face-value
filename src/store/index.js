@@ -49,7 +49,15 @@ const userDataModule = {
   firestorePath: "users/{userId}",
   firestoreRefType: "doc", // or "doc"
   moduleName: "userData",
-  statePropName: ""
+  statePropName: "",
+  sync: {
+    // fillables: ["conversations"]
+  },
+  getters: {
+    userData(state) {
+      return state;
+    }
+  }
   // state: {
   //   email: "",
   //   about: "",
@@ -261,7 +269,8 @@ const easyFirestores = createEasyFirestore(
     profileFeedModule
   ],
   {
-    logging: true, FirebaseDependency: Firebase
+    logging: true,
+    FirebaseDependency: Firebase
   }
 );
 
@@ -276,14 +285,11 @@ const store = new Vuex.Store({
     user
   },
   plugins: [easyFirestores],
-  state: {
-    user: null
-  },
   mutations: {},
   actions: {
-    updateStatus({ state }, payload) {
+    updateStatus({ state, getters }, payload) {
       this.dispatch("status/patch", {
-        id: state.user.user.id,
+        id: getters.user.id,
         state: payload,
         last_changed: Firebase.firestore.FieldValue.serverTimestamp()
       }).catch(console.error);
@@ -306,45 +312,54 @@ const store = new Vuex.Store({
       if (messaging) {
         // Initialize Push Notifications
         // Request Permission for notifications
-        messaging.requestPermission().then(() => {
-          console.log("Notification permission granted.");
-          // Get Instance ID token. Initially this makes a network call, once retrieved
-          // subsequent calls to getToken will return from cache.
-          messaging.getToken().then(currentToken => {
-            if (currentToken) {
-              sendTokenToServer(currentToken);
-              // updateUIForPushEnabled(currentToken);
-            } else {
-              // Show permission request.
-              console.log(
-                "No Instance ID token available. Request permission to generate one."
-              );
-              // Show permission UI.
-              // updateUIForPushPermissionRequired();
-              setTokenSentToServer(false);
-            }
-          }).catch(err => {
-            console.log("An error occurred while retrieving token. ", err);
-            // showToken("Error retrieving Instance ID token. ", err);
-            setTokenSentToServer(false);
+        messaging
+          .requestPermission()
+          .then(() => {
+            console.log("Notification permission granted.");
+            // Get Instance ID token. Initially this makes a network call, once retrieved
+            // subsequent calls to getToken will return from cache.
+            messaging
+              .getToken()
+              .then(currentToken => {
+                if (currentToken) {
+                  sendTokenToServer(currentToken);
+                  // updateUIForPushEnabled(currentToken);
+                } else {
+                  // Show permission request.
+                  console.log(
+                    "No Instance ID token available. Request permission to generate one."
+                  );
+                  // Show permission UI.
+                  // updateUIForPushPermissionRequired();
+                  setTokenSentToServer(false);
+                }
+              })
+              .catch(err => {
+                console.log("An error occurred while retrieving token. ", err);
+                // showToken("Error retrieving Instance ID token. ", err);
+                setTokenSentToServer(false);
+              });
+          })
+          .catch(err => {
+            console.log("Unable to get permission to notify.", err);
           });
-        }).catch(err => {
-          console.log("Unable to get permission to notify.", err);
-        });
         // Callback fired if Instance ID token is updated.
         messaging.onTokenRefresh(function() {
-          messaging.getToken().then(refreshedToken => {
-            console.log("Token refreshed.");
-            // Indicate that the new Instance ID token has not yet been sent to the
-            // app server.
-            setTokenSentToServer(false);
-            // Send Instance ID token to app server.
-            sendTokenToServer(refreshedToken);
-            // ...
-          }).catch(err => {
-            console.log("Unable to retrieve refreshed token ", err);
-            // showToken("Unable to retrieve refreshed token ", err);
-          });
+          messaging
+            .getToken()
+            .then(refreshedToken => {
+              console.log("Token refreshed.");
+              // Indicate that the new Instance ID token has not yet been sent to the
+              // app server.
+              setTokenSentToServer(false);
+              // Send Instance ID token to app server.
+              sendTokenToServer(refreshedToken);
+              // ...
+            })
+            .catch(err => {
+              console.log("Unable to retrieve refreshed token ", err);
+              // showToken("Unable to retrieve refreshed token ", err);
+            });
         });
       }
 
@@ -375,8 +390,7 @@ const store = new Vuex.Store({
         last_changed: Firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      Firebase
-        .database()
+      Firebase.database()
         .ref(".info/connected")
         .on("value", function(snapshot) {
           if (snapshot.val() === false) {
@@ -400,9 +414,6 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    userData(state) {
-      return state.userData;
-    },
     isStudent(state) {
       return (
         state.userData &&

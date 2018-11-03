@@ -181,8 +181,8 @@ export default {
     },
     autoSignIn({ commit }, payload) {
       commit("setUser", {
-        id: payload.uid,
-        name: payload.displayName,
+        id: payload.uid || payload.id,
+        name: payload.displayName || payload.name,
         email: payload.email,
         photoURL: payload.photoURL
       });
@@ -218,21 +218,23 @@ export default {
       });
       this.dispatch("chats/closeDBChannel", { clearModule: true });
     },
-    checkForDefaultUserData({ commit, state, dispatch }, payload) {
-      let data = {};
+    checkForDefaultUserData({ commit, state, dispatch, getters }, payload) {
+      let data = {
+        id: payload.user.id
+      };
       if (
-        !this.getters.userData.name ||
-        this.getters.userData.name !== payload.user.displayName
+        !getters["userData/userData"].name ||
+        getters["userData/userData"].name !== payload.user.displayName
       )
         data.name = payload.user.displayName;
       if (
-        !this.getters.userData.email ||
-        this.getters.userData.email !== payload.user.email
+        !getters["userData/userData"].email ||
+        getters["userData/userData"].email !== payload.user.email
       )
         data.email = payload.user.email;
       if (
-        !this.getters.userData.photoURL ||
-        this.getters.userData.photoURL !== payload.user.photoURL
+        !getters["userData/userData"].photoURL ||
+        getters["userData/userData"].photoURL !== payload.user.photoURL
       )
         data.photoURL = payload.user.photoURL;
       // If data is not empty, proceed

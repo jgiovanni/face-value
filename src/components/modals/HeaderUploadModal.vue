@@ -104,9 +104,12 @@ export default {
           // Upload completed successfully, now we can get the download URL
           uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log("File available at", downloadURL);
-            self.$store.dispatch("userData/patch", {
-              headerURL: downloadURL
-            }).then(success).catch(failure);
+            self.$store
+              .dispatch("userData/patch", {
+                headerURL: downloadURL
+              })
+              .then(success)
+              .catch(failure);
           });
         }
       );

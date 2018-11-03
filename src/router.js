@@ -16,6 +16,7 @@ import UserProfile from "./views/ProfileView.vue";
 import UserHome from "./views/User/Home.vue";
 import Messenger from "./views/Messenger.vue";
 import Collabs from "./views/Collabs.vue";
+import CollabView from "./views/CollabView.vue";
 
 Vue.use(Router);
 
@@ -94,6 +95,17 @@ const router = new Router({
         rootClasses: "collabs-page",
         access: true,
         navigation: "main",
+        navigationIcon: "olymp-happy-faces-icon",
+        navigationTitle: "Collabs"
+      }
+    },
+    {
+      path: "/collabs/:id",
+      name: "Collab",
+      component: CollabView,
+      meta: {
+        rootClasses: "collabs-page",
+        access: true,
         navigationIcon: "olymp-happy-faces-icon",
         navigationTitle: "Collabs"
       }

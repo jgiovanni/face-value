@@ -2,11 +2,14 @@ import _ from "lodash";
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {};
+  },
   computed: {
     ...mapState(["collabs", "collabRequests"])
   },
   methods: {
-    requestCollab() {
+    requestCollab(collabId) {
       let self = this;
       // Package Collab Request data
       let users = [];
@@ -19,61 +22,55 @@ export default {
         this.activeChat.membersList,
         member => member !== self.user.id
       );
-      // Create Collab
-      this.$store
-        .dispatch("collabs/set", {
+      // Create Collab Request
+      return this.$store
+        .dispatch("collabRequests/set", {
           chat: this.activeChat.id,
-          confirmed: [],
-          users
+          collab: collabId,
+          from: this.userAuthorObject,
+          hasPermission,
+          to: requestingList,
+          confirmed: {},
+          confirmedList: [],
+          unconfirmedList: requestingList,
+          users: this.activeChat.membersData
         })
-        .then(result => {
-          // Find created collab
-          const collabItem = _.find(
-            this.$store.state.collabs.items,
-            item => item.chat === self.activeChat.id
-          );
-          // Create Collab Request
-          this.$store
-            .dispatch("collabRequests/set", {
-              chat: this.activeChat.id,
-              collab: collabItem.id,
-              from: {
-                id: this.user.id,
-                displayName: this.userData.name,
-                photoURL: this.userData.photoURL,
-                userName: this.userData.userName
-              },
-              hasPermission,
-              to: requestingList,
-              confirmed: {},
-              confirmedList: [],
-              unconfirmedList: requestingList,
-              users
-            })
-            .then(() => {
-              // Find created collab request
-              const collabRequest = _.find(
-                this.$store.state.collabs.requests.items,
-                item => item.chat === self.activeChat.id
-              );
-              // Send collab invitation in chat
-              this.$store.dispatch("chats/messages/postMessage", {
-                message: "Collab Requested",
-                chat: this.activeChat,
-                additionalMessageData: {},
-                additionalChatData: {
-                  collab: {
-                    collab_id: collabItem.id,
-                    request_id: collabRequest.id,
-                    requested_by: this.user.id
-                  }
-                }
-              });
-            })
-            .catch(console.error);
-        });
+        .then(collabRequestId => {
+          // Send collab invitation in chat
+          return this.$store.dispatch("chats/messages/postMessage", {
+            message: "Collab Requested",
+            chat: this.activeChat,
+            additionalMessageData: {},
+            additionalChatData: {
+              collab: {
+                collab_id: collabId,
+                request_id: collabRequestId,
+                requested_by: this.user.id
+              }
+            }
+          });
+        })
+        .catch(console.error);
       // postMessage("");
     },
+    createCollab() {
+      this.$validator.validateAll("collabCreate").then(result => {
+        if (result) {
+          return this.$store
+            .dispatch("collabs/set", {
+              chat: this.activeChat.id,
+              confirmed: [],
+              users: this.activeChat.membersList
+            })
+            .then(result => {
+              if (this.isRequest) {
+                return this.requestCollab();
+              }
+            });
+        } else return false;
+      });
+    },
+    deleteCollab() {},
     acceptCollab() {},
     declineCollab() {},
     cancelCollab() {}

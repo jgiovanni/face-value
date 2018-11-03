@@ -5,8 +5,6 @@
 				<div class="ui-block messages-ui-block">
 					<div class="row m-0">
 						<div class="col col-xl-5 col-lg-6 col-md-12 col-sm-12 padding-r-0 p-0">
-
-
 							<!-- Notification List Chat Messages -->
 
 							<transition-group tag="ul" class="notification-list chat-message" name="slideleft" :style="{ height : containerHeightStyle }" v-if="orderedChats">
@@ -70,7 +68,16 @@
 
 									<div class="more">
 										<b-btn v-if="activeChat.collab" variant="danger" size="sm" @click.prevent="cancelCollab">Cancel Request</b-btn>
-										<b-btn v-else variant="info" size="sm" @click.prevent="requestCollab">Request Collab</b-btn>
+										<b-btn v-else variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>
+										<!--<template v-if="activeChat.topic">
+											<template v-if="activeChatAuthor && activeChatAuthor.id === user.id">
+												<b-btn v-if="activeChat.collab" variant="danger" size="sm" @click.prevent="cancelCollab">Cancel Request</b-btn>
+												<b-btn v-else variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>
+											</template>
+										</template>
+										<template v-else>
+											<b-btn variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>
+										</template>-->
 									</div>
 
 									<!--<b-dropdown class="more" right variant="link" size="sm" no-caret v-if="activeChat">
@@ -283,6 +290,8 @@
 				</div>
 			</div>
 		</div>
+
+		<CreateCollabModal is-request :active-chat="activeChat" />
 	</div>
 </template>
 <style lang="scss">
@@ -307,9 +316,11 @@ import _ from "lodash";
 import { mapState } from "vuex";
 import { DateTime } from "luxon";
 import Collab from "../mixins/collab";
+import CreateCollabModal from "../components/modals/CreateCollabModal";
 
 export default {
   name: "Messenger",
+  components: { CreateCollabModal },
   mixins: [Collab],
   data() {
     return {
@@ -333,7 +344,10 @@ export default {
       if (oldVal.length === 0 && oldVal !== val) {
         this.openChat(_.first(val));
       }
-    }
+    },
+	  activeChatAuthor() {
+      return this.activeChat && _.find(this.activeChat.membersData, member => !!member.topicAuthor);
+	  }
   },
   methods: {
     getTimestamp(chat) {

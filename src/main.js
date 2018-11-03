@@ -27,7 +27,7 @@ import "v-calendar/lib/v-calendar.min.css";
 Vue.config.productionTip = false;
 
 Vue.use(VCalendar, {
-  firstDayOfWeek: 2  // Monday
+  firstDayOfWeek: 2 // Monday
 });
 Vue.use(Overdrive);
 Vue.use(BootstrapVue);
@@ -51,9 +51,11 @@ Vue.component("v-select", vSelect);
 
 Vue.mixin({
   computed: {
-    ...mapState(["userData"]),
     user() {
       return this.$store.getters.user;
+    },
+    userData() {
+      return this.$store.getters["userData/userData"];
     },
     userIsAuthenticated() {
       return this.user !== null && this.user !== undefined;
@@ -63,6 +65,17 @@ Vue.mixin({
         this.userIsAuthenticated &&
         this.$store.userData !== null &&
         this.$store.getters.isStudent
+      );
+    },
+    userAuthorObject() {
+      return (
+        this.user &&
+        this.userData && {
+          id: this.user.id,
+          displayName: this.userData.name,
+          photoURL: this.userData.photoURL,
+          userName: this.userData.userName
+        }
       );
     }
     /*userIsMerchant () {
@@ -89,6 +102,15 @@ Vue.mixin({
     },
     hideAuthModal() {
       this.$root.$emit("bv::hide::modal", "registration-login-form-popup");
+    },
+    showCreateCollabModal() {
+      this.$root.$emit("bv::show::modal", "create-friend-group-1");
+    },
+    showModal(id) {
+      this.$root.$emit("bv::show::modal", id);
+    },
+    hideModal(id) {
+      this.$root.$emit("bv::hide::modal", id);
     }
   },
   created() {}
@@ -144,6 +166,7 @@ new Vue({
           self.$store
             .dispatch("userData/openDBChannel", { userId: user.uid })
             .then(result => {
+              console.log("UserData: ", result);
               self.$store.dispatch("init", { user });
               self.appReady = true;
             })

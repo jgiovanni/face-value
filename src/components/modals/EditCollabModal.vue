@@ -1,35 +1,52 @@
 <template>
-	<b-modal id="choose-from-my-photo" class="window-popup choose-from-my-photo" title-tag="h6" title="Update Avatar Photo" hide-footer centered size="sm">
-		<Slim v-if="userData" :options="slimOptions"/>
+	<b-modal id="edit-friend-group" class="window-popup create-friend-group create-friend-group-1" title-tag="h6" title="Edit Collab" size="sm" hide-footer centered
+	@hidden="modalClosing">
+		<!--<b-link class="close icon-close" data-dismiss="modal" aria-label="Close">
+			<svg class="olymp-close-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+		</b-link>-->
+		<form v-if="collab" @submit.prevent="updateCollab" data-vv-scope="collabCreate">
+			<b-form-group class="form-group label-floating" :class="{ 'is-empty': !collab.name }"
+			              :state="errorState('collabName')"
+			              :invalid-feedback="errors.first('collabName', 'collabCreate')"
+			              label="Collab Name" label-class="control-label" label-for="collabName">
+				<b-input v-validate="'required|min:5'" v-model.trim="collab.name"
+				         data-vv-as="Collab Name" :state="errorState('collabName', 'collabCreate')"
+				         id="collabName" name="collabName" type="text"></b-input>
+			</b-form-group>
+
+			<Slim :options="slimOptions"/>
+
+		</form>
+
+		<b-btn type="submit" @click="updateCollab" size="lg" variant="blue" block>Save Changes</b-btn>
 	</b-modal>
 </template>
-<style lang="scss">
-button.close {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-.slim {
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
+<style>
+.md-radio.md-theme-default .md-radio-container {
+  border: 2px solid rgba(0, 0, 0, 0.54);
 }
 </style>
 <script type="text/javascript">
-import firebase from "firebase/app";
+import Collab from "../../mixins/collab";
 import Slim from "../../vendor/slim/slim.vue";
-const storage = firebase.storage;
-const DefaultAvatar = require("../../vendor/img/face-value-avatar.jpg");
+import Firebase from "firebase/app";
+const storage = Firebase.storage;
 
 export default {
-  name: "AvatarUploadModal",
+  name: "EditCollabModal",
   components: { Slim },
+  props: {
+    collab: {
+      type: Object
+    }
+  },
+  mixins: [Collab],
   data() {
-    return {
-      avatarModalActiveView: "home"
-    };
+    return {};
   },
   computed: {
     slimOptions() {
-      if (this.userData) {
+      if (this.collab) {
         return {
           ratio: "1:1",
           size: {
@@ -48,11 +65,33 @@ export default {
     }
   },
   methods: {
+    modalClosing() {
+      this.$parent.selectedCollab = null;
+      this.hideModal("edit-friend-group");
+    },
+    updateCollab() {
+      this.$validator.validateAll("collabCreate").then(result => {
+        if (result) {
+          if (result) {
+            // Create Collab
+            this.$store
+              .dispatch("collabs/patch", this.collab)
+              .then(response => {
+                console.log("Collab: ", response);
+                this.modalClosing();
+              });
+          }
+          return false;
+        }
+      });
+    },
     // called when slim has initialized
     slimInit(data, slim) {
       // current slim data object and slim reference
       // console.log(data);
-      slim.load(this.userData.photoURL || DefaultAvatar, { blockPush: true });
+	    if (this.collab && this.collab.avatarUR) {
+        slim.load(this.collab.avatarURL, { blockPush: true });
+      }
       /*setTimeout(() => {
         slim._options.instantEdit = true;
       }, 1000);*/
@@ -70,7 +109,9 @@ export default {
       // console.log(progress, success, failure);
 
       const storageRef = storage().ref();
-      const photoUrlRef = storageRef.child(`users/${this.user.id}/photo.jpg`);
+      const photoUrlRef = storageRef.child(
+        `collabs/${this.collab.id}/photo.jpg`
+      );
       const uploadTask = photoUrlRef.put(file[0], {
         contentType: "image/jpeg",
         uploader: this.user.id
@@ -108,8 +149,9 @@ export default {
           uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             console.log("File available at", downloadURL);
             self.$store
-              .dispatch("userData/patch", {
-                photoURL: downloadURL
+              .dispatch("collabs/patch", {
+                id: self.collab.id,
+                avatarURL: downloadURL
               })
               .then(success)
               .catch(failure);
