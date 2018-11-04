@@ -9,6 +9,7 @@ import VueTimeago from "vue-timeago";
 import VCalendar from "v-calendar";
 import Overdrive from "vue-overdrive";
 import vSelect from "vue-select";
+import htmlTextarea from "./components/htmlTextArea";
 import router from "./router";
 import { store, firebaseApp } from "./store/index";
 import { mapState } from "vuex";
@@ -48,7 +49,7 @@ Vue.use(VueTimeago, {
 
 // Register component(s)
 Vue.component("v-select", vSelect);
-
+Vue.component("html-textarea", htmlTextarea);
 Vue.mixin({
   computed: {
     user() {

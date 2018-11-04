@@ -3,7 +3,9 @@ import { mapState } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      collabRequestCancelModal: false
+    };
   },
   computed: {
     ...mapState(["collabs", "collabRequests"])
@@ -71,8 +73,59 @@ export default {
       });
     },
     deleteCollab() {},
-    acceptCollab() {},
-    declineCollab() {},
-    cancelCollab() {}
+    acceptCollabRequest(request) {
+      let currentUser;
+      let confirmed = {};
+      _.some(request.users, (member, key) => {
+        if (key === this.user.id) {
+          currentUser = member;
+          currentUser.id = key;
+        }
+      });
+      if (currentUser) {
+        confirmed[currentUser.id] = currentUser;
+        this.$store
+          .dispatch("collabRequests/patch", {
+            id: request.id,
+            confirmed: {
+              ...confirmed
+            }
+          })
+          .catch(console.error);
+        this.$store
+          .dispatch("collabs/patch", {
+            id: request.collab,
+            confirmed: {
+              ...confirmed
+            }
+          })
+          .catch(console.error);
+      }
+    },
+    declineCollabRequest() {
+      this.$store
+        .dispatch("collabRequests/patch", {
+          id: this.activeChat.collab.request_id
+        })
+        .then(() => {
+          this.collabRequestCancelModal = false;
+        });
+    },
+    cancelCollabRequest() {
+      this.$store
+        .dispatch("collabRequests/delete", this.activeChat.collab.request_id)
+        .then(() => {
+          this.collabRequestCancelModal = false;
+          return this.$store.dispatch("chats/messages/postMessage", {
+            message: "Collab Request Cancelled",
+            chat: this.activeChat,
+            additionalMessageData: {},
+            additionalChatData: {
+              collab: null
+            }
+          });
+        })
+        .catch(console.error);
+    }
   }
 };

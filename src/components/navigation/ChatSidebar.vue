@@ -153,9 +153,8 @@
   }
 }
 .icon-status.on-campus {
-	background-color: #32e4cd;
+  background-color: #32e4cd;
 }
-
 </style>
 <script type="text/javascript">
 import _ from "lodash";
@@ -189,11 +188,22 @@ export default {
   },
   methods: {
     otherMember(chat) {
-      return _.find(chat.membersData, (member, key) => key !== this.user.id);
+      let person = null;
+      if (Object.keys(chat.membersData).length === 2) {
+        _.some(chat.membersData, (member, key) => {
+          if (key !== this.user.id) {
+            person = member;
+            person.id = key;
+            return true;
+          }
+        });
+      }
+      return person;
     },
     otherMemberStatus(chat) {
       const id = this.otherMember(chat).id;
-      if (this.status[id]) return this.status[id].state;
+      if (this.status.items[id])
+        return this.status.items[id].state || "disconected";
       return "disconected";
     },
     otherMemberPhoto(chat) {

@@ -33,10 +33,10 @@
 
 								<!--<li class="chat-group">
 									<div class="author-thumb">
-										<img src="img/avatar11-sm.jpg" alt="author">
-										<img src="img/avatar12-sm.jpg" alt="author">
-										<img src="img/avatar13-sm.jpg" alt="author">
-										<img src="img/avatar10-sm.jpg" alt="author">
+										<img src="/img/avatar11-sm.jpg" alt="author">
+										<img src="/img/avatar12-sm.jpg" alt="author">
+										<img src="/img/avatar13-sm.jpg" alt="author">
+										<img src="/img/avatar10-sm.jpg" alt="author">
 									</div>
 									<div class="notification-event">
 										<a href="#" class="h6 notification-friend">You, Faye, Ed & Jet +3</a>
@@ -67,26 +67,18 @@
 									<h6 class="title" v-if="activeChat" v-text="otherMember(activeChat).displayName"></h6>
 
 									<div class="more">
-										<b-btn v-if="activeChat.collab" variant="danger" size="sm" @click.prevent="cancelCollab">Cancel Request</b-btn>
-										<b-btn v-else variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>
-										<!--<template v-if="activeChat.topic">
+										<!--<b-btn v-if="activeChat.collab" variant="danger" size="sm" @click.prevent="cancelCollab">Cancel Request</b-btn>-->
+										<!--<b-btn v-else variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>-->
+										<template v-if="activeChat.topic">
 											<template v-if="activeChatAuthor && activeChatAuthor.id === user.id">
-												<b-btn v-if="activeChat.collab" variant="danger" size="sm" @click.prevent="cancelCollab">Cancel Request</b-btn>
+												<b-btn v-if="activeChat.collab && activeChat.collab.request_id" variant="danger" size="sm" @click.prevent="collabRequestCancelModal = true">Cancel Request</b-btn>
 												<b-btn v-else variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>
 											</template>
 										</template>
 										<template v-else>
 											<b-btn variant="info" size="sm" @click.prevent="showCreateCollabModal">Request Collab</b-btn>
-										</template>-->
-									</div>
-
-									<!--<b-dropdown class="more" right variant="link" size="sm" no-caret v-if="activeChat">
-										<template slot="button-content">
-											<svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
 										</template>
-										<b-dropdown-item v-if="activeChat.collab" @click.prevent="cancelCollab">Cancel Request</b-dropdown-item>
-										<b-dropdown-item v-else @click.prevent="requestCollab">Request Collab</b-dropdown-item>
-									</b-dropdown>-->
+									</div>
 								</div>
 								<div class="mCustomScrollbar" data-mcs-theme="dark">
 									<div class="text-center" v-if="loadingMessages">
@@ -123,10 +115,11 @@
 								</div>
 
 								<form style="bottom: 0;position: absolute;width: 100%;" @submit.prevent="postMessage()">
-									<b-form-group class="form-group label-floating is-empty"
+									<b-form-group class="form-group label-floating label-static is-empty"
 									              label="Write your reply here..." label-class="control-label" label-for="chatMessage">
-										<b-form-textarea class="form-control" id="chatMessage" v-model="chatMessage"></b-form-textarea>
+										<b-form-textarea class="form-control bg-white" id="chatMessage" v-model="chatMessage" ref="textarea"></b-form-textarea>
 									</b-form-group>
+										<!--<html-textarea id="chatMessage" v-model="chatMessage" @enter-pressed="postMessage()" ></html-textarea>-->
 
 									<div class="add-options-message">
 										<!--<a href="#" class="options-message">
@@ -136,148 +129,17 @@
 											<svg class="olymp-computer-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
 										</a>-->
 										<div class="options-message smile-block">
-											<svg class="olymp-happy-sticker-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-sticker-icon"></use></svg>
-
-											<ul class="more-dropdown more-with-triangle triangle-bottom-right">
-												<li>
-													<a href="#">
-														<img src="img/icon-chat1.png" alt="icon">
-													</a>
+											<!--<svg  class="olymp-happy-sticker-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-sticker-icon"></use></svg>-->
+											<!--<ul class="more-dropdown more-with-triangle triangle-bottom-right">
+												<li v-for="i in 27" :key="i" @click="chatMessage += `:icon-chat${i}:`">
+													<b-link href="#">
+														<img :src="`/img/icon-chat${i}.png`" alt="icon">
+													</b-link>
 												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat2.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat3.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat4.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat5.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat6.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat7.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat8.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat9.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat10.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat11.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat12.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat13.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat14.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat15.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat16.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat17.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat18.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat19.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat20.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat21.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat22.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat23.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat24.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat25.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat26.png" alt="icon">
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<img src="img/icon-chat27.png" alt="icon">
-													</a>
-												</li>
-											</ul>
+											</ul>-->
 										</div>
 
-										<b-button type="submit" :disabled="!activeChat" variant="primary" size="sm">Post Reply</b-button>
+										<b-button type="submit" :disabled="!activeChat && chatMessage.length === 0" variant="primary" size="sm">Post Reply</b-button>
 									</div>
 
 								</form>
@@ -292,6 +154,15 @@
 		</div>
 
 		<CreateCollabModal is-request :active-chat="activeChat" />
+
+		<md-dialog-confirm
+				:md-active.sync="collabRequestCancelModal"
+				md-title="Cancel Collab Request"
+				md-content="Are you sure you want to cancel this Collab Request?"
+				md-confirm-text="Cancel Request"
+				md-cancel-text="Nevermind"
+				@md-cancel="collabRequestCancelModal = false"
+				@md-confirm="cancelCollabRequest" />
 	</div>
 </template>
 <style lang="scss">
@@ -315,18 +186,20 @@
 import _ from "lodash";
 import { mapState } from "vuex";
 import { DateTime } from "luxon";
+import { Picker } from "emoji-mart-vue";
 import Collab from "../mixins/collab";
 import CreateCollabModal from "../components/modals/CreateCollabModal";
 
 export default {
   name: "Messenger",
-  components: { CreateCollabModal },
+  components: { CreateCollabModal, Picker },
   mixins: [Collab],
   data() {
     return {
       windowHeight: 0,
       activeChat: null,
-      chatMessage: null,
+      chatMessage: "",
+      showEmojiPicker: false,
       loadingMessages: false
     };
   },
@@ -337,6 +210,18 @@ export default {
     },
     containerHeightStyle() {
       return `calc(${this.windowHeight}px - 70px)`;
+    },
+    activeChatAuthor() {
+      let author;
+      this.activeChat &&
+        _.some(this.activeChat.membersData, (member, key) => {
+          if (member.topicAuthor) {
+            author = member;
+            author.id = key;
+            return true;
+          }
+        });
+      return author;
     }
   },
   watch: {
@@ -344,10 +229,7 @@ export default {
       if (oldVal.length === 0 && oldVal !== val) {
         this.openChat(_.first(val));
       }
-    },
-	  activeChatAuthor() {
-      return this.activeChat && _.find(this.activeChat.membersData, member => !!member.topicAuthor);
-	  }
+    }
   },
   methods: {
     getTimestamp(chat) {
@@ -413,7 +295,7 @@ export default {
             chat: this.activeChat
           })
           .then(() => {
-            this.chatMessage = null;
+            this.chatMessage = "";
             const scrollBox = $(".mCustomScrollbar");
             scrollBox.scrollTop(scrollBox.prop("scrollHeight"));
             scrollBox.perfectScrollbar("update");

@@ -110,44 +110,26 @@
 								<thead>
 
 								<tr>
-
-									<th class="author">
-										FROM
-									</th>
-
-									<!--<th class="location">
-										PLACE
-									</th>-->
-
-									<th class="upcoming">
-										DATE
-									</th>
-
-									<th class="description">
-										DESCRIPTION
-									</th>
-
-									<th class="users">
-										ASSISTANTS
-									</th>
-
-									<th class="add-event">
-
-									</th>
+									<th class="author">FROM</th>
+									<!--<th class="location">PLACE</th>-->
+									<th class="upcoming">DATE</th>
+									<!--<th class="description">DESCRIPTION</th>-->
+									<th class="users">USERS</th>
+									<th class="add-event"></th>
 								</tr>
 
 								</thead>
 
 								<tbody>
 								<tr class="event-item" v-for="request in orderedRequests" :key="request.id">
-									<td class="author">
+									<td class="author text-center">
 										<div class="event-author inline-items">
 											<div class="author-thumb">
-												<img src="/img/avatar78-sm.jpg" alt="author">
+												<img :src="request.from.photoURL" width="50" :alt="request.from.displayName">
 											</div>
+											<br>
 											<div class="author-date">
-												<a href="#" class="author-name h6">Walter Havock </a>invited you to <br> an event <a href="#">
-												Daydreamz New <br> Year’s Party.</a>
+												<b-link class="author-name h6">{{ request.from.displayName }}</b-link>
 											</div>
 										</div>
 									</td>
@@ -163,42 +145,28 @@
 												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-small-calendar-icon"></use>
 											</svg>
 
-											<span class="month">Dec 29, 2016 at 7:00pm</span>
+											<span class="month">
+												<timeago :datetime="getTimestamp(request.created_at)" :auto-update="300"></timeago>
+											</span>
 
 										</div>
 									</td>
-									<td class="description">
+									<!--<td class="description">
 										<p class="description">Let’s celebrate the new year together! We are organizing a big party for all
 											the agency...</p>
-									</td>
+									</td>-->
 									<td class="users">
 										<ul class="friends-harmonic">
-											<li>
+											<li v-for="(user, key) in request.users" :key="key" v-b-tooltip.hover :title="user.displayName">
 												<a href="#">
-													<img src="img/friend-harmonic5.jpg" alt="friend">
+													<img :src="user.photoURL" width="24" :alt="user.displayName">
 												</a>
 											</li>
-											<li>
-												<a href="#">
-													<img src="img/friend-harmonic10.jpg" alt="friend">
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<img src="img/friend-harmonic7.jpg" alt="friend">
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													<img src="img/friend-harmonic8.jpg" alt="friend">
-												</a>
-											</li>
-
 										</ul>
 									</td>
 									<td class="add-event">
-										<b-link class="btn btn-sm btn-breez">Accept / Confirm</b-link>
-										<b-link class="btn btn-sm btn-border-think custom-color c-grey">Decline / Delete</b-link>
+										<b-link class="btn btn-sm btn-breez" @click="acceptCollabRequest(request)">Accept / Confirm</b-link>
+										<b-link class="btn btn-sm btn-border-think custom-color c-grey" @click="declineCollabRequest(request)">Decline / Delete</b-link>
 									</td>
 								</tr>
 								</tbody>
@@ -243,6 +211,7 @@
 </style>
 <script type="text/javascript">
 import _ from "lodash";
+import { DateTime } from "luxon";
 import Collab from "../mixins/collab";
 import CreateCollabModal from "../components/modals/CreateCollabModal";
 import EditCollabModal from "../components/modals/EditCollabModal";
@@ -268,6 +237,9 @@ export default {
     }
   },
   methods: {
+    getTimestamp(timestamp) {
+      return DateTime.fromMillis(timestamp.seconds * 1000);
+    },
     editCollab(collab) {
       this.selectedCollab = collab;
       this.showModal("edit-friend-group");

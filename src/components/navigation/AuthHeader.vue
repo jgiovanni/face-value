@@ -1092,7 +1092,7 @@ export default {
       }
     },*/
     myStatus() {
-      return this.status[this.user.id];
+      return this.status.items[this.user.id];
     }
   },
   watch: {

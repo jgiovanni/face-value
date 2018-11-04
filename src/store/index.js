@@ -43,7 +43,7 @@ const statusModule = {
   firestorePath: "status",
   firestoreRefType: "collection",
   moduleName: "status",
-  statePropName: ""
+  statePropName: "items"
 };
 const userDataModule = {
   firestorePath: "users/{userId}",
@@ -215,12 +215,8 @@ const chatMessagesModule = {
         id: chat.id,
         latestMessage: message,
         ...additionalChatData
-      })
-        .then(console.log)
-        .catch(console.error);
-      return this.dispatch("chats/messages/set", messageObj)
-        .then(console.log)
-        .catch(console.error);
+      }).catch(console.error);
+      return this.dispatch("chats/messages/set", messageObj).catch(console.error);
     }
   }
 };
