@@ -12,7 +12,7 @@ import vSelect from "vue-select";
 import htmlTextarea from "./components/htmlTextArea";
 import router from "./router";
 import { store, firebaseApp } from "./store/index";
-import { mapState } from "vuex";
+import { DateTime } from "luxon";
 import "./registerServiceWorker";
 
 /* CSS Imports */
@@ -88,6 +88,9 @@ Vue.mixin({
   },
   methods: {
     randomInt: _.random,
+    getTimestamp(timestamp) {
+      return DateTime.fromMillis(timestamp.seconds * 1000);
+    },
     errorClass(field, scope) {
       return { input: true, "is-danger": this.errors.has(field, scope) };
     },

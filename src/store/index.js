@@ -228,6 +228,10 @@ const collabsModule = {
   moduleName: "collabs",
   statePropName: "items",
   sync: {
+    where: [
+      ["confirmedList", "array-contains", "{userId}"],
+      ["ended", "==", false]
+    ],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
         seconds: parseInt(new Date().getTime() / 1000)
@@ -242,7 +246,7 @@ const collabRequestsModule = {
   moduleName: "collabRequests",
   statePropName: "items",
   sync: {
-    where: [["users", "array-contains", "{userId}"]],
+    where: [["unconfirmedList", "array-contains", "{userId}"]],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
         seconds: parseInt(new Date().getTime() / 1000)

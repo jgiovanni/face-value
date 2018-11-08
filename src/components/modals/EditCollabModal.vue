@@ -13,7 +13,14 @@
 				         data-vv-as="Collab Name" :state="errorState('collabName', 'collabCreate')"
 				         id="collabName" name="collabName" type="text"></b-input>
 			</b-form-group>
-
+			<b-form-group class="form-group label-floating" :class="{ 'is-empty': !collab.description }"
+			              :state="errorState('collabDescription', 'collabCreate')"
+			              :invalid-feedback="errors.first('collabDescription', 'collabCreate')"
+			              label="Collab Description" label-class="control-label" label-for="collabName">
+				<b-textarea v-validate="'min:5'" v-model.trim="collab.description"
+				            data-vv-as="Collab Description" :state="errorState('collabDescription', 'collabCreate')"
+				            key="collab-name-input" id="collabDescription" name="collabDescription" type="text"></b-textarea>
+			</b-form-group>
 			<Slim :options="slimOptions"/>
 
 		</form>
@@ -73,10 +80,25 @@ export default {
       this.$validator.validateAll("collabCreate").then(result => {
         if (result) {
           if (result) {
-            // Create Collab
+            // Update Collab
             this.$store
               .dispatch("collabs/patch", this.collab)
               .then(response => {
+                // Update collab request details
+                let requestRef = this.$db.collection("collabRequests");
+                requestRef
+                  .where("collab", "==", this.collab.id)
+                  .limit(1)
+                  .get()
+                  .then(querySnapshot => {
+                    if (querySnapshot.size) {
+                      querySnapshot.docs[0].ref.update({
+                        collab_name: this.collab.name,
+                        collab_description: this.collab.description
+                      });
+                    }
+                  })
+                  .catch(console.error);
                 console.log("Collab: ", response);
                 this.modalClosing();
               });
@@ -89,7 +111,7 @@ export default {
     slimInit(data, slim) {
       // current slim data object and slim reference
       // console.log(data);
-	    if (this.collab && this.collab.avatarUR) {
+      if (this.collab && this.collab.avatarUR) {
         slim.load(this.collab.avatarURL, { blockPush: true });
       }
       /*setTimeout(() => {

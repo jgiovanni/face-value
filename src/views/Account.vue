@@ -15,7 +15,9 @@
 						<!-- Your Profile  -->
 						<div class="your-profile">
 							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">Your PROFILE</h6>
+								<h6 class="title">
+									Your PROFILE
+								</h6>
 							</div>
 
 							<div id="accordion" role="tablist" aria-multiselectable="true">
@@ -35,6 +37,9 @@
 										<ul class="your-profile-menu">
 											<li v-for="route in profileRoutes" :key="route.path">
 												<router-link :to="route.path ? `/account/${route.path}` : '/account'" v-text="route.meta.title || route.name"></router-link>
+											</li>
+											<li>
+												<router-link class="h6 title text-primary" :to="profileUrl">View Public Profile</router-link>
 											</li>
 										</ul>
 									</b-collapse>
@@ -71,7 +76,12 @@ export default {
     };
   },
   computed: {
-    // ...mapState(["newsFeed"])
+    webHost() {
+      return window.location.host;
+    },
+    profileUrl() {
+      return "/fv/" + this.userData.userName;
+    },
   },
   methods: {},
   mounted() {}

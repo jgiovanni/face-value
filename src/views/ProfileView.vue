@@ -60,7 +60,8 @@
 			</template>
 			<template v-else>
 				<PublicProfileHeader :profile="profile" />
-				<router-view :profile="profile" />
+				<!--<router-view :profile="profile" />-->
+				<Home :profile="profile"/>
 			</template>
 
 		</template>
@@ -71,10 +72,11 @@
 </style>
 <script type="text/javascript">
 import PublicProfileHeader from "../components/blocks/Profile/PublicProfileHeader";
+import Home from "./Profile/Home";
 
 export default {
   name: "ProfileView",
-  components: { PublicProfileHeader },
+  components: { Home, PublicProfileHeader },
   data() {
     return {
       loading: false,

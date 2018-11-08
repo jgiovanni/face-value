@@ -3,7 +3,7 @@
 
 		<div class="ui-block">
 			<div class="ui-block-title">
-				<h6 class="title">Profile Intro</h6>
+				<h6 class="title">Profile Info</h6>
 			</div>
 			<div class="ui-block-content">
 

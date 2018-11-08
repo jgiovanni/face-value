@@ -982,9 +982,10 @@ export default {
     }
   },
   watch: {
-    user(value) {
-      if (this.userIsAuthenticated) {
-        this.$router.push("/account ");
+    userIsAuthenticated(value) {
+      if (value) {
+        if (!this.userData.program) this.$router.push("/account");
+        else this.$router.push("/");
       }
     }
   },

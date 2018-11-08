@@ -9,12 +9,12 @@
 					<NewsFeedItemBlock v-for="item in profileFeed.items" :key="item.id" :item="item" />
 				</transition-group>
 
-				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more" data-load-link="items-to-load.html"
+				<!--<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more" data-load-link="items-to-load.html"
 				   data-container="newsfeed-items-grid">
 					<svg class="olymp-three-dots-icon">
 						<use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 					</svg>
-				</a>
+				</a>-->
 			</div>
 			<!-- ... end Main Content -->
 

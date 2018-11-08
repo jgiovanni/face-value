@@ -821,10 +821,10 @@
   resolved "https://registry.yarnpkg.com/@firebase/storage-types/-/storage-types-0.2.3.tgz#09e7ce30eb0d713733e0193cb5c0c3ac157bf330"
   integrity sha512-RaZeam2LgsB7xwAtOQr4G0Geoyf7D5TnLF3a12By6Rh0Z9PqBSlWn0SVYGW3SkmxIdqvWZMZvCyamUlqQvQzWw==
 
-"@firebase/storage@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@firebase/storage/-/storage-0.2.3.tgz#80188243d8274de9cc0fab570bc9064664a8563d"
-  integrity sha512-2sq5jckWszW53gfQMkPNc7EumJ92oErRhzGJANbVzBumwR8qwKZU8/I+/uV9SPK1tVmSUc3S21jdoW5oOJVEuA==
+"@firebase/storage@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@firebase/storage/-/storage-0.2.4.tgz#8393822d29cdba2a4993d643273c104ad9a033f3"
+  integrity sha512-uqA6CoZYkugk69ImqB16VBPP7JRPRfZwcUP9CsE0GPVGQkZQQfBGwzIyEoFA8lUfVLrvxQiL0sQvHUXZ945LMg==
   dependencies:
     "@firebase/storage-types" "0.2.3"
     tslib "1.9.0"
@@ -1010,14 +1010,14 @@
     source-map "^0.5.6"
     vue-template-es2015-compiler "^1.6.0"
 
-"@vue/eslint-config-prettier@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@vue/eslint-config-prettier/-/eslint-config-prettier-3.0.5.tgz#3f02260c3ba37d6fe7343c5a90f0bdf171e75616"
-  integrity sha512-TxUqk3WO2Q/B1g2K7TYOy7crCwiCIeMJajiUy7ESYI4tt9oKa7iN7x7G1qBSxWoJ2pUvLGWR1tNkKkWNX/zrfA==
+"@vue/eslint-config-prettier@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@vue/eslint-config-prettier/-/eslint-config-prettier-4.0.0.tgz#d408b6490a00864c79df69885ef9d82977312bdc"
+  integrity sha512-NVFubMdP8KPkWJy2Z4AdDI1payw4dt1n/IN2VTGWSZd8Wva4TtdibRWFDjBZs4eqeeZepThxg6PDV9242zEM9w==
   dependencies:
-    eslint-config-prettier "^2.9.0"
-    eslint-plugin-prettier "^2.6.2"
-    prettier "^1.12.1"
+    eslint-config-prettier "^3.1.0"
+    eslint-plugin-prettier "^3.0.0"
+    prettier "^1.14.3"
 
 "@vue/preload-webpack-plugin@^1.1.0":
   version "1.1.0"
@@ -3192,12 +3192,12 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-prettier@^2.9.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.10.0.tgz#ec07bc1d01f87d09f61d3840d112dc8a9791e30b"
-  integrity sha512-Mhl90VLucfBuhmcWBgbUNtgBiK955iCDK1+aHAz7QfDQF6wuzWZ6JjihZ3ejJoGlJWIuko7xLqNm8BA5uenKhA==
+eslint-config-prettier@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.1.0.tgz#2c26d2cdcfa3a05f0642cd7e6e4ef3316cdabfa2"
+  integrity sha512-QYGfmzuc4q4J6XIhlp8vRKdI/fI0tQfQPy1dME3UOLprE+v4ssH/3W9LM2Q7h5qBcy5m0ehCrBDU2YF8q6OY8w==
   dependencies:
-    get-stdin "^5.0.1"
+    get-stdin "^6.0.0"
 
 eslint-loader@^2.0.0:
   version "2.1.1"
@@ -3210,13 +3210,12 @@ eslint-loader@^2.0.0:
     object-hash "^1.1.4"
     rimraf "^2.6.1"
 
-eslint-plugin-prettier@^2.6.2:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.7.0.tgz#b4312dcf2c1d965379d7f9d5b5f8aaadc6a45904"
-  integrity sha512-CStQYJgALoQBw3FsBzH0VOVDRnJ/ZimUlpLm226U8qgqYJfPOY/CPK6wyRInMxh73HSKg5wyRwdS4BVYYHwokA==
+eslint-plugin-prettier@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.0.0.tgz#f6b823e065f8c36529918cdb766d7a0e975ec30c"
+  integrity sha512-4g11opzhqq/8+AMmo5Vc2Gn7z9alZ4JqrbZ+D4i8KlSyxeQhZHlmIrY8U9Akf514MoEhogPa87Jgkq87aZ2Ohw==
   dependencies:
-    fast-diff "^1.1.1"
-    jest-docblock "^21.0.0"
+    prettier-linter-helpers "^1.0.0"
 
 eslint-plugin-vue@^4.5.0:
   version "4.7.1"
@@ -3534,7 +3533,7 @@ fast-deep-equal@^2.0.1:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
-fast-diff@^1.1.1:
+fast-diff@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
   integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
@@ -3652,7 +3651,7 @@ finalhandler@1.1.1:
     statuses "~1.4.0"
     unpipe "~1.0.0"
 
-find-and-replace-anything@^1.1.1, find-and-replace-anything@^1.2.0:
+find-and-replace-anything@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/find-and-replace-anything/-/find-and-replace-anything-1.2.0.tgz#d2f2b69718da4e7aee363441d42485274cf79a2d"
   integrity sha512-Dlk3Ks3Ttq2F49qkhfOcPJ/tL7c4wFKHcwPFfKM6vJ/bJ8rAecZGNqbnglADKSFmM6lysbaVeJaJ78uUPcT9KQ==
@@ -3699,10 +3698,10 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-firebase@^5.5.6:
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.5.6.tgz#035f838b0e01b2a781c765fb119c0a5a9e3a1e86"
-  integrity sha512-fHqI7iOqUSyyU90xGeHejm/niVyA5uNs7C52IBezYRlDjXimz/FgaGoEgXrdhPOJdDnmzMgvtms+Wf5oWfh9OQ==
+firebase@^5.5.7:
+  version "5.5.7"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.5.7.tgz#88220bbc8204a46a6e4ccb72ada407256a7486aa"
+  integrity sha512-hbQQVaj9X9RDeKLl0YzxcMhq0O1VRZSoVcdxyN73S7myg/9zVUsq+ozCCHG3vaIFDB9g3pF/A0fcEZo4SuWPqQ==
   dependencies:
     "@firebase/app" "0.3.4"
     "@firebase/auth" "0.7.8"
@@ -3711,7 +3710,7 @@ firebase@^5.5.6:
     "@firebase/functions" "0.3.1"
     "@firebase/messaging" "0.3.6"
     "@firebase/polyfill" "0.3.3"
-    "@firebase/storage" "0.2.3"
+    "@firebase/storage" "0.2.4"
 
 flat-cache@^1.2.1:
   version "1.3.0"
@@ -3919,10 +3918,10 @@ get-stdin@^4.0.1:
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
   integrity sha1-uWjGsKBDhDJJAui/Gl3zJXmkUP4=
 
-get-stdin@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-5.0.1.tgz#122e161591e21ff4c52530305693f20e6393a398"
-  integrity sha1-Ei4WFZHiH/TFJTAwVpPyDmOTo5g=
+get-stdin@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-6.0.0.tgz#9e09bf712b360ab9225e812048f71fde9c89657b"
+  integrity sha512-jp4tHawyV7+fkkSKyvjuLZswblUtz+SQKzSWnBbii16BuZksJlU1wuBYXY75r+duh/llF1ur6oNwi+2ZzjKZ7g==
 
 get-stream@^3.0.0:
   version "3.0.0"
@@ -4831,11 +4830,6 @@ is-utf8@^0.2.0:
   resolved "https://registry.yarnpkg.com/is-utf8/-/is-utf8-0.2.1.tgz#4b0da1442104d1b336340e80797e865cf39f7d72"
   integrity sha1-Sw2hRCEE0bM2NA6AeX6GXPOffXI=
 
-is-what@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/is-what/-/is-what-2.5.0.tgz#7b7adc57e3aba7343895b60fa888e4123c004435"
-  integrity sha512-YJuvJ19Xb/ytkF/ZUQ5HxSvpk4lQb3MsW4as82+YsavyDkW5JMRTLTURQRZuihZ/PweTDNfv+g1Iuc74EJjpNA==
-
 is-what@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/is-what/-/is-what-3.0.1.tgz#babeb6d8aa78b9a3b3fb9607e36d94e5261481b1"
@@ -4902,11 +4896,6 @@ javascript-stringify@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/javascript-stringify/-/javascript-stringify-1.6.0.tgz#142d111f3a6e3dae8f4a9afd77d45855b5a9cce3"
   integrity sha1-FC0RHzpuPa6PSpr9d9RYVbWpzOM=
-
-jest-docblock@^21.0.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/jest-docblock/-/jest-docblock-21.2.0.tgz#51529c3b30d5fd159da60c27ceedc195faf8d414"
-  integrity sha512-5IZ7sY9dBAYSV+YjQ0Ovb540Ku7AO9Z5o2Cg789xj167iQuZ2cG+z0f3Uct6WeYLbU6aQiM2pCs7sZ+4dotydw==
 
 joi@^11.1.1:
   version "11.4.0"
@@ -5315,10 +5304,10 @@ lru-cache@^4.0.1, lru-cache@^4.1.1, lru-cache@^4.1.2, lru-cache@^4.1.3:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-luxon@^1.4.3:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.4.4.tgz#36929fb9559d4119bec4a1b8bdee1516ddb63bf5"
-  integrity sha512-M21p8nbKZRLqVnQ0XAhhCo+2Z3Z6+zm9tuogDMZ2vlkFkw8AREF+d5/abn8tz1/ycu4cemNlqcQcc7HqjhrpTw==
+luxon@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.5.0.tgz#bbb20bc4d3a97f44798e2f0fe13bf5fc2b8784ab"
+  integrity sha512-9IfJ0a5jA3poJSQnamaoOdPG0ulYk1JUI5IYmEdUhUc8dto4t6TVTu+oIM7fpSYy01GwUAA8kGUZMVe7Qx9Y+Q==
 
 make-dir@^1.0.0:
   version "1.3.0"
@@ -5408,7 +5397,7 @@ meow@^3.7.0:
     redent "^1.0.0"
     trim-newlines "^1.0.0"
 
-merge-anything@^2.1.1, merge-anything@^2.2.0:
+merge-anything@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/merge-anything/-/merge-anything-2.2.0.tgz#aeb2b1fc3c75946f4dcf6a4424807219a2a6942b"
   integrity sha512-/dmPRLl9LxBsKDakFAweVksRI4YpUYycX58gl2X7bNw/QpIfSyBpMrvCoofpqvMLX42s3h/EklNiIPoaeLp7+w==
@@ -6772,15 +6761,22 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
+prettier-linter-helpers@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
+  integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
+  dependencies:
+    fast-diff "^1.1.2"
+
 prettier@1.13.7:
   version "1.13.7"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.7.tgz#850f3b8af784a49a6ea2d2eaa7ed1428a34b7281"
   integrity sha512-KIU72UmYPGk4MujZGYMFwinB7lOf2LsDNGSOC8ufevsrPLISrZbNJlWstRi3m0AMuszbH+EFSQ/r6w56RSPK6w==
 
-prettier@^1.12.1, prettier@^1.14.3:
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
-  integrity sha512-qZDVnCrnpsRJJq5nSsiHCE3BYMED2OtsI+cmzIzF1QIfqm5ALf8tEJcO27zV1gKNKRPdhjO0dNWnrzssDQ1tFg==
+prettier@^1.14.3, prettier@^1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.1.tgz#06c67106afb1b40e74b002353b2079cc7e0e67bf"
+  integrity sha512-4rgV2hyc/5Pk0XHH4VjJWHRgVjgRbpMfLQjREAhHBtyW1UvTFkjJEsueGYNYYZd9mn97K+1qv0EBwm11zoaSgA==
 
 pretty-bytes@^4.0.2:
   version "4.0.2"
@@ -8464,10 +8460,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vee-validate@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.1.1.tgz#87dccf754d3e68a838a7eb258578fe7c1ad6da3c"
-  integrity sha512-+FldPoiLkr0EHrdXX3tH4o9CICYFkl1J5bmJePdUOjMqIeAQEM3rzO/EIoX49TQfibNvTDu/U2wuGR0qnWCq1Q==
+vee-validate@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.1.2.tgz#4dc99bbca1358d2cee2b8d0fe7ebd59ab968de08"
+  integrity sha512-6Gr7jxXRnRhAg4QKedWF2mqtJ5MF6os8OBUtWS4XTOyGMbwa1UsJOPogqxEJA1qNqf5fUwqr/uP5Vs1zVyHSxA==
 
 vendors@^1.0.0:
   version "1.0.2"
@@ -8593,24 +8589,24 @@ vue@^2.5.0, vue@^2.5.16, vue@^2.5.17:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
   integrity sha512-mFbcWoDIJi0w0Za4emyLiW72Jae0yjANHbCVquMKijcavBGypqlF7zHRgMa5k4sesdv7hv2rB4JPdZfR+TPfhQ==
 
-vuex-easy-access@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/vuex-easy-access/-/vuex-easy-access-3.1.1.tgz#5638f6c038045397c43719ced8ee0ce897be7895"
-  integrity sha512-bfQWsgyhW2Tp+YzCrRyJVPSuSck28AlGw17IbKGdPaBmPxf17XItfzV+YhwMaD2PEsvTuZIcV5fHaEVLLSX7Rg==
-  dependencies:
-    find-and-replace-anything "^1.1.1"
-    is-what "^2.5.0"
-    merge-anything "^2.1.1"
-
-vuex-easy-firestore@^1.16.1:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.16.1.tgz#a2b5239817d3330b1e7a6683240e954631a42fa3"
-  integrity sha512-Z6tlIMOWtFaAwq1FpLoVpVgPgijGvVabCwqp4/1nVdOR6pNjSTwELNbyKOOH/XTd9uGpzArUkWLcGk8ukOJDoQ==
+vuex-easy-access@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/vuex-easy-access/-/vuex-easy-access-3.1.4.tgz#3beb4ed026861751cf92006c55899eca6812de91"
+  integrity sha512-ov4Z6+MERx/qopVjfAdbGru/Whupf1KsQOLE426Zwf0G1Tst208lynMkxglUT/xGxtAlPonSHpuFiSMpeHppng==
   dependencies:
     find-and-replace-anything "^1.2.0"
     is-what "^3.0.1"
     merge-anything "^2.2.0"
-    vuex-easy-access "^3.1.1"
+
+vuex-easy-firestore@^1.16.3:
+  version "1.16.3"
+  resolved "https://registry.yarnpkg.com/vuex-easy-firestore/-/vuex-easy-firestore-1.16.3.tgz#317f33d8333532f48392b1282e6b6799bc06ed47"
+  integrity sha512-L5cqdrJVsVOv1DPq/DSnOM5dUDluklcVaMgQYCTRIl85bpOfcsHSKJAVf0rLIBqpsKM/2IZwYSy2wh/E/SHfVA==
+  dependencies:
+    find-and-replace-anything "^1.2.0"
+    is-what "^3.0.1"
+    merge-anything "^2.2.0"
+    vuex-easy-access "^3.1.4"
 
 vuex@^3.0.1:
   version "3.0.1"

@@ -122,13 +122,13 @@ const router = new Router({
           component: ProfileHome,
           meta: { title: "Profile", navigation: "profile" }
         },
-        {
-          // UserProfile will be rendered inside User's <router-view>
-          // when /user/:id/profile is matched
-          path: "about",
-          component: ProfileAbout,
-          meta: { title: "About", navigation: "profile" }
-        }
+        // {
+        //   // UserProfile will be rendered inside User's <router-view>
+        //   // when /user/:id/profile is matched
+        //   path: "about",
+        //   component: ProfileAbout,
+        //   meta: { title: "About", navigation: "profile" }
+        // }
       ],
       meta: {
         access: true
@@ -165,10 +165,9 @@ const router = new Router({
     },
     // s
     {
-      path: "/:username",
+      path: "/fv/:username",
       component: UserProfile,
-      props: true,
-      children: [
+      /*children: [
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
@@ -183,8 +182,9 @@ const router = new Router({
           component: ProfileAbout,
           meta: { title: "About" }
         }
-      ],
+      ],*/
       meta: {
+        title: "Profile",
         access: false
       }
     }
@@ -201,7 +201,6 @@ router.beforeEach(async (to, from, next) => {
   const currentUser = store.getters.user;
   const currentUserData = store.getters.userData;
   const requiresAuth = to.matched.some(record => record.meta.access);
-  // debugger;
   if (requiresAuth && !currentUser) next("/hello");
   else if (Array.isArray(to.meta.access) && currentUser) {
     // check if user has access to page

@@ -261,21 +261,6 @@ export default {
         ...this.ocaduDates,
         // Attributes for todos
         {
-          customData: {
-            eventType: "test",
-          },
-          dot: {
-            backgroundColor: "#ff4d4d" // Red dot
-          },
-          dates: [
-            new Date(2018, 9, 1),
-            new Date(2018, 9, 10),
-            new Date(2018, 9, 22),
-            new Date(2018, 10, 6),
-            new Date(2018, 10, 16)
-          ]
-        },
-        {
           key: "today",
           highlight: {
             backgroundColor: "#ff8080"

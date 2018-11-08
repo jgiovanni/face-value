@@ -13,9 +13,17 @@
 							              :state="errorState('collabName', 'collabCreate')"
 							              :invalid-feedback="errors.first('collabName', 'collabCreate')"
 							              label="Collab Name" label-class="control-label" label-for="collabName">
-								<b-input v-validate="'required|min:5'" v-model.trim="collabName"
+								<b-input v-validate="'required|min:5'" v-model="collabName"
 								         data-vv-as="Collab Name" :state="errorState('collabName', 'collabCreate')"
 								         key="collab-name-input" id="collabName" name="collabName" type="text"></b-input>
+							</b-form-group>
+							<b-form-group class="form-group label-floating" :class="{ 'is-empty': !collabDescription }"
+							              :state="errorState('collabDescription', 'collabCreate')"
+							              :invalid-feedback="errors.first('collabDescription', 'collabCreate')"
+							              label="Collab Description" label-class="control-label" label-for="collabName">
+								<b-textarea v-validate="'min:5'" v-model="collabDescription"
+								         data-vv-as="Collab Description" :state="errorState('collabDescription', 'collabCreate')"
+								         key="collab-name-input" id="collabDescription" name="collabDescription" type="text"></b-textarea>
 							</b-form-group>
 						</template>
 
@@ -51,12 +59,14 @@
 .md-radio.md-theme-default .md-radio-container {
   border: 2px solid rgba(0, 0, 0, 0.54);
 }
-	#collabObj.form-control.custom-select {
-		height: auto;
-	}
+#collabObj.form-control.custom-select {
+  height: auto;
+}
 </style>
 <script type="text/javascript">
 import cloneDeep from "lodash/cloneDeep";
+import pick from "lodash/pick";
+import omit from "lodash/omit";
 import isObject from "lodash/isObject";
 import mergeObjects from "lodash/merge";
 import Collab from "../../mixins/collab";
@@ -78,6 +88,7 @@ export default {
       tabIndex: 0,
       selectedCollab: null,
       collabName: null,
+      collabDescription: null,
       collabAvatar: null
     };
   },
@@ -86,34 +97,44 @@ export default {
       this.$validator.validateAll("collabCreate").then(result => {
         if (result) {
           // Create Collab
-          let existingCollab = this.selectedCollab ? cloneDeep(this.collabs.items[this.selectedCollab]) : null;
+          let newCollab;
+          let existingCollab = this.selectedCollab
+            ? cloneDeep(this.collabs.items[this.selectedCollab])
+            : null;
           const chatId = this.activeChat ? this.activeChat.id : null;
           let users = {};
           if (this.activeChat) users = this.activeChat.membersData;
           else users[this.user.id] = this.userAuthorObject;
-
           switch (this.tabIndex) {
             default:
             case 0:
-              this.$store
-                .dispatch("collabs/set", {
-                  name: this.collabName,
-                  chat: chatId,
-                  confirmed: [],
-                  users
-                })
-                .then(response => {
-                  console.log("Collab: ", response);
-                  if (this.isRequest) {
-                    return this.requestCollab(response).then(response1 => {
-                      this.resetModal();
-                      this.hideModal("create-friend-group-1");
-                    });
-                  } else {
+              newCollab = {
+                name: this.collabName,
+                description: this.collabDescription,
+                chat: chatId,
+                confirmed: {
+                  [this.user.id]: this.userAuthorObject
+                },
+                confirmedList: [this.user.id],
+                unconfirmed: omit(users, this.user.id),
+                unconfirmedList: Object.keys(omit(users, this.user.id)),
+                users,
+                usersList: Object.keys(users),
+                ended: false
+              };
+              // newCollab.confirmed[this.user.id] = this.userAuthorObject;
+              this.$store.dispatch("collabs/set", newCollab).then(response => {
+                console.log("Collab: ", response);
+                if (this.isRequest) {
+                  return this.requestCollab(response, newCollab).then(() => {
                     this.resetModal();
                     this.hideModal("create-friend-group-1");
-                  }
-                });
+                  });
+                } else {
+                  this.resetModal();
+                  this.hideModal("create-friend-group-1");
+                }
+              });
               break;
             case 1:
               if (!isObject(existingCollab)) return false;
@@ -123,7 +144,10 @@ export default {
                 .then(response => {
                   console.log("Collab: ", response);
                   if (this.isRequest) {
-                    return this.requestCollab(existingCollab.id).then(response1 => {
+                    return this.requestCollab(
+                      existingCollab.id,
+                      existingCollab
+                    ).then(() => {
                       this.resetModal();
                       this.hideModal("create-friend-group-1");
                     });

@@ -11,31 +11,23 @@ export default {
     ...mapState(["collabs", "collabRequests"])
   },
   methods: {
-    requestCollab(collabId) {
-      let self = this;
-      // Package Collab Request data
-      let users = [];
-      let hasPermission = {};
-      _.each(this.activeChat.membersList, member => {
-        hasPermission[member] = true;
-        users.push(member);
-      });
-      const requestingList = _.filter(
-        this.activeChat.membersList,
-        member => member !== self.user.id
-      );
+    requestCollab(collabId, collabData) {
       // Create Collab Request
       return this.$store
         .dispatch("collabRequests/set", {
-          chat: this.activeChat.id,
+          chat: this.activeChat ? this.activeChat.id : null,
           collab: collabId,
+          collab_name: collabData.name,
+          collab_description: collabData.description,
           from: this.userAuthorObject,
-          hasPermission,
-          to: requestingList,
-          confirmed: {},
-          confirmedList: [],
-          unconfirmedList: requestingList,
-          users: this.activeChat.membersData
+          confirmed: collabData.confirmed,
+          confirmedList: collabData.confirmedList,
+          unconfirmed: collabData.unconfirmed,
+          unconfirmedList: collabData.unconfirmedList,
+          users: collabData.users,
+          declined: {},
+          declinedList: [],
+          ended: false
         })
         .then(collabRequestId => {
           // Send collab invitation in chat
@@ -74,42 +66,60 @@ export default {
     },
     deleteCollab() {},
     acceptCollabRequest(request) {
-      let currentUser;
-      let confirmed = {};
-      _.some(request.users, (member, key) => {
-        if (key === this.user.id) {
-          currentUser = member;
-          currentUser.id = key;
-        }
-      });
-      if (currentUser) {
-        confirmed[currentUser.id] = currentUser;
+      let currentUserObj = _.pick(request.unconfirmed, this.user.id);
+      let confirmed = request.confirmed;
+      let unconfirmed = request.unconfirmed;
+      if (currentUserObj) {
+        _.merge(currentUserObj, this.userAuthorObject); // update user object if changed
+        confirmed[currentUserObj.id] = currentUserObj;
+        unconfirmed = _.omit(unconfirmed, currentUserObj.id);
         this.$store
           .dispatch("collabRequests/patch", {
             id: request.id,
-            confirmed: {
-              ...confirmed
-            }
+            confirmed,
+            confirmedList: Object.keys(confirmed),
+            unconfirmed,
+            unconfirmedList: Object.keys(unconfirmed)
           })
           .catch(console.error);
         this.$store
           .dispatch("collabs/patch", {
             id: request.collab,
-            confirmed: {
-              ...confirmed
-            }
+            confirmed,
+            confirmedList: Object.keys(confirmed),
+            unconfirmed,
+            unconfirmedList: Object.keys(unconfirmed)
           })
           .catch(console.error);
       }
     },
-    declineCollabRequest() {
-      this.$store
-        .dispatch("collabRequests/patch", {
-          id: this.activeChat.collab.request_id
-        })
-        .then(() => {
-          this.collabRequestCancelModal = false;
-        });
+    declineCollabRequest(request) {
+      let currentUserObj = _.pick(request.unconfirmed, this.user.id);
+      let declined = request.declined || {};
+      let unconfirmed = request.unconfirmed;
+      if (currentUserObj) {
+        _.merge(currentUserObj, this.userAuthorObject); // update user object if changed
+        declined[currentUserObj.id] = currentUserObj;
+        unconfirmed = _.omit(unconfirmed, currentUserObj.id);
+        this.$store
+          .dispatch("collabRequests/patch", {
+            id: request.id,
+            unconfirmed,
+            unconfirmedList: Object.keys(unconfirmed),
+            declined,
+            declinedList: Object.keys(declined)
+          })
+          .catch(console.error);
+        this.$store
+          .dispatch("collabs/patch", {
+            id: request.collab,
+            unconfirmed,
+            unconfirmedList: Object.keys(unconfirmed),
+            declined,
+            declinedList: Object.keys(declined)
+          })
+          .catch(console.error);
+      }
     },
     cancelCollabRequest() {
       this.$store

@@ -57,11 +57,24 @@
 						              :invalid-feedback="errors.first('userName')"
 						              description="You can change your user name once."
 						              label="User Name" label-class="control-label" label-for="userData">
-							<b-input v-model="userData.userName"
+							<b-input v-model="userData.userName" disabled
 							         :state="errorState('userName')"
 							         v-validate="'required|alpha_num|min:5'"
 							         data-vv-as="User Name"
 							         id="userData" name="userName" type="text"></b-input>
+						</b-form-group>
+
+						<b-form-group class="form-group label-floating">
+							<label style="z-index: 1" class="control-label pb-1" for="profileURL">Public Profile URL</label>
+							<b-input-group>
+								<b-input readonly :value="webHost + profileUrl" style="z-index: 0;"
+								         id="profileURL" name="profileURL"></b-input>
+								<b-input-group-append>
+									<b-btn style="height: 100%;" variant="secondary" @click="copyToClipboard" v-b-tooltip.hover title="Copy to clipboard"><i class="fa fa-clipboard fa-2x"></i></b-btn>
+								</b-input-group-append>
+							</b-input-group>
+
+							<!--<h5><b-link class="heading-title" :to="profileUrl" v-text="webHost + profileUrl"></b-link></h5>-->
 						</b-form-group>
 					</div>
 
@@ -241,6 +254,14 @@ export default {
       skill: null
     };
   },
+	computed: {
+    webHost() {
+      return window.location.host;
+    },
+    profileUrl() {
+      return "/fv/" + this.userData.userName;
+    },
+	},
   methods: {
     searchSkills(searchTerm) {
       return new Promise(resolve => {
@@ -288,6 +309,16 @@ export default {
         });
         this.$root.$emit("showAlert", "Profile Updated Successfully!");
       });
+    },
+    copyToClipboard() {
+      /* Get the text field */
+      const copyText = document.getElementById("profileURL");
+      /* Select the text field */
+      copyText.select();
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+      /* Alert the copied text */
+      this.$root.$emit("showAlert", "Copied the text: " + copyText.value);
     }
   },
   mounted() {
