@@ -137,11 +137,11 @@
 											<b-form-group class="form-group label-floating" :class="{ 'is-empty': !newUser.email }"
 											              :state="errorState('email', 'register')"
 											              :invalid-feedback="errors.first('email', 'register')"
-											              description="Please use your OCADU student email. (abc@student.ocadu.ca)"
+											              description="We encourage you to use your OCADU student email."
 											              label="Email" label-class="control-label" label-for="newEmail">
 												<b-input v-model="newUser.email"
 												         :state="errorState('email', 'register')"
-												         v-validate="{ required: true, email: true, regex: /(@student\.ocadu\.ca)$/ }"
+												         v-validate="{ required: true, email: true }"
 												         data-vv-as="Email"
 												         id="newEmail" name="email" type="email"></b-input>
 											</b-form-group>
@@ -972,6 +972,11 @@ export default {
         acceptedTOS: false
       }
     };
+  },
+  metaInfo () {
+    return {
+      title: this.$route.name
+    }
   },
   computed: {
     "forms.login.email.state"() {

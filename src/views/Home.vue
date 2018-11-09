@@ -65,6 +65,11 @@ export default {
   data() {
     return {};
   },
+  metaInfo () {
+    return {
+      title: this.$route.name
+    }
+  },
   computed: {
     ...mapState(["newsFeed"]),
     orderedNewsFeed() {

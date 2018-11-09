@@ -256,6 +256,16 @@ const collabRequestsModule = {
   }
 };
 
+// Users Search
+const userSearchModule = {
+  firestorePath: 'users',
+  firestoreRefType: 'collection', // or 'doc'
+  moduleName: 'searchedUsers',
+  statePropName: 'docs',
+  // you can also add state/getters/mutations/actions
+  // for other config like fillables see 'Extra features'
+}
+
 const easyFirestores = createEasyFirestore(
   [
     statusModule,
@@ -266,7 +276,8 @@ const easyFirestores = createEasyFirestore(
     chatMessagesModule,
     collabsModule,
     collabRequestsModule,
-    profileFeedModule
+    profileFeedModule,
+    userSearchModule
   ],
   {
     logging: true,
@@ -278,6 +289,7 @@ Vue.use(Vuex);
 
 import shared from "./shared";
 import user from "./user";
+import algoliaSearch from "algoliasearch";
 
 const store = new Vuex.Store({
   modules: {

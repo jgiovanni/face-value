@@ -1,4 +1,5 @@
 import Vue from "vue";
+import VueMeta from "vue-meta";
 import { store } from "./store/index";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
@@ -19,6 +20,7 @@ import Collabs from "./views/Collabs.vue";
 import CollabView from "./views/CollabView.vue";
 
 Vue.use(Router);
+Vue.use(VueMeta);
 
 const router = new Router({
   routes: [
@@ -136,13 +138,14 @@ const router = new Router({
     },
     {
       path: "/account",
+      name: "Profile Settings",
       component: Account,
       children: [
         {
           // UserProfile will be rendered inside User's <router-view>
           // when /user/:id/profile is matched
           path: "",
-          name: "Account",
+          name: "Profile Settings",
           component: AccountInformation,
           meta: { title: "Personal Information", navigation: "settings" }
         },

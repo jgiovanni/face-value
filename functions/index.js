@@ -1,18 +1,31 @@
 const functions = require('firebase-functions');
+const algoliasearch = require('algoliasearch');
+const nodemailer = require('nodemailer');
 // const Firestore = require('@google-cloud/firestore');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
 const firestore = admin.firestore();
-// const settings = {timestampsInSnapshots: true};
-// firestore.settings(settings);
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
+// [START init_algolia]
+// Initialize Algolia, requires installing Algolia dependencies:
+// https://www.algolia.com/doc/api-client/javascript/getting-started/#install
 //
+// App ID and API Key are stored in functions config variables
+const ALGOLIA_ID = functions.config().algolia.app_id;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
+const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
+
+const ALGOLIA_INDEX_NAME = 'users';
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_SEARCH_KEY);
+const algolia = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+// [END init_algolia]
+
+
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
+
 exports.aggregateLikes = functions.firestore
   .document('newsFeed/{itemId}/likes/{likeId}')
   .onWrite((change, context) => {
@@ -42,6 +55,19 @@ exports.aggregateLikes = functions.firestore
     .catch(err => console.log(err) )
   });
 
+// exports.onUserDataCreated = functions.firestore
+//   .document('users/{userId}')
+//   .onCreate((snap, context) => {
+//     // Get the userData
+//     const userData = snap.data();
+//     const userId = context.params.userId;
+//     // Add an 'objectID' field which Algolia requires
+//     userData.objectID = userId;
+//
+//     // Write to the algolia index
+//     const index = algolia.initIndex(ALGOLIA_INDEX_NAME);
+//     return index.saveObject(userData);
+//   });
 exports.updateUserDataOnCollections = functions.firestore
   .document('users/{userId}')
   .onUpdate((change, context) => {
@@ -72,13 +98,30 @@ exports.updateUserDataOnCollections = functions.firestore
      * chats.membersData[{userId}]
      *
      */
-      const newsFeedRef = firestore.collection('newsFeed')
-      .where('author.id', '==', userId)
-    const likesRef = firestore.collection('likes')
-    const collabRequestsRef = firestore.collection('collabRequests')
-    const chatsRef = firestore.collection('chats')
+      // const newsFeedRef = firestore.collection('newsFeed')
+      // .where('author.id', '==', userId)
+    // const likesRef = firestore.collection('likes')
+    // const collabRequestsRef = firestore.collection('collabRequests')
+    // const chatsRef = firestore.collection('chats')
+    
+    // Write to the algolia index
+    // newUserData.objectID = userId;
+    // const index = algolia.initIndex(ALGOLIA_INDEX_NAME);
+    // return index.saveObject(newUserData);
   
-  });
+  
+});
+// exports.onUserDataDeleted = functions.firestore
+//   .document('users/{userId}')
+//   .onCreate((snap, context) => {
+//     // Get the userData
+//     const userId = context.params.userId;
+//
+//     // Delete from the algolia index
+//     const index = algolia.initIndex(ALGOLIA_INDEX_NAME);
+//     return index.deleteObject(userId);
+//   });
+
 
 // Note: This is a Realtime Database trigger, *not* Cloud Firestore.
 exports.onUserStatusChanged = functions.database

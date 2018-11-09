@@ -1,70 +1,147 @@
 <template>
-	<div class="ui-block">
-		<div class="news-feed-form">
-			<!-- Nav tabs -->
-			<b-nav tabs>
-				<!--<b-nav-item :active="post.type === 'status'" @click="post.type = 'status'">
-					<svg class="olymp-status-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
-					<span>Status</span>
-				</b-nav-item>-->
-				<b-nav-item :active="post.type === 'skill-share'" @click="post.type = 'skill-share'">
-					<i class="fa fa-handshake fa-2x"></i>
-					<!--<svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>-->
-					<span>Skill Share</span>
-				</b-nav-item>
-				<!--<b-nav-item :active="post.type === 'skill-learn'" @click="post.type = 'skill-learn'">
-					&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
-					<i class="fa fa-graduation-cap fa-2x"></i>
-					<span>Skill Learn</span>
-				</b-nav-item>-->
-				<b-nav-item :active="post.type === 'collab'" @click="post.type = 'collab'">
-					<i class="fa fa-users fa-2x"></i>
-					<!--<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>-->
-					<span>Collaboration</span>
-				</b-nav-item>
-			</b-nav>
+  <div class="ui-block">
+    <div class="news-feed-form">
+      <!-- Nav tabs -->
+      <b-nav tabs>
+        <!--
+          <b-nav-item :active="post.type === 'status'" @click="post.type = 'status'">
+          	<svg class="olymp-status-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
+          	<span>Status</span>
+          </b-nav-item>
+        -->
+        <b-nav-item
+          :active="post.type === 'skill-share'"
+          @click="post.type = 'skill-share';"
+        >
+          <i class="fa fa-handshake fa-2x"></i>
+          <!--
+            <svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
+          -->
+          <span>Skill Share</span>
+        </b-nav-item>
+        <!--
+          <b-nav-item :active="post.type === 'skill-learn'" @click="post.type = 'skill-learn'">
+          	&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
+          	<i class="fa fa-graduation-cap fa-2x"></i>
+          	<span>Skill Learn</span>
+          </b-nav-item>
+        -->
+        <b-nav-item
+          :active="post.type === 'collab'"
+          @click="post.type = 'collab';"
+        >
+          <i class="fa fa-users fa-2x"></i>
+          <!--
+            <svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>
+          -->
+          <span>Collaboration</span>
+        </b-nav-item>
+      </b-nav>
 
-			<!-- Tab panes -->
-			<div class="tab-content">
-				<div class="tab-pane active" role="tabpanel" aria-expanded="true">
-					<b-form @submit.prevent.stop>
-						<div class="author-thumb">
-							<img :src="userData.photoURL" height="36" width="36" :alt="user.displayName">
-						</div>
-						<b-form-group class="form-group with-icon label-floating is-empty" :label="postTypeLabels[post.type]" label-class="control-label" label-for="postBody">
-							<b-form-textarea id="postBody" class="form-control" v-model="post.body"></b-form-textarea>
-						</b-form-group>
-						<!--<b-form-group class="form-group with-icon label-floating label-static is-empty tags-control" label="Add Skills here" label-class="control-label" label-for="postSkills">-->
-						<div class="" style="border-bottom: 1px solid #e6ecf5;padding-left: 70px;">
-        
-							<!-- <md-chips class="md-primary" style="font-size: .875rem;" v-model="post.skills" md-placeholder="Add Skills here..." @keydown.enter.prevent.stop="" :md-format="formatName"  md-static></md-chips> -->
-              <md-chip v-for="skill in post.skills" :key="skill" class="md-primary" style="font-size: .875rem;" md-deletable @md-delete="removeSkill(skill)">{{ skill }}</md-chip>
-              <md-autocomplete v-model="skill" :md-options="skillsList" @md-selected="addSkill" @md-changed="searchSkills" @md-opened="searchSkills" md-dense>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" role="tabpanel" aria-expanded="true">
+          <b-form @submit.prevent.stop>
+            <div class="author-thumb">
+              <img
+                :src="userData.photoURL"
+                height="36"
+                width="36"
+                :alt="user.displayName"
+              />
+            </div>
+            <b-form-group
+              class="form-group with-icon label-floating is-empty"
+              :label="postTypeLabels[post.type]"
+              label-class="control-label"
+              label-for="postBody"
+            >
+              <b-form-textarea
+                id="postBody"
+                class="form-control"
+                v-model="post.body"
+              ></b-form-textarea>
+            </b-form-group>
+            <!--
+              <b-form-group class="form-group with-icon label-floating label-static is-empty tags-control" label="Add Skills here" label-class="control-label" label-for="postSkills">
+            -->
+            <div
+              class=""
+              style="border-bottom: 1px solid #e6ecf5;padding-left: 70px;"
+            >
+              <!--
+                <md-chips class="md-primary" style="font-size: .875rem;" v-model="post.skills" md-placeholder="Add Skills here..." @keydown.enter.prevent.stop="" :md-format="formatName"  md-static></md-chips>
+              -->
+              <md-chip
+                v-for="skill in post.skills"
+                :key="skill"
+                class="md-primary"
+                style="font-size: .875rem;"
+                md-deletable
+                @md-delete="removeSkill(skill);"
+                >{{ skill }}</md-chip
+              >
+              <md-autocomplete
+                v-model="skill"
+                :md-options="skillsList"
+                @md-selected="addSkill"
+                @md-changed="searchSkills"
+                @md-opened="searchSkills"
+                md-dense
+              >
                 <label>Add skills you are looking for here...</label>
 
-	              <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item }}</template>
+                <template slot="md-autocomplete-item" slot-scope="{ item }">{{
+                  item
+                }}</template>
               </md-autocomplete>
-						</div>
-						<!--</b-form-group>-->
-						<div class="add-options-message">
-							<a href="#" @click.prevent="" class="options-message" v-b-tooltip.hover title="ADD PHOTOS">
-								<svg class="olymp-camera-icon" data-toggle="modal" data-target="#update-header-photo"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"></use></svg>
-							</a>
-							<!--<a href="#" class="options-message" v-b-tooltip.hover title="TAG YOUR FRIENDS">
-								<svg class="olymp-computer-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
-							</a>-->
-							<!--<a href="#" class="options-message" v-b-tooltip.hover title="ADD LOCATION">
-								<svg class="olymp-small-pin-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-small-pin-icon"></use></svg>
-							</a>-->
+            </div>
+            <!-- </b-form-group> -->
+            <div class="add-options-message">
+              <a
+                href="#"
+                @click.prevent=""
+                class="options-message"
+                v-b-tooltip.hover
+                title="ADD PHOTOS"
+              >
+                <svg
+                  class="olymp-camera-icon"
+                  data-toggle="modal"
+                  data-target="#update-header-photo"
+                >
+                  <use
+                    xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"
+                  ></use>
+                </svg>
+              </a>
+              <!--
+                <a href="#" class="options-message" v-b-tooltip.hover title="TAG YOUR FRIENDS">
+                	<svg class="olymp-computer-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
+                </a>
+              -->
+              <!--
+                <a href="#" class="options-message" v-b-tooltip.hover title="ADD LOCATION">
+                	<svg class="olymp-small-pin-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-small-pin-icon"></use></svg>
+                </a>
+              -->
 
-							<button type="button" @click.prevent.stop="createItem" class="btn btn-primary btn-md-2">Post Status</button>
-							<!--<button type="button" class="btn btn-md-2 btn-border-think btn-transparent c-grey" @click="">Preview</button>-->
-						</div>
-					</b-form>
-				</div>
-			</div>
-		</div>
-	</div>
+              <button
+                type="button"
+                @click.prevent.stop="createItem"
+                class="btn btn-primary btn-md-2"
+              >
+                Post Status
+              </button>
+              <!--
+                <button type="button" class="btn btn-md-2 btn-border-think btn-transparent c-grey" @click="">Preview</button>
+              -->
+            </div>
+          </b-form>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style lang="scss">
 .news-feed-form {

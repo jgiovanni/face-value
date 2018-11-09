@@ -1,4 +1,5 @@
 import _ from "lodash";
+import Firebase from "firebase/app";
 import Vue from "vue";
 import App from "./App.vue";
 import BootstrapVue from "bootstrap-vue";
@@ -23,6 +24,7 @@ import "selectize/dist/css/selectize.css";
 import "./vendor/sass/main.scss";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "v-calendar/lib/v-calendar.min.css";
+import algoliaSearch from "algoliasearch";
 // import "./vendor/slim/slim.css";
 
 Vue.config.productionTip = false;
@@ -60,6 +62,13 @@ Vue.mixin({
     },
     userIsAuthenticated() {
       return this.user !== null && this.user !== undefined;
+    },
+    isFirstLogin() {
+      let metadata;
+      if (this.user) {
+        metadata = Firebase.auth().currentUser.metadata;
+        return metadata.creationTime === metadata.lastSignInTime;
+      } else return null;
     },
     userIsStudent() {
       return (
@@ -166,6 +175,19 @@ new Vue({
     return firebaseApp.auth().onAuthStateChanged(user => {
       console.log(user);
       if (user) {
+        if (this.isFirstLogin) {
+          let algolia = algoliaSearch(
+            "B2P40N4H7I",
+            "0df51b06c9678a484cc44e90687d795d"
+          );
+          const AlgoliaUsersIndex = algolia.initIndex("users");
+          AlgoliaUsersIndex.saveObject({
+            objectID: user.uid,
+            displayName: user.displayName,
+            userName: user.userName,
+            photoURL: user.photoURL
+          });
+        }
         self.$store.dispatch("autoSignIn", user.toJSON()).then(() => {
           self.$store
             .dispatch("userData/openDBChannel", { userId: user.uid })

@@ -22,9 +22,7 @@
 				            key="collab-name-input" id="collabDescription" name="collabDescription" type="text"></b-textarea>
 			</b-form-group>
 			<Slim :options="slimOptions"/>
-
 		</form>
-
 		<b-btn type="submit" @click="updateCollab" size="lg" variant="blue" block>Save Changes</b-btn>
 	</b-modal>
 </template>

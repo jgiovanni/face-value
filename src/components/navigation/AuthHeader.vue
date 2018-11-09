@@ -506,29 +506,29 @@
 			<div class="header-content-wrapper">
 				<ul class="nav nav-tabs mobile-app-tabs" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#request" role="tab">
+						<b-link class="nav-link" @click="mobileNav.collabRequests = !mobileNav.collabRequests">
 							<div class="control-icon has-items">
 								<svg class="olymp-happy-face-icon">
 									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
 								</svg>
-								<div class="label-avatar bg-blue">6</div>
+								<div class="label-avatar bg-blue">{{ orderedRequests.length || 0 }}</div>
 							</div>
-						</a>
+						</b-link>
 					</li>
 
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#chat" role="tab">
+					<!--<li class="nav-item">
+						<a class="nav-link" @click="mobileNav.chats = !mobileNav.chats">
 							<div class="control-icon has-items">
-								<svg class="olymp-chat---messages-icon">
-									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
+								<svg class="olymp-chat-&#45;&#45;messages-icon">
+									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use>
 								</svg>
 								<div class="label-avatar bg-purple">2</div>
 							</div>
 						</a>
-					</li>
+					</li>-->
 
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#notification" role="tab">
+					<!--<li class="nav-item">
+						<a class="nav-link" @click="mobileNav.notifications = !mobileNav.notifications">
 							<div class="control-icon has-items">
 								<svg class="olymp-thunder-icon">
 									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
@@ -536,10 +536,10 @@
 								<div class="label-avatar bg-primary">8</div>
 							</div>
 						</a>
-					</li>
+					</li>-->
 
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#search" role="tab">
+					<!--<li class="nav-item">
+						<a class="nav-link" @click="mobileNav.searchBar = !mobileNav.searchBar">
 							<svg class="olymp-magnifying-glass-icon">
 								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
 							</svg>
@@ -547,144 +547,58 @@
 								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use>
 							</svg>
 						</a>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 
 			<!-- Tab panes -->
 			<div class="tab-content tab-content-responsive">
 
-				<div class="tab-pane " id="request" role="tabpanel">
+				<div class="tab-pane" :class="{ 'active': mobileNav.collabRequests }" id="request" role="tabpanel">
 
 					<div class="mCustomScrollbar" data-mcs-theme="dark">
-						<div class="ui-block-title ui-block-title-small">
-							<h6 class="title">FRIEND REQUESTS</h6>
-							<a href="#">Find Friends</a>
-							<a href="#">Settings</a>
-						</div>
 						<ul class="notification-list friend-requests">
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar55-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-									<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
-								</div>
-								<span class="notification-icon">
-										<a href="#" class="accept-request">
-											<span class="icon-add without-text">
-												<svg class="olymp-happy-face-icon"><use
-														xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-											</span>
-										</a>
-
-										<a href="#" class="accept-request request-del">
-											<span class="icon-minus">
-												<svg class="olymp-happy-face-icon"><use
-														xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-											</span>
-										</a>
-
-									</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
+							<li v-if="!orderedRequests.length">
+								<div class="notification-event text-center">
+									<i>Nothing to see here!</i>
 								</div>
 							</li>
-							<li>
+							<li v-for="request in orderedRequests" :key="request.id">
 								<div class="author-thumb">
-									<img src="/img/avatar56-sm.jpg" alt="author">
+									<img :src="request.from.photoURL" width="34" :alt="request.from.displayName">
 								</div>
 								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Tony Stevens</a>
-									<span class="chat-message-item">4 Friends in Common</span>
+									<b-link class="h6 notification-friend">{{ request.from.displayName }}</b-link>
+									<!--<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>-->
 								</div>
 								<span class="notification-icon">
-										<a href="#" class="accept-request">
-											<span class="icon-add without-text">
-												<svg class="olymp-happy-face-icon"><use
-														xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-											</span>
-										</a>
+											<b-link @click="acceptCollabRequest(request)" class="accept-request" v-b-tooltip.hover title="Accept Request">
+												<span class="icon-add without-text">
+													<svg class="olymp-happy-face-icon"><use
+															xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+												</span>
+											</b-link>
 
-										<a href="#" class="accept-request request-del">
-											<span class="icon-minus">
-												<svg class="olymp-happy-face-icon"><use
-														xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-											</span>
-										</a>
+											<b-link @click="declineCollabRequest(request)" class="accept-request request-del" v-b-tooltip.hover title="Decline Request">
+												<span class="icon-minus">
+													<svg class="olymp-happy-face-icon"><use
+															xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+												</span>
+											</b-link>
+										</span>
 
-									</span>
-
-								<div class="more">
+								<!--<div class="more">
 									<svg class="olymp-three-dots-icon">
 										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
 									</svg>
-								</div>
-							</li>
-							<li class="accepted">
-								<div class="author-thumb">
-									<img src="/img/avatar57-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									You and <a href="#" class="h6 notification-friend">Mary Jane Stark</a> just
-									became friends. Write on <a href="#" class="notification-link">her wall</a>.
-								</div>
-								<span class="notification-icon">
-										<svg class="olymp-happy-face-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-									</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-									<svg class="olymp-little-delete">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-									</svg>
-								</div>
-							</li>
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar58-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Stagg Clothing</a>
-									<span class="chat-message-item">9 Friends in Common</span>
-								</div>
-								<span class="notification-icon">
-										<a href="#" class="accept-request">
-											<span class="icon-add without-text">
-												<svg class="olymp-happy-face-icon"><use
-														xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-											</span>
-										</a>
-
-										<a href="#" class="accept-request request-del">
-											<span class="icon-minus">
-												<svg class="olymp-happy-face-icon"><use
-														xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-											</span>
-										</a>
-
-									</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-								</div>
+								</div>-->
 							</li>
 						</ul>
-						<a href="#" class="view-all bg-blue">Check all your Events</a>
 					</div>
 
 				</div>
 
-				<div class="tab-pane " id="chat" role="tabpanel">
+				<div class="tab-pane " :class="{'active': mobileNav.chats}" id="chat" role="tabpanel">
 
 					<div class="mCustomScrollbar" data-mcs-theme="dark">
 						<div class="ui-block-title ui-block-title-small">
@@ -788,7 +702,7 @@
 
 				</div>
 
-				<div class="tab-pane " id="notification" role="tabpanel">
+				<div class="tab-pane " :class="{'active': mobileNav.notifications}" id="notification" role="tabpanel">
 
 					<div class="mCustomScrollbar" data-mcs-theme="dark">
 						<div class="ui-block-title ui-block-title-small">
@@ -941,17 +855,13 @@
 
 				</div>
 
-				<div class="tab-pane " id="search" role="tabpanel">
-
-
+				<div class="tab-pane " :class="{'active': mobileNav.searchBar}" id="search" role="tabpanel">
 					<form class="search-bar w-search notification-list friend-requests">
 						<div class="form-group with-button">
 							<input class="form-control js-user-search" placeholder="Search here people or pages..."
 							       type="text">
 						</div>
 					</form>
-
-
 				</div>
 
 			</div>
@@ -985,6 +895,12 @@ export default {
   mixins: [Collab],
   data() {
     return {
+      mobileNav: {
+        collabRequests: false,
+	      chats: false,
+	      notifications: false,
+	      searchBar: false
+      },
       searchSkillInput: this.$route.query.skill || null,
       currentStatusType: "online",
       statusTypes: ["online", "away", "disconected", "status-invisible"],

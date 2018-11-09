@@ -37,15 +37,22 @@
 <script type="text/javascript">
 import _ from "lodash";
 import SkillsList from "../../assets/skills.json";
+import algoliaAdmin from "../../mixins/algoliaAdmin";
 
 export default {
   name: "Skills",
+	mixins: [algoliaAdmin],
   data() {
     return {
       skillsList: [],
       skill: null,
       originalSkills: {}
     };
+  },
+  metaInfo () {
+    return {
+      title: (this.$route.meta && this.$route.meta.title) + " | " + this.$route.name
+    }
   },
   methods: {
     searchSkills(searchTerm) {
@@ -81,6 +88,7 @@ export default {
     },
     updateProfile() {
       this.$store.dispatch("userData/patch", this.userData).then(() => {
+        this.updateUsersIndicies(this.userData);
         this.$root.$emit("showAlert", "Skills Updated Successfully!");
       });
     }

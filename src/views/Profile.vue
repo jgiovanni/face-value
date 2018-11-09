@@ -16,6 +16,11 @@ export default {
       msg: null
     };
   },
+  metaInfo () {
+    return {
+      title: this.$route.name
+    }
+  },
   methods: {},
   mounted() {}
 };

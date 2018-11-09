@@ -12,10 +12,11 @@ export default {
   },
   methods: {
     requestCollab(collabId, collabData) {
+      const hasChat = this.activeChat ? this.activeChat.id : null;
       // Create Collab Request
       return this.$store
         .dispatch("collabRequests/set", {
-          chat: this.activeChat ? this.activeChat.id : null,
+          chat: hasChat,
           collab: collabId,
           collab_name: collabData.name,
           collab_description: collabData.description,
@@ -31,18 +32,20 @@ export default {
         })
         .then(collabRequestId => {
           // Send collab invitation in chat
-          return this.$store.dispatch("chats/messages/postMessage", {
-            message: "Collab Requested",
-            chat: this.activeChat,
-            additionalMessageData: {},
-            additionalChatData: {
-              collab: {
-                collab_id: collabId,
-                request_id: collabRequestId,
-                requested_by: this.user.id
+          if (hasChat) {
+            return this.$store.dispatch("chats/messages/postMessage", {
+              message: "Collab Requested",
+              chat: this.activeChat,
+              additionalMessageData: {},
+              additionalChatData: {
+                collab: {
+                  collab_id: collabId,
+                  request_id: collabRequestId,
+                  requested_by: this.user.id
+                }
               }
-            }
-          });
+            });
+          }
         })
         .catch(console.error);
       // postMessage("");

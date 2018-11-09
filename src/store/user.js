@@ -1,3 +1,4 @@
+import algoliaSearch from "algoliasearch";
 import Vue from "vue";
 import axios from "axios";
 import _ from "lodash";
@@ -49,7 +50,7 @@ export default {
                   user: newUser,
                   ...payload
                 });
-                commit("setUser", newUser);
+              commit("setUser", newUser);
                 resolve(updatedUser);
               })
               .catch(error => {
@@ -220,7 +221,8 @@ export default {
     },
     checkForDefaultUserData({ commit, state, dispatch, getters }, payload) {
       let data = {
-        id: payload.user.id
+        id: payload.user.id,
+        uid: payload.user.id
       };
       if (
         !getters["userData/userData"].name ||
