@@ -26,36 +26,39 @@ export default {
             commit("setLoading", false);
 
             // Send Email Verification
-            firebase
-              .auth()
-              .currentUser.sendEmailVerification()
-              .catch(error => {
-                console.log(error);
-              });
+            // firebase
+            //   .auth()
+            //   .currentUser.sendEmailVerification()
+            //   .catch(console.error);
 
             // Add additional data to user profile
             firebase
               .auth()
               .currentUser.updateProfile({
-                displayName: `${payload.first_name} ${payload.last_name}`
+                displayName: payload.displayName
               })
-              .then(updatedUser => {
+              .then(() => {
                 const newUser = {
-                  id: updatedUser.uid,
-                  name: updatedUser.displayName,
-                  email: updatedUser.email,
-                  photoURL: updatedUser.photoURL
+                  id: user.user.uid,
+                  name: user.user.displayName,
+                  email: user.user.email,
+                  photoURL: `https://ui-avatars.com/api/?name=${payload.displayName}&size=512`,
+                  userName: payload.userName
                 };
-                dispatch("checkForDefaultUserData", {
-                  user: newUser,
-                  ...payload
+                // firebase.firestore().collection("users")
+                //   .doc(newUser.id)
+                //   .set({
+                //     ...newUser,
+                //     uid: newUser.id
+                //   });
+                dispatch("userData/patch", {
+                  ...newUser,
+                  uid: newUser.id
                 });
-              commit("setUser", newUser);
-                resolve(updatedUser);
+                commit("setUser", newUser);
+                resolve(user.user);
               })
-              .catch(error => {
-                console.log(error);
-              });
+              .catch(console.error);
           })
           .catch(error => {
             commit("setLoading", false);
@@ -226,9 +229,9 @@ export default {
       };
       if (
         !getters["userData/userData"].name ||
-        getters["userData/userData"].name !== payload.user.displayName
+        getters["userData/userData"].name !== (payload.user.displayName || payload.user.name)
       )
-        data.name = payload.user.displayName;
+        data.name = (payload.user.displayName || payload.user.name);
       if (
         !getters["userData/userData"].email ||
         getters["userData/userData"].email !== payload.user.email
@@ -239,6 +242,11 @@ export default {
         getters["userData/userData"].photoURL !== payload.user.photoURL
       )
         data.photoURL = payload.user.photoURL;
+      if (
+        !getters["userData/userData"].userName ||
+        getters["userData/userData"].userName !== payload.user.userName
+      )
+        data.userName = payload.user.userName;
       // If data is not empty, proceed
       console.log(data);
       if (!_.isEmpty(data)) dispatch("userData/patch", data);

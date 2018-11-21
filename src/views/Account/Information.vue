@@ -366,7 +366,7 @@
                 ></i>
               </b-form-group>
 
-	            <b-form-group
+              <b-form-group
                 class="form-group with-icon label-floating"
                 :class="{ 'is-empty': !userData.social.deviantArt }"
                 :state="errorState('socialDeviantArt')"
@@ -460,10 +460,11 @@ export default {
       skill: null
     };
   },
-  metaInfo () {
+  metaInfo() {
     return {
-      title: (this.$route.meta && this.$route.meta.title) + " | " + this.$route.name
-    }
+      title:
+        (this.$route.meta && this.$route.meta.title) + " | " + this.$route.name
+    };
   },
   computed: {
     webHost() {
@@ -508,16 +509,22 @@ export default {
     updateProfile() {
       let self = this;
       this.$store.dispatch("userData/patch", this.userData).then(() => {
-        Firebase.auth().currentUser.updateProfile({
-          displayName: self.userData.name,
-          phoneNumber: self.userData.phoneNumber,
-          photoURL: self.userData.photoURL
-        });
-        this.$store.dispatch("autoSignIn", {
-          uid: self.user.id,
-          displayName: self.userData.name,
-          photoURL: self.userData.photoURL
-        });
+        Firebase.auth()
+          .currentUser.updateProfile({
+            displayName: self.userData.name,
+            phoneNumber: self.userData.phoneNumber,
+            photoURL: self.userData.photoURL
+          })
+          .then(console.log)
+          .catch(console.error);
+        this.$store
+          .dispatch("autoSignIn", {
+            uid: self.user.id,
+            displayName: self.userData.name,
+            photoURL: self.userData.photoURL
+          })
+          .then(console.log)
+          .catch(console.error);
         this.updateUsersIndicies(self.userData);
         this.$root.$emit("showAlert", "Profile Updated Successfully!");
       });

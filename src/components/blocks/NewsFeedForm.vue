@@ -2,47 +2,47 @@
   <div class="ui-block">
     <div class="news-feed-form">
       <!-- Nav tabs -->
-      <b-nav tabs>
-        <!--
+      <!--<b-nav tabs>
+        &lt;!&ndash;
           <b-nav-item :active="post.type === 'status'" @click="post.type = 'status'">
           	<svg class="olymp-status-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
           	<span>Status</span>
           </b-nav-item>
-        -->
+        &ndash;&gt;
         <b-nav-item
           :active="post.type === 'skill-share'"
           @click="post.type = 'skill-share';"
         >
           <i class="fa fa-handshake fa-2x"></i>
-          <!--
+          &lt;!&ndash;
             <svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
-          -->
+          &ndash;&gt;
           <span>Skill Share</span>
         </b-nav-item>
-        <!--
+        &lt;!&ndash;
           <b-nav-item :active="post.type === 'skill-learn'" @click="post.type = 'skill-learn'">
           	&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
           	<i class="fa fa-graduation-cap fa-2x"></i>
           	<span>Skill Learn</span>
           </b-nav-item>
-        -->
+        &ndash;&gt;
         <b-nav-item
           :active="post.type === 'collab'"
           @click="post.type = 'collab';"
         >
           <i class="fa fa-users fa-2x"></i>
-          <!--
+          &lt;!&ndash;
             <svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>
-          -->
+          &ndash;&gt;
           <span>Collaboration</span>
         </b-nav-item>
-      </b-nav>
+      </b-nav>-->
 
       <!-- Tab panes -->
       <div class="tab-content">
         <div class="tab-pane active" role="tabpanel" aria-expanded="true">
           <b-form @submit.prevent.stop>
-            <div class="author-thumb">
+            <div class="author-thumb" v-if="userData && user">
               <img
                 :src="userData.photoURL"
                 height="36"
@@ -52,7 +52,7 @@
             </div>
             <b-form-group
               class="form-group with-icon label-floating is-empty"
-              :label="postTypeLabels[post.type]"
+              label="Get help with a project or ask others to collaborate."
               label-class="control-label"
               label-for="postBody"
             >
@@ -98,7 +98,7 @@
             </div>
             <!-- </b-form-group> -->
             <div class="add-options-message">
-              <a
+              <!--<a
                 href="#"
                 @click.prevent=""
                 class="options-message"
@@ -114,7 +114,7 @@
                     xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"
                   ></use>
                 </svg>
-              </a>
+              </a>-->
               <!--
                 <a href="#" class="options-message" v-b-tooltip.hover title="TAG YOUR FRIENDS">
                 	<svg class="olymp-computer-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
@@ -288,15 +288,11 @@ export default {
     },
     createItem(e) {
       // Add author
-      this.post.author = {
-        id: this.user.id,
-        displayName: this.user.name,
-        photoURL: this.user.photoURL,
-        userName: this.userData.userName
-      };
+      this.post.author = this.userAuthorObject;
       this.post.authorRef = this.$db.collection("users").doc(this.user.id); // document reference
       this.$store.dispatch("newsFeed/set", this.post).then(result => {
         this.resetPost();
+        this.$ga.event("Post", "create", result);
       });
     },
     resetPost() {

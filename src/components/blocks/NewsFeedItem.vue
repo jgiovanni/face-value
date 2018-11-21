@@ -248,6 +248,7 @@
                 created_at: firebase.firestore.FieldValue.serverTimestamp()
               }).catch(console.log);
               this.item.like_count++;
+              this.$ga.event("Post", "like", this.item.id);
             }).catch(console.log);
           }
         }
@@ -317,18 +318,16 @@
         conversation.membersData[this.item.author.id] = author;
         conversation.membersData[this.item.author.id]["topicAuthor"] = true;
 
-        this.$store.dispatch("chats/set", conversation).then(() => {
+        this.$store.dispatch("chats/set", conversation).then(newChatId => {
           // Find new chat
-          const thisChat = _.find(
-            this.$store.state.chats.items,
-            item => item.latestMessage === conversation.latestMessage
-          );
+          const thisChat = this.$store.state.chats.items[newChatId];
+          this.$ga.event("Post", "message", this.item.id);
           // add id to the list of chats associated with this top
-          this.item.chats[thisChat.id] = true;
+          this.item.chats[newChatId] = true;
           this.item.chats_with[this.user.id] = true;
           this.$store.dispatch("newsFeed/patch", this.item).catch(console.error);
           // open chat channel and 2-way bind
-          this.$store.dispatch("chats/messages/openDBChannel", { chatId: thisChat.id }).then(() => {
+          this.$store.dispatch("chats/messages/openDBChannel", { chatId: newChatId }).then(() => {
             this.$store.dispatch("chats/messages/set", msg).catch(console.error);
             this.$root.$emit("openChatModal", thisChat);
             this.resetForm();

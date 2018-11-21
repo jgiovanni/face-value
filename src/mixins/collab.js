@@ -60,6 +60,7 @@ export default {
               users: this.activeChat.membersList
             })
             .then(result => {
+              this.$ga.event("Collab", "create", this.item.id);
               if (this.isRequest) {
                 return this.requestCollab();
               }

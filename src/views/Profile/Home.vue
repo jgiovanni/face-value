@@ -52,29 +52,42 @@ export default {
     // ...mapState(["profileFeed"])
   },
   watch: {
-    $route: "fetchFeed"
+    $route: "fetchFeed",
+    profile() {
+      this.fetchFeed();
+    }
   },
   methods: {
     fetchFeed() {
+      console.log(this.profile);
       this.$store.dispatch("profileFeed/fetch", {whereFilters: [["author.id", "==", this.profile.id]], orderBy: ["created_at", "desc"]})
-      .then(querySnapshot => {
-        if (querySnapshot.done === true) {
-          // `{done: true}` is returned when everything is already fetched and there are 0 docs:
-          return '0 docs left to retrieve'
-        }
-        // here you can the Firestore `querySnapshot` which is returned
-        querySnapshot.forEach(doc => {
-          // you have to manually add the doc with `fetch`
-          const fetchedDoc = doc.data()
-          fetchedDoc.id = doc.id
-          // this.profileFeed[doc.id] = fetchedDoc;
-          this.profileFeed.push(fetchedDoc);
-          // also don't forget that in this case `defaultValues` will not be applied
+        .then(querySnapshot => {
+          console.log(querySnapshot);
+          if (querySnapshot.done === true) {
+            // `{done: true}` is returned when everything is already fetched and there are 0 docs:
+            return "0 docs left to retrieve";
+          }
+          // here you can the Firestore `querySnapshot` which is returned
+          querySnapshot.forEach(doc => {
+            // you have to manually add the doc with `fetch`
+            const fetchedDoc = doc.data();
+            fetchedDoc.id = doc.id;
+            // this.profileFeed[doc.id] = fetchedDoc;
+            console.log(fetchedDoc);
+            this.profileFeed.push(fetchedDoc);
+            // also don't forget that in this case `defaultValues` will not be applied
+          });
         })
-      })
-      .catch(console.error)
+        .catch(console.error);
     }
   },
-  mounted() {}
+  mounted() {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    if (this.profile) this.fetchFeed();
+  },
+  created() {
+
+  }
 };
 </script>

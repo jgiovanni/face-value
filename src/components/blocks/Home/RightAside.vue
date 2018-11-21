@@ -4,15 +4,10 @@
   >
     <div class="ui-block">
       <!-- W-Action -->
-      <div class="widget w-action">
-        <img src="https://firebasestorage.googleapis.com/v0/b/face-value-6b3c6.appspot.com/o/ads%2FOCAD_WebAd_Akimbo.jpg?alt=media&token=666f4456-c560-4b61-bcd0-573729c9e098" alt="Akimbo" />
-        <div class="content">
-          <h4 class="title">AD SPACE</h4>
-          <span>PREMIUM AD SPACE HERE!</span>
-          <!--
-            <a href="01-LandingPage.html" class="btn btn-bg-secondary btn-md">Register Now!</a>
-          -->
-        </div>
+      <div class="widget w-action" style="background: url('https://firebasestorage.googleapis.com/v0/b/face-value-6b3c6.appspot.com/o/ads%2FOCAD_WebAd_Akimbo.jpg?alt=media&token=666f4456-c560-4b61-bcd0-573729c9e098') #F37123 no-repeat center center; background-size: contain">
+        <a href="http://akimbo.ca" target="_blank" style="display: block;">
+          <img src="https://firebasestorage.googleapis.com/v0/b/face-value-6b3c6.appspot.com/o/ads%2FOCAD_WebAd_Akimbo.jpg?alt=media&token=666f4456-c560-4b61-bcd0-573729c9e098" style="opacity: 0;" alt="Akimbo" />
+        </a>
       </div>
       <!-- ... end W-Action -->
     </div>

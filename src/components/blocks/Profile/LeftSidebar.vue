@@ -10,14 +10,14 @@
         <ul class="widget w-personal-info item-block">
           <li>
             <span class="title">About Me:</span>
-            <span class="text" v-text="profile.about || userData.about"></span>
+            <span class="text" v-text="(profile && profile.about) || userData.about"></span>
           </li>
           <li>
             <span class="title">Skills:</span>
             <span class="text">
               <router-link
                 :to="{ name: 'home', query: { skill } }"
-                v-for="(val, skill) in profile.skills || userData.skills"
+                v-for="(val, skill) in (profile && profile.skills) || userData.skills"
                 :key="skill"
                 >{{ skill }},
               </router-link>
@@ -38,8 +38,8 @@
           <h6 class="title">Social Networks:</h6>
           <a
             target="_blank"
-            v-if="profile.website || userData.website"
-            :href="profile.website || userData.website"
+            v-if="(profile && profile.website) || userData.website"
+            :href="(profile && profile.website) || userData.website"
             class="social-item bg-dark"
             style="text-transform: capitalize"
           >
@@ -47,7 +47,7 @@
           </a>
           <a
             target="_blank"
-            v-for="(val, key) in profile.social || userData.social"
+            v-for="(val, key) in (profile && profile.social) || userData.social"
             :key="key"
             :href="val"
             class="social-item"
@@ -440,6 +440,8 @@ export default {
       switch (social) {
         case "facebook":
           return "fa-facebook-f";
+        case "deviantArt":
+          return "fa-deviantart";
         case "linkedIn":
           return "fa-linkedin-in";
         default:
@@ -450,6 +452,8 @@ export default {
       switch (social) {
         case "facebook":
           return "bg-facebook";
+        case "deviantArt":
+          return "bg-dark";
         case "twitter":
           return "bg-twitter";
         case "dribbble":

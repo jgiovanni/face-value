@@ -88,12 +88,6 @@ Vue.mixin({
         }
       );
     }
-    /*userIsMerchant () {
-      return this.userIsAuthenticated && this.$store.userData !== null && this.$store.getters.isMerchant
-    },
-    userIsAdmin () {
-      return this.userIsAuthenticated && this.$store.userData !== null && this.$store.getters.isAdmin
-    }*/
   },
   methods: {
     randomInt: _.random,
@@ -169,12 +163,33 @@ new Vue({
       }
     }
   },
+  methods: {
+    // enable firestore with persistence
+    async getFirestore () {
+      const firestore = Firebase.firestore();
+      firestore.settings({ timestampsInSnapshots: true });
+      try {
+        await firestore.enablePersistence();
+      } catch (err) {
+        console.log("err.code → ", err.code);
+        if (err.code === "failed-precondition") {
+          // Multiple tabs open, persistence can only be enabled in one tab at a a time.
+          console.log("firebase/failed-precondition");
+        } else if (err.code === "unimplemented") {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          return firestore;
+        }
+      }
+      return firestore;
+    }
+  },
   async created() {
-    console.log("Created App");
+    // console.log("Created App");
     let self = this;
     return firebaseApp.auth().onAuthStateChanged(user => {
-      console.log(user);
       if (user) {
+        console.log(user);
         if (this.isFirstLogin) {
           let algolia = algoliaSearch(
             "B2P40N4H7I",

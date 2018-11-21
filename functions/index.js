@@ -21,6 +21,35 @@ const client = algoliasearch(ALGOLIA_ID, ALGOLIA_SEARCH_KEY);
 const algolia = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 // [END init_algolia]
 
+const sendgridemail = require('@sendgrid/mail');
+const MY_SENDGRID_API_KEY = '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';
+sendgridemail.setApiKey(MY_SENDGRID_API_KEY);
+
+exports.payEmail = functions.firestore
+.document('customers/{customerId}/payments/{paymentId}') //any write to this node will trigger email
+  .onCreate(event => {
+    const customerId = event.params.customerId;
+    const fsdb = admin.firestore()
+    return fsdb.collection('customers').doc(customerId)
+    .get()
+    .then(doc => {
+      const customerdata = doc.data()
+      const msgbody = {
+        to: customerdata.email,
+        from: 'auto-reply@xyzshopping.com',
+        subject:  'Payment Success - xyzshopping.com',
+        templateId: '<add send grid custom template id here>',
+        substitutionWrappers: ['{{', '}}'],
+        substitutions: {
+          name: customerdata.displayName
+        }
+      };
+      return payEmail.send(msgbody)
+    })
+    .then(() => console.log('payment mail sent success') )
+    .catch(err => console.log(err) )
+  });
+
 
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");

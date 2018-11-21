@@ -19,7 +19,32 @@ const firebaseApp = Firebase.initializeApp({
   messagingSenderId: "242553748651"
 });
 
-const db = Firebase.firestore();
+// enable firestore with persistence
+async function getFirestore() {
+  const firestore = Firebase.firestore();
+  firestore.settings({ timestampsInSnapshots: true });
+  try {
+    await firestore.enablePersistence();
+  } catch (err) {
+    console.log("err.code → ", err.code);
+    if (err.code === "failed-precondition") {
+      // Multiple tabs open, persistence can only be enabled in one tab at a a time.
+      console.log("firebase/failed-precondition");
+    } else if (err.code === "unimplemented") {
+      // The current browser does not support all of the
+      // features required to enable persistence
+      return firestore;
+    }
+  }
+  return firestore;
+}
+
+let db;
+getFirestore().then(db => {
+  db = Firebase.firestore();
+  db.settings({ timestampsInSnapshots: true });
+  Vue.prototype.$db = db;
+});
 const rtdb = Firebase.database();
 let messaging = null;
 if (Firebase.messaging.isSupported()) {
@@ -28,9 +53,6 @@ if (Firebase.messaging.isSupported()) {
     "BElMLZYkQaSdPof35PbPP-CLdGebTt2iuKrGlg6c8IwFhAE_xgL75IzyGLVNDu2FdNetLGfJG-eqGp19TUV0Z5I"
   );
 }
-
-db.settings({ timestampsInSnapshots: true });
-Vue.prototype.$db = db;
 
 // Firestore uses a different server timestamp value, so we'll
 // create two more constants for Firestore state.
