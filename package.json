@@ -13,8 +13,8 @@
     "algoliasearch": "^3.30.0",
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "emoji-mart-vue": "^2.6.4",
-    "firebase": "^5.5.8",
+    "emoji-mart-vue": "^2.6.5",
+    "firebase": "^5.5.9",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "luxon": "^1.7.1",
@@ -33,7 +33,7 @@
     "vue-timeago": "^5.0.0",
     "vue2-animate": "^2.1.0",
     "vuex": "^3.0.1",
-    "vuex-easy-firestore": "^1.16.3",
+    "vuex-easy-firestore": "^1.16.4",
     "yarn": "^1.10.1"
   },
   "devDependencies": {
