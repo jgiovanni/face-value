@@ -3,6 +3,7 @@ import VueMeta from "vue-meta";
 import { store } from "./store/index";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import SearchResults from "./views/SearchResults.vue";
 import Landing from "./views/Landing.vue";
 import TermsOfService from "./views/TermsOfService.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
@@ -75,6 +76,14 @@ const router = new Router({
         navigation: "main",
         navigationIcon: "olymp-newsfeed-icon",
         navigationTitle: "Home"
+      }
+    },
+    {
+      path: "/search",
+      name: "Search",
+      component: SearchResults,
+      meta: {
+        access: true
       }
     },
     {

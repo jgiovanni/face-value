@@ -2,41 +2,43 @@
   <div class="ui-block">
     <div class="news-feed-form">
       <!-- Nav tabs -->
-      <!--<b-nav tabs>
-        &lt;!&ndash;
-          <b-nav-item :active="post.type === 'status'" @click="post.type = 'status'">
-          	<svg class="olymp-status-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
-          	<span>Status</span>
-          </b-nav-item>
-        &ndash;&gt;
-        <b-nav-item
-          :active="post.type === 'skill-share'"
-          @click="post.type = 'skill-share';"
-        >
-          <i class="fa fa-handshake fa-2x"></i>
+      <!--
+        <b-nav tabs>
           &lt;!&ndash;
-            <svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
+            <b-nav-item :active="post.type === 'status'" @click="post.type = 'status'">
+            	<svg class="olymp-status-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-status-icon"></use></svg>
+            	<span>Status</span>
+            </b-nav-item>
           &ndash;&gt;
-          <span>Skill Share</span>
-        </b-nav-item>
-        &lt;!&ndash;
-          <b-nav-item :active="post.type === 'skill-learn'" @click="post.type = 'skill-learn'">
-          	&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
-          	<i class="fa fa-graduation-cap fa-2x"></i>
-          	<span>Skill Learn</span>
+          <b-nav-item
+            :active="post.type === 'skill-share'"
+            @click="post.type = 'skill-share';"
+          >
+            <i class="fa fa-handshake fa-2x"></i>
+            &lt;!&ndash;
+              <svg class="olymp-share-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-share-icon"></use></svg>
+            &ndash;&gt;
+            <span>Skill Share</span>
           </b-nav-item>
-        &ndash;&gt;
-        <b-nav-item
-          :active="post.type === 'collab'"
-          @click="post.type = 'collab';"
-        >
-          <i class="fa fa-users fa-2x"></i>
           &lt;!&ndash;
-            <svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>
+            <b-nav-item :active="post.type === 'skill-learn'" @click="post.type = 'skill-learn'">
+            	&lt;!&ndash;<svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>&ndash;&gt;
+            	<i class="fa fa-graduation-cap fa-2x"></i>
+            	<span>Skill Learn</span>
+            </b-nav-item>
           &ndash;&gt;
-          <span>Collaboration</span>
-        </b-nav-item>
-      </b-nav>-->
+          <b-nav-item
+            :active="post.type === 'collab'"
+            @click="post.type = 'collab';"
+          >
+            <i class="fa fa-users fa-2x"></i>
+            &lt;!&ndash;
+              <svg class="olymp-multimedia-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-multimedia-icon"></use></svg>
+            &ndash;&gt;
+            <span>Collaboration</span>
+          </b-nav-item>
+        </b-nav>
+      -->
 
       <!-- Tab panes -->
       <div class="tab-content">
@@ -73,12 +75,12 @@
                 <md-chips class="md-primary" style="font-size: .875rem;" v-model="post.skills" md-placeholder="Add Skills here..." @keydown.enter.prevent.stop="" :md-format="formatName"  md-static></md-chips>
               -->
               <md-chip
-                v-for="skill in post.skills"
+                v-for="skill in post.skillsList"
                 :key="skill"
                 class="md-primary"
                 style="font-size: .875rem;"
                 md-deletable
-                @md-delete="removeSkill(skill);"
+                @md-delete="removeSkill(skill)"
                 >{{ skill }}</md-chip
               >
               <md-autocomplete
@@ -98,23 +100,25 @@
             </div>
             <!-- </b-form-group> -->
             <div class="add-options-message">
-              <!--<a
-                href="#"
-                @click.prevent=""
-                class="options-message"
-                v-b-tooltip.hover
-                title="ADD PHOTOS"
-              >
-                <svg
-                  class="olymp-camera-icon"
-                  data-toggle="modal"
-                  data-target="#update-header-photo"
+              <!--
+                <a
+                  href="#"
+                  @click.prevent=""
+                  class="options-message"
+                  v-b-tooltip.hover
+                  title="ADD PHOTOS"
                 >
-                  <use
-                    xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"
-                  ></use>
-                </svg>
-              </a>-->
+                  <svg
+                    class="olymp-camera-icon"
+                    data-toggle="modal"
+                    data-target="#update-header-photo"
+                  >
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-camera-icon"
+                    ></use>
+                  </svg>
+                </a>
+              -->
               <!--
                 <a href="#" class="options-message" v-b-tooltip.hover title="TAG YOUR FRIENDS">
                 	<svg class="olymp-computer-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
@@ -241,7 +245,8 @@ export default {
         like_count: 0,
         share_count: 0,
         recent_likes: [],
-        skills: [],
+        skills: {},
+        skillsList: [],
         attachments: [],
         publish: true,
         created_at: null,
@@ -277,14 +282,16 @@ export default {
       });
     },
     addSkill(skill) {
-      this.post.skills.push(skill);
+      this.$set(this.post.skills, skill, true);
+      this.post.skillsList.push(skill);
       this.$nextTick(() => {
         this.skill = null;
       });
       return null;
     },
     removeSkill(skill) {
-      this.post.skills = _.without(this.post.skills, skill);
+      this.$delete(this.post.skills, skill);
+      this.post.skillsList = _.without(this.post.skillsList, skill);
     },
     createItem(e) {
       // Add author
@@ -308,7 +315,8 @@ export default {
         like_count: 0,
         share_count: 0,
         recent_likes: [],
-        skills: [],
+        skills: {},
+        skillsList: [],
         attachments: [],
         publish: true,
         created_at: null,

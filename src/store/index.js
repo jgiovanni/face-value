@@ -27,13 +27,15 @@ async function getFirestore() {
     await firestore.enablePersistence();
   } catch (err) {
     console.log("err.code → ", err.code);
-    if (err.code === "failed-precondition") {
-      // Multiple tabs open, persistence can only be enabled in one tab at a a time.
-      console.log("firebase/failed-precondition");
-    } else if (err.code === "unimplemented") {
-      // The current browser does not support all of the
-      // features required to enable persistence
-      return firestore;
+    switch (err.code) {
+      case "failed-precondition":
+        // Multiple tabs open, persistence can only be enabled in one tab at a a time.
+        console.log("firebase/failed-precondition");
+        break;
+      case "unimplemented":
+        // The current browser does not support all of the
+        // features required to enable persistence
+        return firestore;
     }
   }
   return firestore;
@@ -45,6 +47,7 @@ getFirestore().then(db => {
   db.settings({ timestampsInSnapshots: true });
   Vue.prototype.$db = db;
 });
+const createNewTimestamp = () => parseInt(new Date().getTime() / 1000);
 const rtdb = Firebase.database();
 let messaging = null;
 if (Firebase.messaging.isSupported()) {
@@ -53,9 +56,6 @@ if (Firebase.messaging.isSupported()) {
     "BElMLZYkQaSdPof35PbPP-CLdGebTt2iuKrGlg6c8IwFhAE_xgL75IzyGLVNDu2FdNetLGfJG-eqGp19TUV0Z5I"
   );
 }
-
-// Firestore uses a different server timestamp value, so we'll
-// create two more constants for Firestore state.
 
 /**
  * Modules for Vuex
@@ -125,7 +125,7 @@ const newsFeedModule = {
     orderBy: ["created_at", "desc"],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
-        seconds: parseInt(new Date().getTime() / 1000)
+        seconds: createNewTimestamp()
       };
       updateStore(doc);
     }
@@ -144,7 +144,7 @@ const profileFeedModule = {
     orderBy: ["created_at", "desc"],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
-        seconds: parseInt(new Date().getTime() / 1000)
+        seconds: createNewTimestamp()
       };
       updateStore(doc);
     }
@@ -164,7 +164,7 @@ const chatsModule = {
     ],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
-        seconds: parseInt(new Date().getTime() / 1000)
+        seconds: createNewTimestamp()
       };
       updateStore(doc);
     }
@@ -194,7 +194,7 @@ const chatMessagesModule = {
     orderBy: ["created_at"],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
-        seconds: parseInt(new Date().getTime() / 1000)
+        seconds: createNewTimestamp()
       };
       updateStore(doc);
     }
@@ -256,7 +256,7 @@ const collabsModule = {
     ],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
-        seconds: parseInt(new Date().getTime() / 1000)
+        seconds: createNewTimestamp()
       };
       updateStore(doc);
     }
@@ -271,7 +271,7 @@ const collabRequestsModule = {
     where: [["unconfirmedList", "array-contains", "{userId}"]],
     insertHook(updateStore, doc, store) {
       doc.created_at = {
-        seconds: parseInt(new Date().getTime() / 1000)
+        seconds: createNewTimestamp()
       };
       updateStore(doc);
     }

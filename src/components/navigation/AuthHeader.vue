@@ -1,877 +1,1232 @@
 <template>
-	<div>
-		<!-- Header-BP -->
-
-		<header class="header" id="site-header">
-
-			<div class="page-title">
-				<h6>{{ $route.meta.title || $route.name }}</h6>
-			</div>
-
-			<div class="header-content-wrapper">
-				<form @submit.prevent="searchSkill" class="search-bar w-search notification-list friend-requests">
-					<div class="form-group with-button">
-						<input v-model="searchSkillInput" class="form-control js-user-search" placeholder="Search posts on skills..."
-						       type="text" @keydown.enter.stop="searchSkill">
-						<button type="submit">
-							<svg class="olymp-magnifying-glass-icon">
-								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
-							</svg>
-						</button>
-					</div>
-				</form>
-
-				<!--<a href="#" class="link-find-friend">Find Friends</a>-->
-
-				<div class="control-block">
-
-					<div class="control-icon more has-items">
-						<svg class="olymp-happy-face-icon">
-							<use xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
-						</svg>
-						<div class="label-avatar bg-blue">{{ orderedRequests.length || 0 }}</div>
-
-						<div class="more-dropdown more-with-triangle triangle-top-center">
-							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">COLLAB REQUESTS</h6>
-								<!--<a href="#">Find Friends</a>-->
-								<!--<a href="#">Settings</a>-->
-							</div>
-
-							<div class="mCustomScrollbar" data-mcs-theme="dark">
-								<ul class="notification-list friend-requests">
-									<li v-if="!orderedRequests.length">
-										<div class="notification-event text-center">
-											<i>Nothing to see here!</i>
-										</div>
-									</li>
-									<li v-for="request in orderedRequests" :key="request.id">
-										<div class="author-thumb">
-											<img :src="request.from.photoURL" width="34" :alt="request.from.displayName">
-										</div>
-										<div class="notification-event">
-											<b-link class="h6 notification-friend">{{ request.from.displayName }}</b-link>
-											<!--<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>-->
-										</div>
-										<span class="notification-icon">
-											<b-link @click="acceptCollabRequest(request)" class="accept-request" v-b-tooltip.hover title="Accept Request">
-												<span class="icon-add without-text">
-													<svg class="olymp-happy-face-icon"><use
-															xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-												</span>
-											</b-link>
-
-											<b-link @click="declineCollabRequest(request)" class="accept-request request-del" v-b-tooltip.hover title="Decline Request">
-												<span class="icon-minus">
-													<svg class="olymp-happy-face-icon"><use
-															xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-												</span>
-											</b-link>
-										</span>
-
-										<!--<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-										</div>-->
-									</li>
-								</ul>
-							</div>
-
-							<a href="#" class="view-all bg-blue">Check all your Collab Requests</a>
-						</div>
-					</div>
-
-					<div class="control-icon more has-items" style="display: none;">
-						<svg class="olymp-chat---messages-icon">
-							<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use>
-						</svg>
-						<div class="label-avatar bg-purple">2</div>
-
-						<div class="more-dropdown more-with-triangle triangle-top-center">
-							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">Chat / Messages</h6>
-								<a href="#">Mark all as read</a>
-								<a href="#">Settings</a>
-							</div>
-
-							<div class="mCustomScrollbar" data-mcs-theme="dark">
-								<ul class="notification-list chat-message">
-									<li class="message-unread">
-										<div class="author-thumb">
-											<img src="/img/avatar59-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<a href="#" class="h6 notification-friend">Diana Jameson</a>
-											<span class="chat-message-item">Hi James! It’s Diana, I just wanted to let you know that we have to reschedule...</span>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">4 hours ago</time></span>
-										</div>
-										<span class="notification-icon">
-									<svg class="olymp-chat---messages-icon"><use
-											xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-								</span>
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-										</div>
-									</li>
-
-									<li>
-										<div class="author-thumb">
-											<img src="/img/avatar60-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<a href="#" class="h6 notification-friend">Jake Parker</a>
-											<span class="chat-message-item">Great, I’ll see you tomorrow!.</span>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">4 hours ago</time></span>
-										</div>
-										<span class="notification-icon">
-									<svg class="olymp-chat---messages-icon"><use
-											xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-								</span>
-
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-										</div>
-									</li>
-									<li>
-										<div class="author-thumb">
-											<img src="/img/avatar61-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<a href="#" class="h6 notification-friend">Elaine Dreyfuss</a>
-											<span class="chat-message-item">We’ll have to check that at the office and see if the client is on board with...</span>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">Yesterday at 9:56pm</time></span>
-										</div>
-										<span class="notification-icon">
-										<svg class="olymp-chat---messages-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-									</span>
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-										</div>
-									</li>
-
-									<!--<li class="chat-group">
-										<div class="author-thumb">
-											<img src="/img/avatar11-sm.jpg" alt="author">
-											<img src="/img/avatar12-sm.jpg" alt="author">
-											<img src="/img/avatar13-sm.jpg" alt="author">
-											<img src="/img/avatar10-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<a href="#" class="h6 notification-friend">You, Faye, Ed &amp; Jet
-												+3</a>
-											<span class="last-message-author">Ed:</span>
-											<span class="chat-message-item">Yeah! Seems fine by me!</span>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">March 16th at 10:23am</time></span>
-										</div>
-										<span class="notification-icon">
-											<svg class="olymp-chat-&#45;&#45;messages-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use></svg>
-										</span>
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-										</div>
-									</li>-->
-								</ul>
-							</div>
-
-							<a href="#" class="view-all bg-purple">View All Messages</a>
-						</div>
-					</div>
-
-					<div class="control-icon more has-items" style="display: none;">
-						<svg class="olymp-thunder-icon">
-							<use xlink:href="/svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
-						</svg>
-
-						<div class="label-avatar bg-primary">8</div>
-
-						<div class="more-dropdown more-with-triangle triangle-top-center">
-							<div class="ui-block-title ui-block-title-small">
-								<h6 class="title">Notifications</h6>
-								<a href="#">Mark all as read</a>
-								<a href="#">Settings</a>
-							</div>
-
-							<div class="mCustomScrollbar" data-mcs-theme="dark">
-								<ul class="notification-list">
-									<li>
-										<div class="author-thumb">
-											<img src="/img/avatar62-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<div><a href="#" class="h6 notification-friend">Mathilda Brinker</a>
-												commented on your new <a href="#" class="notification-link">profile
-													status</a>.
-											</div>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">4 hours ago</time></span>
-										</div>
-										<span class="notification-icon">
-										<svg class="olymp-comments-post-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
-									</span>
-
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-											<svg class="olymp-little-delete">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-											</svg>
-										</div>
-									</li>
-
-									<li class="un-read">
-										<div class="author-thumb">
-											<img src="/img/avatar63-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<div>You and <a href="#" class="h6 notification-friend">Nicholas
-												Grissom</a> just became friends. Write on <a href="#"
-											                                                 class="notification-link">his
-												wall</a>.
-											</div>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">9 hours ago</time></span>
-										</div>
-										<span class="notification-icon">
-										<svg class="olymp-happy-face-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-									</span>
-
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-											<svg class="olymp-little-delete">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-											</svg>
-										</div>
-									</li>
-
-									<li class="with-comment-photo">
-										<div class="author-thumb">
-											<img src="/img/avatar64-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<div><a href="#" class="h6 notification-friend">Sarah Hetfield</a>
-												commented on your <a href="#" class="notification-link">photo</a>.
-											</div>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">Yesterday at 5:32am</time></span>
-										</div>
-										<span class="notification-icon">
-										<svg class="olymp-comments-post-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
-									</span>
-
-										<div class="comment-photo">
-											<img src="/img/comment-photo1.jpg" alt="photo">
-											<span>“She looks incredible in that outfit! We should see each...”</span>
-										</div>
-
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-											<svg class="olymp-little-delete">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-											</svg>
-										</div>
-									</li>
-
-									<li>
-										<div class="author-thumb">
-											<img src="/img/avatar65-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<div><a href="#" class="h6 notification-friend">Green Goo Rock</a>
-												invited you to attend to his event Goo in <a href="#"
-												                                             class="notification-link">Gotham
-													Bar</a>.
-											</div>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">March 5th at 6:43pm</time></span>
-										</div>
-										<span class="notification-icon">
-										<svg class="olymp-happy-face-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-									</span>
-
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-											<svg class="olymp-little-delete">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-											</svg>
-										</div>
-									</li>
-
-									<li>
-										<div class="author-thumb">
-											<img src="/img/avatar66-sm.jpg" alt="author">
-										</div>
-										<div class="notification-event">
-											<div><a href="#" class="h6 notification-friend">James Summers</a>
-												commented on your new <a href="#" class="notification-link">profile
-													status</a>.
-											</div>
-											<span class="notification-date"><time class="entry-date updated"
-											                                      datetime="2004-07-24T18:18">March 2nd at 8:29pm</time></span>
-										</div>
-										<span class="notification-icon">
-										<svg class="olymp-heart-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
-									</span>
-
-										<div class="more">
-											<svg class="olymp-three-dots-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-											</svg>
-											<svg class="olymp-little-delete">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-											</svg>
-										</div>
-									</li>
-								</ul>
-							</div>
-
-							<a href="#" class="view-all bg-primary">View All Notifications</a>
-						</div>
-					</div>
-
-					<div class="author-page author vcard inline-items more">
-						<div class="author-thumb">
-							<router-link to="/profile">
-								<overdrive id="profile-avatar">
-									<img :src="userData.photoURL" height="36" width="36" :alt="userData.name" class="avatar">
-								</overdrive>
-							</router-link>
-							<span class="icon-status" :class="[myStatus && myStatus.state]"></span>
-							<div class="more-dropdown more-with-triangle">
-								<div class="mCustomScrollbar" data-mcs-theme="dark">
-									<div class="ui-block-title ui-block-title-small">
-										<h6 class="title">Your Account</h6>
-									</div>
-
-									<ul class="account-settings">
-										<li>
-											<router-link to="/account">
-												<svg class="olymp-menu-icon">
-													<use xlink:href="/svg-icons/sprites/icons.svg#olymp-menu-icon"></use>
-												</svg>
-												<span>Profile Settings</span>
-											</router-link>
-										</li>
-										<!--<li>
-											<a href="36-FavPage-SettingsAndCreatePopup.html">
-												<svg class="olymp-star-icon left-menu-icon" data-toggle="tooltip"
-												     data-placement="right" data-original-title="FAV PAGE">
-													<use xlink:href="/svg-icons/sprites/icons.svg#olymp-star-icon"></use>
-												</svg>
-
-												<span>Create Fav Page</span>
-											</a>
-										</li>-->
-										<li>
-											<a href="#" @click.prevent="logout">
-												<svg class="olymp-logout-icon">
-													<use xlink:href="/svg-icons/sprites/icons.svg#olymp-logout-icon"></use>
-												</svg>
-
-												<span>Log Out</span>
-											</a>
-										</li>
-									</ul>
-
-									<div class="ui-block-title ui-block-title-small">
-										<h6 class="title">Chat Settings</h6>
-									</div>
-
-									<ul class="chat-settings">
-										<li>
-											<a href="#" @click.prevent="changeStatus('on-campus')">
-												<span class="icon-status online"></span>
-												<span>On Campus</span>
-											</a>
-										</li>
-										<li>
-											<a href="#" @click.prevent="changeStatus('online')">
-												<span class="icon-status online"></span>
-												<span>Online</span>
-											</a>
-										</li>
-										<li>
-											<a href="#" @click.prevent="changeStatus('away')">
-												<span class="icon-status away"></span>
-												<span>Away</span>
-											</a>
-										</li>
-										<li>
-											<a href="#" @click.prevent="changeStatus('disconected')">
-												<span class="icon-status disconected"></span>
-												<span>Disconnected</span>
-											</a>
-										</li>
-
-										<li>
-											<a href="#" @click.prevent="changeStatus('status-invisible')">
-												<span class="icon-status status-invisible"></span>
-												<span>Invisible</span>
-											</a>
-										</li>
-									</ul>
-
-									<!--<div class="ui-block-title ui-block-title-small">
-										<h6 class="title">Custom Status</h6>
-									</div>
-
-									<form class="form-group with-button custom-status">
-										<input class="form-control" placeholder="" type="text" value="Space Cowboy">
-
-										<button class="bg-purple">
-											<svg class="olymp-check-icon">
-												<use xlink:href="/svg-icons/sprites/icons.svg#olymp-check-icon"></use>
-											</svg>
-										</button>
-									</form>-->
-
-									<div class="ui-block-title ui-block-title-small">
-										<h6 class="title">About FaceValue</h6>
-									</div>
-
-									<ul>
-										<li>
-											<router-link to="/terms">
-												<span>Terms and Conditions</span>
-											</router-link>
-										</li>
-										<li>
-											<router-link to="/faq">
-												<span>FAQs</span>
-											</router-link>
-										</li>
-										<!--<li>
-											<router-link to="#">
-												<span>Careers</span>
-											</router-link>
-										</li>-->
-										<li>
-											<router-link to="/contact">
-												<span>Contact</span>
-											</router-link>
-										</li>
-									</ul>
-								</div>
-
-							</div>
-						</div>
-						<router-link to="/profile" class="author-name fn">
-							<div class="author-title">
-								{{ userData.name }}
-								<svg class="olymp-dropdown-arrow-icon">
-									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use>
-								</svg>
-							</div>
-							<span class="author-subtitle">{{ statuses[currentStatusType] }}</span>
-						</router-link>
-					</div>
-
-				</div>
-			</div>
-
-		</header>
-
-		<!-- ... end Header-BP -->
-
-
-		<!-- Responsive Header-BP -->
-
-		<header class="header header-responsive" id="site-header-responsive">
-
-			<div class="header-content-wrapper">
-				<ul class="nav nav-tabs mobile-app-tabs" role="tablist">
-					<li class="nav-item">
-						<b-link class="nav-link" @click="mobileNav.collabRequests = !mobileNav.collabRequests">
-							<div class="control-icon has-items">
-								<svg class="olymp-happy-face-icon">
-									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use>
-								</svg>
-								<div class="label-avatar bg-blue">{{ orderedRequests.length || 0 }}</div>
-							</div>
-						</b-link>
-					</li>
-
-					<!--<li class="nav-item">
-						<a class="nav-link" @click="mobileNav.chats = !mobileNav.chats">
-							<div class="control-icon has-items">
-								<svg class="olymp-chat-&#45;&#45;messages-icon">
-									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use>
-								</svg>
-								<div class="label-avatar bg-purple">2</div>
-							</div>
-						</a>
-					</li>-->
-
-					<!--<li class="nav-item">
-						<a class="nav-link" @click="mobileNav.notifications = !mobileNav.notifications">
-							<div class="control-icon has-items">
-								<svg class="olymp-thunder-icon">
-									<use xlink:href="/svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
-								</svg>
-								<div class="label-avatar bg-primary">8</div>
-							</div>
-						</a>
-					</li>-->
-
-					<!--<li class="nav-item">
-						<a class="nav-link" @click="mobileNav.searchBar = !mobileNav.searchBar">
-							<svg class="olymp-magnifying-glass-icon">
-								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
-							</svg>
-							<svg class="olymp-close-icon">
-								<use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use>
-							</svg>
-						</a>
-					</li>-->
-				</ul>
-			</div>
-
-			<!-- Tab panes -->
-			<div class="tab-content tab-content-responsive">
-
-				<div class="tab-pane" :class="{ 'active': mobileNav.collabRequests }" id="request" role="tabpanel">
-
-					<div class="mCustomScrollbar" data-mcs-theme="dark">
-						<ul class="notification-list friend-requests">
-							<li v-if="!orderedRequests.length">
-								<div class="notification-event text-center">
-									<i>Nothing to see here!</i>
-								</div>
-							</li>
-							<li v-for="request in orderedRequests" :key="request.id">
-								<div class="author-thumb">
-									<img :src="request.from.photoURL" width="34" :alt="request.from.displayName">
-								</div>
-								<div class="notification-event">
-									<b-link class="h6 notification-friend">{{ request.from.displayName }}</b-link>
-									<!--<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>-->
-								</div>
-								<span class="notification-icon">
-											<b-link @click="acceptCollabRequest(request)" class="accept-request" v-b-tooltip.hover title="Accept Request">
-												<span class="icon-add without-text">
-													<svg class="olymp-happy-face-icon"><use
-															xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-												</span>
-											</b-link>
-
-											<b-link @click="declineCollabRequest(request)" class="accept-request request-del" v-b-tooltip.hover title="Decline Request">
-												<span class="icon-minus">
-													<svg class="olymp-happy-face-icon"><use
-															xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-												</span>
-											</b-link>
-										</span>
-
-								<!--<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-								</div>-->
-							</li>
-						</ul>
-					</div>
-
-				</div>
-
-				<div class="tab-pane " :class="{'active': mobileNav.chats}" id="chat" role="tabpanel">
-
-					<div class="mCustomScrollbar" data-mcs-theme="dark">
-						<div class="ui-block-title ui-block-title-small">
-							<h6 class="title">Chat / Messages</h6>
-							<a href="#">Mark all as read</a>
-							<a href="#">Settings</a>
-						</div>
-
-						<ul class="notification-list chat-message">
-							<li class="message-unread">
-								<div class="author-thumb">
-									<img src="/img/avatar59-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Diana Jameson</a>
-									<span class="chat-message-item">Hi James! It’s Diana, I just wanted to let you know that we have to reschedule...</span>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">4 hours ago</time></span>
-								</div>
-								<span class="notification-icon">
-										<svg class="olymp-chat---messages-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-									</span>
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-								</div>
-							</li>
-
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar60-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Jake Parker</a>
-									<span class="chat-message-item">Great, I’ll see you tomorrow!.</span>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">4 hours ago</time></span>
-								</div>
-								<span class="notification-icon">
-										<svg class="olymp-chat---messages-icon"><use
-												xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-									</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-								</div>
-							</li>
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar61-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">Elaine Dreyfuss</a>
-									<span class="chat-message-item">We’ll have to check that at the office and see if the client is on board with...</span>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">Yesterday at 9:56pm</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-chat---messages-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"></use></svg>
-										</span>
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-								</div>
-							</li>
-
-							<!--<li class="chat-group">
-								<div class="author-thumb">
-									<img src="/img/avatar11-sm.jpg" alt="author">
-									<img src="/img/avatar12-sm.jpg" alt="author">
-									<img src="/img/avatar13-sm.jpg" alt="author">
-									<img src="/img/avatar10-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<a href="#" class="h6 notification-friend">You, Faye, Ed &amp; Jet +3</a>
-									<span class="last-message-author">Ed:</span>
-									<span class="chat-message-item">Yeah! Seems fine by me!</span>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">March 16th at 10:23am</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-chat-&#45;&#45;messages-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use></svg>
-										</span>
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-								</div>
-							</li>-->
-						</ul>
-
-						<a href="#" class="view-all bg-purple">View All Messages</a>
-					</div>
-
-				</div>
-
-				<div class="tab-pane " :class="{'active': mobileNav.notifications}" id="notification" role="tabpanel">
-
-					<div class="mCustomScrollbar" data-mcs-theme="dark">
-						<div class="ui-block-title ui-block-title-small">
-							<h6 class="title">Notifications</h6>
-							<a href="#">Mark all as read</a>
-							<a href="#">Settings</a>
-						</div>
-
-						<ul class="notification-list">
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar62-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<div><a href="#" class="h6 notification-friend">Mathilda Brinker</a> commented
-										on your new <a href="#" class="notification-link">profile status</a>.
-									</div>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">4 hours ago</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-comments-post-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
-										</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-									<svg class="olymp-little-delete">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-									</svg>
-								</div>
-							</li>
-
-							<li class="un-read">
-								<div class="author-thumb">
-									<img src="/img/avatar63-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<div>You and <a href="#" class="h6 notification-friend">Nicholas Grissom</a>
-										just became friends. Write on <a href="#" class="notification-link">his
-											wall</a>.
-									</div>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">9 hours ago</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-happy-face-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-										</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-									<svg class="olymp-little-delete">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-									</svg>
-								</div>
-							</li>
-
-							<li class="with-comment-photo">
-								<div class="author-thumb">
-									<img src="/img/avatar64-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<div><a href="#" class="h6 notification-friend">Sarah Hetfield</a> commented on
-										your <a href="#" class="notification-link">photo</a>.
-									</div>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">Yesterday at 5:32am</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-comments-post-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"></use></svg>
-										</span>
-
-								<div class="comment-photo">
-									<img src="/img/comment-photo1.jpg" alt="photo">
-									<span>“She looks incredible in that outfit! We should see each...”</span>
-								</div>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-									<svg class="olymp-little-delete">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-									</svg>
-								</div>
-							</li>
-
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar65-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<div><a href="#" class="h6 notification-friend">Green Goo Rock</a> invited you
-										to attend to his event Goo in <a href="#" class="notification-link">Gotham
-											Bar</a>.
-									</div>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">March 5th at 6:43pm</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-happy-face-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-										</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-									<svg class="olymp-little-delete">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-									</svg>
-								</div>
-							</li>
-
-							<li>
-								<div class="author-thumb">
-									<img src="/img/avatar66-sm.jpg" alt="author">
-								</div>
-								<div class="notification-event">
-									<div><a href="#" class="h6 notification-friend">James Summers</a> commented on
-										your new <a href="#" class="notification-link">profile status</a>.
-									</div>
-									<span class="notification-date"><time class="entry-date updated"
-									                                      datetime="2004-07-24T18:18">March 2nd at 8:29pm</time></span>
-								</div>
-								<span class="notification-icon">
-											<svg class="olymp-heart-icon"><use
-													xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
-										</span>
-
-								<div class="more">
-									<svg class="olymp-three-dots-icon">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-									</svg>
-									<svg class="olymp-little-delete">
-										<use xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"></use>
-									</svg>
-								</div>
-							</li>
-						</ul>
-
-						<a href="#" class="view-all bg-primary">View All Notifications</a>
-					</div>
-
-				</div>
-
-				<div class="tab-pane " :class="{'active': mobileNav.searchBar}" id="search" role="tabpanel">
-					<form class="search-bar w-search notification-list friend-requests">
-						<div class="form-group with-button">
-							<input class="form-control js-user-search" placeholder="Search here people or pages..."
-							       type="text">
-						</div>
-					</form>
-				</div>
-
-			</div>
-			<!-- ... end  Tab panes -->
-
-		</header>
-
-		<!-- ... end Responsive Header-BP -->
-		<div class="header-spacer"></div>
-	</div>
+  <div>
+    <!-- Header-BP -->
+
+    <header class="header" id="site-header">
+      <div class="page-title">
+        <h6>{{ $route.meta.title || $route.name }}</h6>
+      </div>
+
+      <div class="header-content-wrapper">
+        <form
+          @submit.prevent="searchSkill"
+          class="search-bar w-search notification-list friend-requests"
+        >
+          <div class="form-group with-button">
+            <input
+              v-model="searchSkillInput"
+              class="form-control js-user-search"
+              placeholder="Search posts on skills..."
+              type="text"
+              @keydown.enter.stop="searchSkill"
+            />
+            <button type="submit">
+              <svg class="olymp-magnifying-glass-icon">
+                <use
+                  xlink:href="/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"
+                ></use>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- <a href="#" class="link-find-friend">Find Friends</a> -->
+
+        <div class="control-block">
+          <div class="control-icon more has-items">
+            <svg class="olymp-happy-face-icon">
+              <use
+                xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+              ></use>
+            </svg>
+            <div class="label-avatar bg-blue">
+              {{ orderedRequests.length || 0 }}
+            </div>
+
+            <div class="more-dropdown more-with-triangle triangle-top-center">
+              <div class="ui-block-title ui-block-title-small">
+                <h6 class="title">COLLAB REQUESTS</h6>
+                <!-- <a href="#">Find Friends</a> -->
+                <!-- <a href="#">Settings</a> -->
+              </div>
+
+              <div class="mCustomScrollbar" data-mcs-theme="dark">
+                <ul class="notification-list friend-requests">
+                  <li v-if="!orderedRequests.length">
+                    <div class="notification-event text-center">
+                      <i>Nothing to see here!</i>
+                    </div>
+                  </li>
+                  <li v-for="request in orderedRequests" :key="request.id">
+                    <div class="author-thumb">
+                      <img
+                        :src="request.from.photoURL"
+                        width="34"
+                        :alt="request.from.displayName"
+                      />
+                    </div>
+                    <div class="notification-event">
+                      <b-link class="h6 notification-friend">{{
+                        request.from.displayName
+                      }}</b-link>
+                      <!--
+                        <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+                      -->
+                    </div>
+                    <span class="notification-icon">
+                      <b-link
+                        @click="acceptCollabRequest(request);"
+                        class="accept-request"
+                        v-b-tooltip.hover
+                        title="Accept Request"
+                      >
+                        <span class="icon-add without-text">
+                          <svg class="olymp-happy-face-icon">
+                            <use
+                              xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                            ></use>
+                          </svg>
+                        </span>
+                      </b-link>
+
+                      <b-link
+                        @click="declineCollabRequest(request);"
+                        class="accept-request request-del"
+                        v-b-tooltip.hover
+                        title="Decline Request"
+                      >
+                        <span class="icon-minus">
+                          <svg class="olymp-happy-face-icon">
+                            <use
+                              xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                            ></use>
+                          </svg>
+                        </span>
+                      </b-link>
+                    </span>
+
+                    <!--
+                      <div class="more">
+                      	<svg class="olymp-three-dots-icon">
+                      		<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                      	</svg>
+                      </div>
+                    -->
+                  </li>
+                </ul>
+              </div>
+
+              <a href="#" class="view-all bg-blue"
+                >Check all your Collab Requests</a
+              >
+            </div>
+          </div>
+
+          <div class="control-icon more has-items" style="display: none;">
+            <svg class="olymp-chat---messages-icon">
+              <use
+                xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+              ></use>
+            </svg>
+            <div class="label-avatar bg-purple">2</div>
+
+            <div class="more-dropdown more-with-triangle triangle-top-center">
+              <div class="ui-block-title ui-block-title-small">
+                <h6 class="title">Chat / Messages</h6>
+                <a href="#">Mark all as read</a> <a href="#">Settings</a>
+              </div>
+
+              <div class="mCustomScrollbar" data-mcs-theme="dark">
+                <ul class="notification-list chat-message">
+                  <li class="message-unread">
+                    <div class="author-thumb">
+                      <img src="/img/avatar59-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <a href="#" class="h6 notification-friend"
+                        >Diana Jameson</a
+                      >
+                      <span class="chat-message-item"
+                        >Hi James! It’s Diana, I just wanted to let you know
+                        that we have to reschedule...</span
+                      >
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >4 hours ago</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-chat---messages-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+                        ></use>
+                      </svg>
+                    </span>
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="author-thumb">
+                      <img src="/img/avatar60-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <a href="#" class="h6 notification-friend">Jake Parker</a>
+                      <span class="chat-message-item"
+                        >Great, I’ll see you tomorrow!.</span
+                      >
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >4 hours ago</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-chat---messages-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+                        ></use>
+                      </svg>
+                    </span>
+
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="author-thumb">
+                      <img src="/img/avatar61-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <a href="#" class="h6 notification-friend"
+                        >Elaine Dreyfuss</a
+                      >
+                      <span class="chat-message-item"
+                        >We’ll have to check that at the office and see if the
+                        client is on board with...</span
+                      >
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >Yesterday at 9:56pm</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-chat---messages-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+                        ></use>
+                      </svg>
+                    </span>
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+
+                  <!--
+                    <li class="chat-group">
+                    	<div class="author-thumb">
+                    		<img src="/img/avatar11-sm.jpg" alt="author">
+                    		<img src="/img/avatar12-sm.jpg" alt="author">
+                    		<img src="/img/avatar13-sm.jpg" alt="author">
+                    		<img src="/img/avatar10-sm.jpg" alt="author">
+                    	</div>
+                    	<div class="notification-event">
+                    		<a href="#" class="h6 notification-friend">You, Faye, Ed &amp; Jet
+                    			+3</a>
+                    		<span class="last-message-author">Ed:</span>
+                    		<span class="chat-message-item">Yeah! Seems fine by me!</span>
+                    		<span class="notification-date"><time class="entry-date updated"
+                    		                                      datetime="2004-07-24T18:18">March 16th at 10:23am</time></span>
+                    	</div>
+                    	<span class="notification-icon">
+                    		<svg class="olymp-chat-&#45;&#45;messages-icon"><use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use></svg>
+                    	</span>
+                    	<div class="more">
+                    		<svg class="olymp-three-dots-icon">
+                    			<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                    		</svg>
+                    	</div>
+                    </li>
+                  -->
+                </ul>
+              </div>
+
+              <a href="#" class="view-all bg-purple">View All Messages</a>
+            </div>
+          </div>
+
+          <div class="control-icon more has-items" style="display: none;">
+            <svg class="olymp-thunder-icon">
+              <use
+                xlink:href="/svg-icons/sprites/icons.svg#olymp-thunder-icon"
+              ></use>
+            </svg>
+
+            <div class="label-avatar bg-primary">8</div>
+
+            <div class="more-dropdown more-with-triangle triangle-top-center">
+              <div class="ui-block-title ui-block-title-small">
+                <h6 class="title">Notifications</h6>
+                <a href="#">Mark all as read</a> <a href="#">Settings</a>
+              </div>
+
+              <div class="mCustomScrollbar" data-mcs-theme="dark">
+                <ul class="notification-list">
+                  <li>
+                    <div class="author-thumb">
+                      <img src="/img/avatar62-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <div>
+                        <a href="#" class="h6 notification-friend"
+                          >Mathilda Brinker</a
+                        >
+                        commented on your new
+                        <a href="#" class="notification-link">profile status</a
+                        >.
+                      </div>
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >4 hours ago</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-comments-post-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"
+                        ></use>
+                      </svg>
+                    </span>
+
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                      <svg class="olymp-little-delete">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+
+                  <li class="un-read">
+                    <div class="author-thumb">
+                      <img src="/img/avatar63-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <div>
+                        You and
+                        <a href="#" class="h6 notification-friend"
+                          >Nicholas Grissom</a
+                        >
+                        just became friends. Write on
+                        <a href="#" class="notification-link">his wall</a>.
+                      </div>
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >9 hours ago</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-happy-face-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                        ></use>
+                      </svg>
+                    </span>
+
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                      <svg class="olymp-little-delete">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+
+                  <li class="with-comment-photo">
+                    <div class="author-thumb">
+                      <img src="/img/avatar64-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <div>
+                        <a href="#" class="h6 notification-friend"
+                          >Sarah Hetfield</a
+                        >
+                        commented on your
+                        <a href="#" class="notification-link">photo</a>.
+                      </div>
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >Yesterday at 5:32am</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-comments-post-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"
+                        ></use>
+                      </svg>
+                    </span>
+
+                    <div class="comment-photo">
+                      <img src="/img/comment-photo1.jpg" alt="photo" />
+                      <span
+                        >“She looks incredible in that outfit! We should see
+                        each...”</span
+                      >
+                    </div>
+
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                      <svg class="olymp-little-delete">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="author-thumb">
+                      <img src="/img/avatar65-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <div>
+                        <a href="#" class="h6 notification-friend"
+                          >Green Goo Rock</a
+                        >
+                        invited you to attend to his event Goo in
+                        <a href="#" class="notification-link">Gotham Bar</a>.
+                      </div>
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >March 5th at 6:43pm</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-happy-face-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                        ></use>
+                      </svg>
+                    </span>
+
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                      <svg class="olymp-little-delete">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="author-thumb">
+                      <img src="/img/avatar66-sm.jpg" alt="author" />
+                    </div>
+                    <div class="notification-event">
+                      <div>
+                        <a href="#" class="h6 notification-friend"
+                          >James Summers</a
+                        >
+                        commented on your new
+                        <a href="#" class="notification-link">profile status</a
+                        >.
+                      </div>
+                      <span class="notification-date"
+                        ><time
+                          class="entry-date updated"
+                          datetime="2004-07-24T18:18"
+                          >March 2nd at 8:29pm</time
+                        ></span
+                      >
+                    </div>
+                    <span class="notification-icon">
+                      <svg class="olymp-heart-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"
+                        ></use>
+                      </svg>
+                    </span>
+
+                    <div class="more">
+                      <svg class="olymp-three-dots-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                        ></use>
+                      </svg>
+                      <svg class="olymp-little-delete">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                        ></use>
+                      </svg>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="#" class="view-all bg-primary">View All Notifications</a>
+            </div>
+          </div>
+
+          <div class="author-page author vcard inline-items more">
+            <div class="author-thumb">
+              <router-link to="/profile">
+                <overdrive id="profile-avatar">
+                  <img
+                    :src="userData.photoURL"
+                    height="36"
+                    width="36"
+                    :alt="userData.name"
+                    class="avatar"
+                  />
+                </overdrive>
+              </router-link>
+              <span
+                class="icon-status"
+                :class="[myStatus && myStatus.state]"
+              ></span>
+              <div class="more-dropdown more-with-triangle">
+                <div class="mCustomScrollbar" data-mcs-theme="dark">
+                  <div class="ui-block-title ui-block-title-small">
+                    <h6 class="title">Your Account</h6>
+                  </div>
+
+                  <ul class="account-settings">
+                    <li>
+                      <router-link to="/account">
+                        <svg class="olymp-menu-icon">
+                          <use
+                            xlink:href="/svg-icons/sprites/icons.svg#olymp-menu-icon"
+                          ></use>
+                        </svg>
+                        <span>Profile Settings</span>
+                      </router-link>
+                    </li>
+                    <!--
+                      <li>
+                      	<a href="36-FavPage-SettingsAndCreatePopup.html">
+                      		<svg class="olymp-star-icon left-menu-icon" data-toggle="tooltip"
+                      		     data-placement="right" data-original-title="FAV PAGE">
+                      			<use xlink:href="/svg-icons/sprites/icons.svg#olymp-star-icon"></use>
+                      		</svg>
+
+                      		<span>Create Fav Page</span>
+                      	</a>
+                      </li>
+                    -->
+                    <li>
+                      <a href="#" @click.prevent="logout">
+                        <svg class="olymp-logout-icon">
+                          <use
+                            xlink:href="/svg-icons/sprites/icons.svg#olymp-logout-icon"
+                          ></use>
+                        </svg>
+
+                        <span>Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+
+                  <div class="ui-block-title ui-block-title-small">
+                    <h6 class="title">Chat Settings</h6>
+                  </div>
+
+                  <ul class="chat-settings">
+                    <li>
+                      <a href="#" @click.prevent="changeStatus('on-campus');">
+                        <span class="icon-status online"></span>
+                        <span>On Campus</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click.prevent="changeStatus('online');">
+                        <span class="icon-status online"></span>
+                        <span>Online</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click.prevent="changeStatus('away');">
+                        <span class="icon-status away"></span> <span>Away</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click.prevent="changeStatus('disconected');">
+                        <span class="icon-status disconected"></span>
+                        <span>Disconnected</span>
+                      </a>
+                    </li>
+
+                    <li>
+                      <a
+                        href="#"
+                        @click.prevent="changeStatus('status-invisible');"
+                      >
+                        <span class="icon-status status-invisible"></span>
+                        <span>Invisible</span>
+                      </a>
+                    </li>
+                  </ul>
+
+                  <!--
+                    <div class="ui-block-title ui-block-title-small">
+                    	<h6 class="title">Custom Status</h6>
+                    </div>
+
+                    <form class="form-group with-button custom-status">
+                    	<input class="form-control" placeholder="" type="text" value="Space Cowboy">
+
+                    	<button class="bg-purple">
+                    		<svg class="olymp-check-icon">
+                    			<use xlink:href="/svg-icons/sprites/icons.svg#olymp-check-icon"></use>
+                    		</svg>
+                    	</button>
+                    </form>
+                  -->
+
+                  <div class="ui-block-title ui-block-title-small">
+                    <h6 class="title">About FaceValue</h6>
+                  </div>
+
+                  <ul>
+                    <li>
+                      <router-link to="/terms">
+                        <span>Terms and Conditions</span>
+                      </router-link>
+                    </li>
+                    <li>
+                      <router-link to="/faq"> <span>FAQs</span> </router-link>
+                    </li>
+                    <!--
+                      <li>
+                      	<router-link to="#">
+                      		<span>Careers</span>
+                      	</router-link>
+                      </li>
+                    -->
+                    <li>
+                      <router-link to="/contact">
+                        <span>Contact</span>
+                      </router-link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <router-link to="/profile" class="author-name fn">
+              <div class="author-title">
+                {{ userData.name }}
+                <svg class="olymp-dropdown-arrow-icon">
+                  <use
+                    xlink:href="/svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"
+                  ></use>
+                </svg>
+              </div>
+              <span class="author-subtitle">{{
+                statuses[currentStatusType]
+              }}</span>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ... end Header-BP -->
+
+    <!-- Responsive Header-BP -->
+
+    <header class="header header-responsive" id="site-header-responsive">
+      <div class="header-content-wrapper">
+        <ul class="nav nav-tabs mobile-app-tabs" role="tablist">
+          <li class="nav-item">
+            <b-link
+              class="nav-link"
+              @click="mobileNav.collabRequests = !mobileNav.collabRequests;"
+            >
+              <div class="control-icon has-items">
+                <svg class="olymp-happy-face-icon">
+                  <use
+                    xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                  ></use>
+                </svg>
+                <div class="label-avatar bg-blue">
+                  {{ orderedRequests.length || 0 }}
+                </div>
+              </div>
+            </b-link>
+          </li>
+
+          <!--
+            <li class="nav-item">
+            	<a class="nav-link" @click="mobileNav.chats = !mobileNav.chats">
+            		<div class="control-icon has-items">
+            			<svg class="olymp-chat-&#45;&#45;messages-icon">
+            				<use xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use>
+            			</svg>
+            			<div class="label-avatar bg-purple">2</div>
+            		</div>
+            	</a>
+            </li>
+          -->
+
+          <!--
+            <li class="nav-item">
+            	<a class="nav-link" @click="mobileNav.notifications = !mobileNav.notifications">
+            		<div class="control-icon has-items">
+            			<svg class="olymp-thunder-icon">
+            				<use xlink:href="/svg-icons/sprites/icons.svg#olymp-thunder-icon"></use>
+            			</svg>
+            			<div class="label-avatar bg-primary">8</div>
+            		</div>
+            	</a>
+            </li>
+          -->
+
+          <!--
+            <li class="nav-item">
+            	<a class="nav-link" @click="mobileNav.searchBar = !mobileNav.searchBar">
+            		<svg class="olymp-magnifying-glass-icon">
+            			<use xlink:href="/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use>
+            		</svg>
+            		<svg class="olymp-close-icon">
+            			<use xlink:href="/svg-icons/sprites/icons.svg#olymp-close-icon"></use>
+            		</svg>
+            	</a>
+            </li>
+          -->
+        </ul>
+      </div>
+
+      <!-- Tab panes -->
+      <div class="tab-content tab-content-responsive">
+        <div
+          class="tab-pane"
+          :class="{ active: mobileNav.collabRequests }"
+          id="request"
+          role="tabpanel"
+        >
+          <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <ul class="notification-list friend-requests">
+              <li v-if="!orderedRequests.length">
+                <div class="notification-event text-center">
+                  <i>Nothing to see here!</i>
+                </div>
+              </li>
+              <li v-for="request in orderedRequests" :key="request.id">
+                <div class="author-thumb">
+                  <img
+                    :src="request.from.photoURL"
+                    width="34"
+                    :alt="request.from.displayName"
+                  />
+                </div>
+                <div class="notification-event">
+                  <b-link class="h6 notification-friend">{{
+                    request.from.displayName
+                  }}</b-link>
+                  <!--
+                    <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+                  -->
+                </div>
+                <span class="notification-icon">
+                  <b-link
+                    @click="acceptCollabRequest(request);"
+                    class="accept-request"
+                    v-b-tooltip.hover
+                    title="Accept Request"
+                  >
+                    <span class="icon-add without-text">
+                      <svg class="olymp-happy-face-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                        ></use>
+                      </svg>
+                    </span>
+                  </b-link>
+
+                  <b-link
+                    @click="declineCollabRequest(request);"
+                    class="accept-request request-del"
+                    v-b-tooltip.hover
+                    title="Decline Request"
+                  >
+                    <span class="icon-minus">
+                      <svg class="olymp-happy-face-icon">
+                        <use
+                          xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                        ></use>
+                      </svg>
+                    </span>
+                  </b-link>
+                </span>
+
+                <!--
+                  <div class="more">
+                  	<svg class="olymp-three-dots-icon">
+                  		<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                  	</svg>
+                  </div>
+                -->
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane "
+          :class="{ active: mobileNav.chats }"
+          id="chat"
+          role="tabpanel"
+        >
+          <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <div class="ui-block-title ui-block-title-small">
+              <h6 class="title">Chat / Messages</h6>
+              <a href="#">Mark all as read</a> <a href="#">Settings</a>
+            </div>
+
+            <ul class="notification-list chat-message">
+              <li class="message-unread">
+                <div class="author-thumb">
+                  <img src="/img/avatar59-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <a href="#" class="h6 notification-friend">Diana Jameson</a>
+                  <span class="chat-message-item"
+                    >Hi James! It’s Diana, I just wanted to let you know that we
+                    have to reschedule...</span
+                  >
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >4 hours ago</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-chat---messages-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+                    ></use>
+                  </svg>
+                </span>
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+
+              <li>
+                <div class="author-thumb">
+                  <img src="/img/avatar60-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <a href="#" class="h6 notification-friend">Jake Parker</a>
+                  <span class="chat-message-item"
+                    >Great, I’ll see you tomorrow!.</span
+                  >
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >4 hours ago</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-chat---messages-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+                    ></use>
+                  </svg>
+                </span>
+
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+              <li>
+                <div class="author-thumb">
+                  <img src="/img/avatar61-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <a href="#" class="h6 notification-friend">Elaine Dreyfuss</a>
+                  <span class="chat-message-item"
+                    >We’ll have to check that at the office and see if the
+                    client is on board with...</span
+                  >
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >Yesterday at 9:56pm</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-chat---messages-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-chat---messages-icon"
+                    ></use>
+                  </svg>
+                </span>
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+
+              <!--
+                <li class="chat-group">
+                	<div class="author-thumb">
+                		<img src="/img/avatar11-sm.jpg" alt="author">
+                		<img src="/img/avatar12-sm.jpg" alt="author">
+                		<img src="/img/avatar13-sm.jpg" alt="author">
+                		<img src="/img/avatar10-sm.jpg" alt="author">
+                	</div>
+                	<div class="notification-event">
+                		<a href="#" class="h6 notification-friend">You, Faye, Ed &amp; Jet +3</a>
+                		<span class="last-message-author">Ed:</span>
+                		<span class="chat-message-item">Yeah! Seems fine by me!</span>
+                		<span class="notification-date"><time class="entry-date updated"
+                		                                      datetime="2004-07-24T18:18">March 16th at 10:23am</time></span>
+                	</div>
+                	<span class="notification-icon">
+                				<svg class="olymp-chat-&#45;&#45;messages-icon"><use
+                						xlink:href="/svg-icons/sprites/icons.svg#olymp-chat-&#45;&#45;messages-icon"></use></svg>
+                			</span>
+                	<div class="more">
+                		<svg class="olymp-three-dots-icon">
+                			<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
+                		</svg>
+                	</div>
+                </li>
+              -->
+            </ul>
+
+            <a href="#" class="view-all bg-purple">View All Messages</a>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane "
+          :class="{ active: mobileNav.notifications }"
+          id="notification"
+          role="tabpanel"
+        >
+          <div class="mCustomScrollbar" data-mcs-theme="dark">
+            <div class="ui-block-title ui-block-title-small">
+              <h6 class="title">Notifications</h6>
+              <a href="#">Mark all as read</a> <a href="#">Settings</a>
+            </div>
+
+            <ul class="notification-list">
+              <li>
+                <div class="author-thumb">
+                  <img src="/img/avatar62-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <div>
+                    <a href="#" class="h6 notification-friend"
+                      >Mathilda Brinker</a
+                    >
+                    commented on your new
+                    <a href="#" class="notification-link">profile status</a>.
+                  </div>
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >4 hours ago</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-comments-post-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"
+                    ></use>
+                  </svg>
+                </span>
+
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                  <svg class="olymp-little-delete">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+
+              <li class="un-read">
+                <div class="author-thumb">
+                  <img src="/img/avatar63-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <div>
+                    You and
+                    <a href="#" class="h6 notification-friend"
+                      >Nicholas Grissom</a
+                    >
+                    just became friends. Write on
+                    <a href="#" class="notification-link">his wall</a>.
+                  </div>
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >9 hours ago</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-happy-face-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                    ></use>
+                  </svg>
+                </span>
+
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                  <svg class="olymp-little-delete">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+
+              <li class="with-comment-photo">
+                <div class="author-thumb">
+                  <img src="/img/avatar64-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <div>
+                    <a href="#" class="h6 notification-friend"
+                      >Sarah Hetfield</a
+                    >
+                    commented on your
+                    <a href="#" class="notification-link">photo</a>.
+                  </div>
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >Yesterday at 5:32am</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-comments-post-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-comments-post-icon"
+                    ></use>
+                  </svg>
+                </span>
+
+                <div class="comment-photo">
+                  <img src="/img/comment-photo1.jpg" alt="photo" />
+                  <span
+                    >“She looks incredible in that outfit! We should see
+                    each...”</span
+                  >
+                </div>
+
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                  <svg class="olymp-little-delete">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+
+              <li>
+                <div class="author-thumb">
+                  <img src="/img/avatar65-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <div>
+                    <a href="#" class="h6 notification-friend"
+                      >Green Goo Rock</a
+                    >
+                    invited you to attend to his event Goo in
+                    <a href="#" class="notification-link">Gotham Bar</a>.
+                  </div>
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >March 5th at 6:43pm</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-happy-face-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-happy-face-icon"
+                    ></use>
+                  </svg>
+                </span>
+
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                  <svg class="olymp-little-delete">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+
+              <li>
+                <div class="author-thumb">
+                  <img src="/img/avatar66-sm.jpg" alt="author" />
+                </div>
+                <div class="notification-event">
+                  <div>
+                    <a href="#" class="h6 notification-friend">James Summers</a>
+                    commented on your new
+                    <a href="#" class="notification-link">profile status</a>.
+                  </div>
+                  <span class="notification-date"
+                    ><time
+                      class="entry-date updated"
+                      datetime="2004-07-24T18:18"
+                      >March 2nd at 8:29pm</time
+                    ></span
+                  >
+                </div>
+                <span class="notification-icon">
+                  <svg class="olymp-heart-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-heart-icon"
+                    ></use>
+                  </svg>
+                </span>
+
+                <div class="more">
+                  <svg class="olymp-three-dots-icon">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+                    ></use>
+                  </svg>
+                  <svg class="olymp-little-delete">
+                    <use
+                      xlink:href="/svg-icons/sprites/icons.svg#olymp-little-delete"
+                    ></use>
+                  </svg>
+                </div>
+              </li>
+            </ul>
+
+            <a href="#" class="view-all bg-primary">View All Notifications</a>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane "
+          :class="{ active: mobileNav.searchBar }"
+          id="search"
+          role="tabpanel"
+        >
+          <form class="search-bar w-search notification-list friend-requests">
+            <div class="form-group with-button">
+              <input
+                class="form-control js-user-search"
+                placeholder="Search here people or pages..."
+                type="text"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- ... end  Tab panes -->
+    </header>
+
+    <!-- ... end Responsive Header-BP -->
+    <div class="header-spacer"></div>
+  </div>
 </template>
 <style>
 .account-settings li i {
@@ -897,9 +1252,9 @@ export default {
     return {
       mobileNav: {
         collabRequests: false,
-	      chats: false,
-	      notifications: false,
-	      searchBar: false
+        chats: false,
+        notifications: false,
+        searchBar: false
       },
       searchSkillInput: this.$route.query.skill || null,
       currentStatusType: "online",
@@ -944,7 +1299,7 @@ export default {
     },
     searchSkill() {
       this.$router.push({
-        path: "",
+        path: "/search",
         query: { skill: this.searchSkillInput }
       });
     },

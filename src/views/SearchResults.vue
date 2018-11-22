@@ -1,35 +1,45 @@
 <template>
-	<div class="container">
-		<div class="row">
+  <div class="container">
+    <div class="row">
+      <!-- Main Content -->
 
-			<!-- Main Content -->
+      <main
+        class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
+      >
+        <div class="ui-block" v-if="$route.query.skill">
+          <div class="ui-block-title">
+            <div class="h6 title">
+              Showing {{ orderedNewsFeed.length }}
+              Post for: "<span class="c-primary">{{ $route.query.skill }}</span>"
+            </div>
+          </div>
+        </div>
 
-			<main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-				<div class="ui-block" v-if="$route.query.skill">
-					<div class="ui-block-title">
-						<div class="h6 title">Showing 12 Results for: "<span class="c-primary">{{ $route.query.skill }}</span>"</div>
-					</div>
-				</div>
+        <transition-group tag="div" name="fadeDown" id="newsfeed-items-grid">
+          <NewsFeedItemBlock
+            v-for="item in orderedNewsFeed"
+            :key="item.id"
+            :item="item"
+          />
+        </transition-group>
 
-				<!-- News Feed Form  -->
-				<NewsFeedFormBlock/>
-				<!-- ... end News Feed Form  -->
+        <a
+          id="load-more-button"
+          href="#"
+          @click.prevent="loadMore"
+          class="btn btn-control btn-more"
+        >
+          <svg class="olymp-three-dots-icon">
+            <use
+              xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
+            ></use>
+          </svg>
+        </a>
+      </main>
 
-				<transition-group tag="div" name="fadeDown" id="newsfeed-items-grid">
-					<NewsFeedItemBlock v-for="item in orderedNewsFeed" :key="item.id" :item="item" />
-				</transition-group>
-
-				<a id="load-more-button" href="#" @click.prevent="loadMore" class="btn btn-control btn-more">
-					<svg class="olymp-three-dots-icon">
-						<use xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use>
-					</svg>
-				</a>
-
-			</main>
-
-			<!-- ... end Main Content -->
-		</div>
-	</div>
+      <!-- ... end Main Content -->
+    </div>
+  </div>
 </template>
 
 <script>
@@ -42,24 +52,72 @@ import NewsFeedItemBlock from "../components/blocks/NewsFeedItem";
 
 export default {
   name: "SearchResults",
-  components: { NewsFeedFormBlock, NewsFeedItemBlock },
+  components: { NewsFeedItemBlock },
   data() {
-    return {};
+    return {
+      newsFeed: {}
+    };
   },
   computed: {
-    ...mapState(["newsFeed"]),
     orderedNewsFeed() {
-      return _.sortBy(
-        this.newsFeed.items,
-        item => item.created_at.seconds
-      ).reverse();
+      return _.sortBy(this.newsFeed, item => item.created_at.seconds).reverse();
     }
   },
+  watch: {
+    // call again the method if the route changes
+    $route: "fetchData"
+  },
   methods: {
-    loadMore() {}
+    fetchData() {
+      this.newsFeed = {};
+      let self = this;
+      this.$db
+        .collection("newsFeed")
+        // .where(`skills.${this.$route.query.skill}`, "==", true)
+        // .where("skills", "array-contains", this.$route.query.skill)
+        .orderBy(`skills.${this.$route.query.skill}`, "desc")
+        .get()
+        .then(querySnapshot => {
+          console.log(querySnapshot);
+          if (querySnapshot.done) {
+            // `{done: true}` is returned when everything is already fetched and there are 0 docs:
+            return "0 docs left to retrieve";
+          }
+          querySnapshot.forEach(doc => {
+            // you have to manually add the doc with `fetch`
+            const fetchedDoc = doc.data();
+            fetchedDoc.id = doc.id;
+            self.$set(self.newsFeed, doc.id, fetchedDoc);
+            // also don't forget that in this case `defaultValues` will not be applied
+          });
+        })
+        .catch(console.error);
+      // this.$store
+      //   .dispatch("newsFeed/fetch", {
+      //     whereFilters: [[`skills.${this.$route.query.skill}`, "==", true]],
+      //     orderBy: []
+      //   })
+      //   .then(querySnapshot => {
+      //     console.log(querySnapshot);
+      //     if (querySnapshot.done) {
+      //       // `{done: true}` is returned when everything is already fetched and there are 0 docs:
+      //       return "0 docs left to retrieve";
+      //     }
+      //     querySnapshot.forEach(doc => {
+      //       // you have to manually add the doc with `fetch`
+      //       const fetchedDoc = doc.data();
+      //       fetchedDoc.id = doc.id;
+      //       self.$set(self.newsFeed, doc.id, fetchedDoc);
+      //       // also don't forget that in this case `defaultValues` will not be applied
+      //     });
+      //   })
+      //   .catch(console.error);
+    }
   },
   created() {
-    // this.$root.$emit("showAlert", "Testing this now 1 2 3")
+    // fetch the data when the view is created and the data is
+    // already being observed
+    if (this.$route.query.skill) this.fetchData();
   }
 };
 </script>
