@@ -23,9 +23,8 @@
           />
         </transition-group>
 
-        <a
+        <b-link v-if="newsFeedSize > 50"
           id="load-more-button"
-          href="#"
           @click.prevent="loadMore"
           class="btn btn-control btn-more"
         >
@@ -34,7 +33,7 @@
               xlink:href="/svg-icons/sprites/icons.svg#olymp-three-dots-icon"
             ></use>
           </svg>
-        </a>
+        </b-link>
       </main>
 
       <!-- ... end Main Content -->
@@ -55,7 +54,8 @@ export default {
   components: { NewsFeedItemBlock },
   data() {
     return {
-      newsFeed: {}
+      newsFeed: {},
+      newsFeedSize: 0
     };
   },
   computed: {
@@ -83,6 +83,7 @@ export default {
             // `{done: true}` is returned when everything is already fetched and there are 0 docs:
             return "0 docs left to retrieve";
           }
+          self.newsFeedSize = querySnapshot.size;
           querySnapshot.forEach(doc => {
             // you have to manually add the doc with `fetch`
             const fetchedDoc = doc.data();
